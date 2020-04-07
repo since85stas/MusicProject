@@ -15,7 +15,6 @@ buildscript {
         // in the individual module build.gradle files
     }
 
-    ext {
         ext {
             // App SDK versions.
             compileSdkVersion = 29
@@ -45,7 +44,6 @@ buildscript {
             robolectric_version = '4.2'
             test_runner_version = '1.1.0'
         }
-    }
 }
 
 allprojects {

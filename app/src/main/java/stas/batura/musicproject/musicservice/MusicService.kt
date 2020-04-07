@@ -1,15 +1,16 @@
 package stas.batura.musicproject.musicservice
 
-import android.app.Notification
-import android.app.PendingIntent
-import android.app.Service
+import android.annotation.SuppressLint
+import android.app.*
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.graphics.BitmapFactory
+import android.media.AudioAttributes
 import android.media.AudioFocusRequest
 import android.media.AudioManager
+import android.media.AudioManager.OnAudioFocusChangeListener
 import android.net.Uri
 import android.os.Binder
 import android.os.Build
@@ -61,7 +62,7 @@ class MusicService : Service () {
     private var audioManager: AudioManager? = null
     private var audioFocusRequest: AudioFocusRequest? = null
 
-    private var audioFocusRequested = false
+    private var isAudioFocusRequested = false
 
     private var exoPlayer: SimpleExoPlayer? = null
     private var extractorsFactory: ExtractorsFactory? = null
@@ -76,6 +77,34 @@ class MusicService : Service () {
 
         // создаем аудио менеджер
         audioManager = getSystemService(Context.AUDIO_SERVICE) as AudioManager
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+
+            // настраиваем уведомления
+            @SuppressLint("WrongConstant") val notificationChannel =
+                NotificationChannel(
+                    NOTIFICATION_DEFAULT_CHANNEL_ID,
+                    getString(R.string.notification_channel_name),
+                    NotificationManagerCompat.IMPORTANCE_DEFAULT
+                )
+            val notificationManager =
+                getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            notificationManager.createNotificationChannel(notificationChannel)
+            val audioAttributes =
+                AudioAttributes.Builder()
+                    .setUsage(AudioAttributes.USAGE_MEDIA)
+                    .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
+                    .build()
+
+            // запрос на аудио фокус
+            audioFocusRequest =
+                AudioFocusRequest.Builder(AudioManager.AUDIOFOCUS_GAIN)
+                    .setOnAudioFocusChangeListener(audioFocusChangeListener)
+                    .setAcceptsDelayedFocusGain(false)
+                    .setWillPauseWhenDucked(true)
+                    .setAudioAttributes(audioAttributes)
+                    .build()
+        }
 
         // создаем и настраиваем медиа сессию
         mediaSession = MediaSessionCompat(this,"Music Service")
@@ -118,7 +147,7 @@ class MusicService : Service () {
         )
 
         // добавляем слушатель
-//        exoPlayer!!.addListener(exoPlayerListener)
+        exoPlayer!!.addListener(exoPlayerListener)
 
         val httpDataSourceFactory: DataSource.Factory =
             OkHttpDataSourceFactory(
@@ -149,10 +178,12 @@ class MusicService : Service () {
         private var currentUri: Uri? = null
         var currentState = PlaybackStateCompat.STATE_STOPPED
 
+        // при подготовке сервиса
         override fun onPrepare() {
             super.onPrepare()
         }
 
+        // при начале проигрыша
         override fun onPlay() {
             if (!exoPlayer!!.playWhenReady) {
                 startService(
@@ -164,8 +195,8 @@ class MusicService : Service () {
                 val track: MusicRepository.Track = musicRepository.getCurrent()
                 updateMetadataFromTrack(track)
                 prepareToPlay(track.uri)
-                if (!audioFocusRequested) {
-                    audioFocusRequested = true
+                if (!isAudioFocusRequested) {
+                    isAudioFocusRequested = true
                     var audioFocusResult: Int
                     audioFocusResult = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                         audioManager!!.requestAudioFocus(audioFocusRequest!!)
@@ -198,12 +229,75 @@ class MusicService : Service () {
             refreshNotificationAndForegroundStatus(currentState)
         }
 
-        override fun onStop() {
-            super.onStop()
+        // при остановки проигрыша
+        override fun onPause() {
+            if (exoPlayer!!.playWhenReady) {
+                exoPlayer!!.playWhenReady = false
+                unregisterReceiver(becomingNoisyReceiver)
+            }
+
+            mediaSession!!.setPlaybackState(
+                stateBuilder.setState(
+                    PlaybackStateCompat.STATE_PAUSED,
+                    PlaybackStateCompat.PLAYBACK_POSITION_UNKNOWN,
+                    1f
+                ).build()
+            )
+            currentState = PlaybackStateCompat.STATE_PAUSED
+
+            refreshNotificationAndForegroundStatus(currentState)
         }
 
+        // при остановки проигрыша
+        override fun onStop() {
+            if (exoPlayer!!.playWhenReady) {
+                exoPlayer!!.playWhenReady = false
+                unregisterReceiver(becomingNoisyReceiver)
+            }
+
+            if (isAudioFocusRequested) {
+                isAudioFocusRequested = false
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    audioManager!!.abandonAudioFocusRequest(audioFocusRequest!!)
+                } else {
+                    audioManager!!.abandonAudioFocus(audioFocusChangeListener)
+                }
+            }
+
+            mediaSession!!.isActive = false
+
+            mediaSession!!.setPlaybackState(
+                stateBuilder.setState(
+                    PlaybackStateCompat.STATE_STOPPED,
+                    PlaybackStateCompat.PLAYBACK_POSITION_UNKNOWN,
+                    1f
+                ).build()
+            )
+            currentState = PlaybackStateCompat.STATE_STOPPED
+
+            refreshNotificationAndForegroundStatus(currentState)
+
+            stopSelf()
+        }
+
+        // при переходе на следующий трек
         override fun onSkipToNext() {
-            super.onSkipToNext()
+            val track = musicRepository.next
+            updateMetadataFromTrack(track)
+
+            refreshNotificationAndForegroundStatus(currentState)
+
+            prepareToPlay(track.uri)
+        }
+
+        // при переходе на предыдущий трек
+        override fun onSkipToPrevious() {
+            val track = musicRepository.previous
+            updateMetadataFromTrack(track)
+
+            refreshNotificationAndForegroundStatus(currentState)
+
+            prepareToPlay(track.uri)
         }
 
         // подготавливаем трэк
@@ -249,7 +343,6 @@ class MusicService : Service () {
         }
 
         override fun onLoadingChanged(isLoading: Boolean) {
-
         }
 
         override fun onPlayerStateChanged(
@@ -262,14 +355,23 @@ class MusicService : Service () {
         }
 
         override fun onPlayerError(error: ExoPlaybackException) {
-
         }
 
         override fun onPlaybackParametersChanged(playbackParameters: PlaybackParameters) {
-
         }
     }
 
+    // отклик на фокус
+    private val audioFocusChangeListener : OnAudioFocusChangeListener =
+        OnAudioFocusChangeListener { focusChange : Int ->
+            when (focusChange ) {
+                AudioManager.AUDIOFOCUS_GAIN -> mediaSessionCallback.onPlay() // Не очень красиво
+                AudioManager.AUDIOFOCUS_LOSS_TRANSIENT_CAN_DUCK -> mediaSessionCallback.onPause()
+                else -> mediaSessionCallback.onPause()
+            }
+        }
+
+    //
     private val becomingNoisyReceiver: BroadcastReceiver = object : BroadcastReceiver() {
         override fun onReceive(
             context: Context,
@@ -283,7 +385,7 @@ class MusicService : Service () {
 
     inner class PlayerServiceBinder : Binder () {
         fun  getMediaSessionToke() : MediaSessionCompat.Token{
-            return mediaSession.sessionToken
+            return mediaSession!!.sessionToken
         }
     }
 
@@ -293,7 +395,7 @@ class MusicService : Service () {
                 startForeground(NOTIFICATION_ID, getNotification(playbackState))
             }
             PlaybackStateCompat.STATE_PAUSED -> {
-                NotificationManagerCompat.from(this@PlayerService)
+                NotificationManagerCompat.from(this@MusicService)
                     .notify(NOTIFICATION_ID, getNotification(playbackState)!!)
                 stopForeground(false)
             }
