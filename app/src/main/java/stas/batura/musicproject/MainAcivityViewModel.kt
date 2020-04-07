@@ -1,4 +1,4 @@
-package stas.batura.musicproject.ui.main
+package stas.batura.musicproject
 
 import android.app.Application
 import android.content.ComponentName
@@ -13,6 +13,7 @@ import android.view.View
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import kotlinx.android.synthetic.main.main_activity.*
 import stas.batura.musicproject.musicservice.MusicService
 
@@ -27,6 +28,7 @@ class MainAcivityViewModel (val application: Application) : ViewModel(  ) {
     val callbackChanges : MutableLiveData<PlaybackStateCompat?> = MutableLiveData(null)
 
     init {
+        println("init main view model")
 //        initMusicService()
     }
 
@@ -71,14 +73,6 @@ class MainAcivityViewModel (val application: Application) : ViewModel(  ) {
             }
         }
 
-
-
-//        bindService(
-//            Intent(application, MusicService::class.java),
-//            serviceConnection!!,
-//            Context.BIND_AUTO_CREATE
-//        )
-
     }
 
 
@@ -100,5 +94,17 @@ class MainAcivityViewModel (val application: Application) : ViewModel(  ) {
 
     fun prevClicked () {
         if (mediaController != null) mediaController!!.transportControls.skipToPrevious()
+    }
+
+    class Factory(
+        private val application: Application
+    ) : ViewModelProvider.Factory {
+        @Suppress("unchecked_cast")
+        override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+            if (modelClass.isAssignableFrom(MainAcivityViewModel::class.java)) {
+                return MainAcivityViewModel(application) as T
+            }
+            throw IllegalArgumentException("Unknown ViewModel class")
+        }
     }
 }

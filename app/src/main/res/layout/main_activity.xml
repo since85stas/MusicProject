@@ -7,47 +7,47 @@
     android:orientation="vertical"
     >
 
-<!--<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
-<!--    xmlns:tools="http://schemas.android.com/tools"-->
-<!--    android:id="@+id/container"-->
-<!--    android:layout_width="match_parent"-->
-<!--    android:layout_height="match_parent"-->
-<!--    tools:context=".MainActivity" />-->
-    <Button
-        android:id="@+id/play_button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="@dimen/button_padding"
-        android:text="@string/play"/>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity" />
+<!--    <Button-->
+<!--        android:id="@+id/play_button"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:padding="@dimen/button_padding"-->
+<!--        android:text="@string/play"/>-->
 
-    <Button
-        android:id="@+id/pause_button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="@dimen/button_padding"
-        android:text="@string/pause"
-        android:enabled="false"/>
+<!--    <Button-->
+<!--        android:id="@+id/pause_button"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:padding="@dimen/button_padding"-->
+<!--        android:text="@string/pause"-->
+<!--        android:enabled="false"/>-->
 
-    <Button
-        android:id="@+id/stop_button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="@dimen/button_padding"
-        android:text="@string/stop"
-        android:enabled="false"/>
+<!--    <Button-->
+<!--        android:id="@+id/stop_button"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:padding="@dimen/button_padding"-->
+<!--        android:text="@string/stop"-->
+<!--        android:enabled="false"/>-->
 
-    <Button
-        android:id="@+id/skip_to_next_button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="@dimen/button_padding"
-        android:text="@string/next"/>
+<!--    <Button-->
+<!--        android:id="@+id/skip_to_next_button"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:padding="@dimen/button_padding"-->
+<!--        android:text="@string/next"/>-->
 
-    <Button
-        android:id="@+id/skip_to_previous_button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="@dimen/button_padding"
-        android:text="@string/previous"/>
+<!--    <Button-->
+<!--        android:id="@+id/skip_to_previous_button"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:padding="@dimen/button_padding"-->
+<!--        android:text="@string/previous"/>-->
 
 </LinearLayout>

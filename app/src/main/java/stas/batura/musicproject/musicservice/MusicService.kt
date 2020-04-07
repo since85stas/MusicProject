@@ -2,10 +2,7 @@ package stas.batura.musicproject.musicservice
 
 import android.annotation.SuppressLint
 import android.app.*
-import android.content.BroadcastReceiver
-import android.content.Context
-import android.content.Intent
-import android.content.IntentFilter
+import android.content.*
 import android.graphics.BitmapFactory
 import android.media.AudioAttributes
 import android.media.AudioFocusRequest
@@ -171,6 +168,11 @@ class MusicService : Service () {
         )
         extractorsFactory = DefaultExtractorsFactory()
 
+    }
+
+    override fun unbindService(conn: ServiceConnection) {
+        println("unbind service")
+        super.unbindService(conn)
     }
 
     private val  mediaSessionCallback = object : MediaSessionCompat.Callback() {

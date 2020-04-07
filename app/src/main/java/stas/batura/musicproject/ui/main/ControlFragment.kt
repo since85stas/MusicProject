@@ -1,0 +1,44 @@
+package stas.batura.musicproject.ui.main
+
+import androidx.lifecycle.ViewModelProviders
+import android.os.Bundle
+import androidx.fragment.app.Fragment
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import kotlinx.android.synthetic.main.control_fragment.*
+import stas.batura.musicproject.MainAcivityViewModel
+import stas.batura.musicproject.R
+import stas.batura.musicproject.utils.InjectorUtils
+
+class ControlFragment : Fragment() {
+
+    companion object {
+        fun newInstance() = ControlFragment()
+    }
+
+    private lateinit var mainViewModel: MainAcivityViewModel
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
+                              savedInstanceState: Bundle?): View {
+
+        mainViewModel = ViewModelProviders
+            .of(this, InjectorUtils.provideMainViewModel(this.activity!!.application))
+            .get(MainAcivityViewModel::class.java)
+
+
+        return inflater.inflate(R.layout.control_fragment, container, false)
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+
+        play_button.setOnClickListener { mainViewModel.playClicked() }
+        pause_button.setOnClickListener {mainViewModel.pauseyClicked()}
+        stop_button.setOnClickListener {mainViewModel.stopClicked()}
+        skip_to_previous_button.setOnClickListener{mainViewModel.prevClicked()}
+
+
+        super.onActivityCreated(savedInstanceState)
+    }
+
+}
