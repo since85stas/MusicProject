@@ -5,9 +5,11 @@ import android.net.Uri;
 import stas.batura.musicproject.R;
 
 //https://simpleguics2pygame.readthedocs.io/en/latest/_static/links/snd_links.html
-final class MusicRepository {
+public final class MusicRepository {
 
-    private final Track[] data = {
+
+
+    public final Track[] data = {
             new Track("Triangle", "Jason Shaw", R.drawable.image266680,                   Uri.parse("https://codeskulptor-demos.commondatastorage.googleapis.com/pang/paza-moduless.mp3"), (3 * 60 + 41) * 1000),
             new Track("Rubix Cube", "Jason Shaw", R.drawable.image396168,                 Uri.parse("https://codeskulptor-demos.commondatastorage.googleapis.com/descent/background%20music.mp3"), (3 * 60 + 44) * 1000),
             new Track("MC Ballad S Early Eighties", "Frank Nora", R.drawable.image533998, Uri.parse("https://commondatastorage.googleapis.com/codeskulptor-assets/sounddogs/soundtrack.mp3"), (2 * 60 + 50) * 1000),
@@ -34,11 +36,16 @@ final class MusicRepository {
         return getCurrent();
     }
 
+    Track getTrackByIndex(int index) {
+        currentItemIndex = index;
+        return getCurrent();
+    }
+
     Track getCurrent() {
         return data[currentItemIndex];
     }
 
-    static class Track {
+    public static class Track {
 
         private String title;
         private String artist;

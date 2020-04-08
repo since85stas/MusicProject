@@ -3,14 +3,15 @@ package stas.batura.musicproject
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.view.MotionEvent
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProviders
-import kotlinx.android.synthetic.main.main_activity.*
 import stas.batura.musicproject.musicservice.MusicService
-import stas.batura.musicproject.ui.main.ControlFragment
+import stas.batura.musicproject.ui.control.ControlFragment
 import stas.batura.musicproject.utils.InjectorUtils
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), View.OnTouchListener {
 
     lateinit var  mainViewModel : MainAcivityViewModel
 
@@ -50,5 +51,11 @@ class MainActivity : AppCompatActivity() {
     override fun onStop() {
         println("main activity stop")
         super.onStop()
+    }
+
+    override fun onTouch(v: View?, event: MotionEvent?): Boolean {
+
+
+        return false
     }
 }

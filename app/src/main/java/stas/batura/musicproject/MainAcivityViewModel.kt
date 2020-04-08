@@ -103,7 +103,6 @@ class MainAcivityViewModel (val application: Application) : ViewModel(  ) {
             }
             throw IllegalArgumentException("Unknown ViewModel class")
         }
-
-
     }
+
 }

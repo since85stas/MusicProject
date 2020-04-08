@@ -65,7 +65,7 @@ class MusicService : Service () {
     private var extractorsFactory: ExtractorsFactory? = null
     private var dataSourceFactory: DataSource.Factory? = null
 
-    private val musicRepository: MusicRepository = MusicRepository()
+    val musicRepository: MusicRepository = MusicRepository()
 
     override fun onCreate() {
         super.onCreate()

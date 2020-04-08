@@ -1,4 +1,4 @@
-package stas.batura.musicproject.ui.main
+package stas.batura.musicproject.ui.control
 
 import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle

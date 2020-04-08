@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@id/controlFragment"
+
+    >
+
+
+    <fragment
+        android:id="@+id/controlFragment"
+        android:name="stas.batura.musicproject.ui.control.ControlFragment"
+        android:label="control_fragment"
+        tools:layout="@layout/control_fragment" >
+        <action
+            android:id="@+id/action_controlFragment_to_playlistFragment"
+            app:destination="@id/playlistFragment" />
+    </fragment>
+
+
+    <fragment
+        android:id="@+id/playlistFragment"
+        android:name="stas.batura.musicproject.ui.playlist.PlaylistFragment"
+        android:label="PlaylistFragment" >
+        <action
+            android:id="@+id/action_playlistFragment_to_controlFragment"
+            app:destination="@id/controlFragment" />
+    </fragment>
+
+
+</navigation>

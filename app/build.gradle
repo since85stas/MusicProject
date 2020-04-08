@@ -1,6 +1,8 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
+//apply plugin: 'androidx.navigation.safeargs'
 
 android {
     buildToolsVersion "29.0.2"
@@ -47,4 +49,16 @@ dependencies {
     api "com.google.android.exoplayer:exoplayer-ui:$exoplayer_version"
     api "com.google.android.exoplayer:extension-mediasession:$exoplayer_version"
     implementation 'com.google.android.exoplayer:extension-okhttp:2.9.4'
+
+    // Room and Lifecycle dependencies
+    implementation "androidx.room:room-runtime:$version_room"
+    implementation "androidx.room:room-ktx:$version_room"
+    kapt "androidx.room:room-compiler:$version_room"
+    implementation "androidx.lifecycle:lifecycle-extensions:$version_lifecycle_extensions"
+
+    // navigation
+    implementation 'androidx.navigation:navigation-fragment:2.2.1'
+    implementation 'androidx.navigation:navigation-ui:2.2.1'
+    implementation 'androidx.navigation:navigation-fragment-ktx:2.2.1'
+    implementation 'androidx.navigation:navigation-ui-ktx:2.2.1'
 }
