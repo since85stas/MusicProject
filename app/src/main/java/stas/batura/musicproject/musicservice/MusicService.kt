@@ -175,6 +175,18 @@ class MusicService : Service () {
         super.unbindService(conn)
     }
 
+    override fun onUnbind(intent: Intent?): Boolean {
+        println("on unbind")
+        return super.onUnbind(intent)
+    }
+
+    override fun onRebind(intent: Intent?) {
+        println("on reunbind")
+        super.onRebind(intent)
+    }
+
+
+
     private val  mediaSessionCallback = object : MediaSessionCompat.Callback() {
 
         private var currentUri: Uri? = null

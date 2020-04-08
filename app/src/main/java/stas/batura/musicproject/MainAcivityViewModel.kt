@@ -18,7 +18,6 @@ import kotlinx.android.synthetic.main.main_activity.*
 import stas.batura.musicproject.musicservice.MusicService
 
 class MainAcivityViewModel (val application: Application) : ViewModel(  ) {
-    // TODO: Implement the ViewModel
 
     private var playerServiceBinder: MusicService.PlayerServiceBinder? = null
     private var mediaController: MediaControllerCompat? = null
@@ -35,16 +34,10 @@ class MainAcivityViewModel (val application: Application) : ViewModel(  ) {
 
     fun initMusicService() {
 
-        // реагируем на изменение колбека
+        // привязываем колбека и лайв дэйта
         callback = object : MediaControllerCompat.Callback() {
             override fun onPlaybackStateChanged(state: PlaybackStateCompat?) {
-                if (state == null) return
-                val playing = state.state == PlaybackStateCompat.STATE_PLAYING
-
                 callbackChanges.value = state
-//                play_button.setEnabled(!playing)
-//                pause_button.setEnabled(playing)
-//                stop_button.setEnabled(playing)
             }
         }
 
@@ -96,15 +89,21 @@ class MainAcivityViewModel (val application: Application) : ViewModel(  ) {
         if (mediaController != null) mediaController!!.transportControls.skipToPrevious()
     }
 
+    /**
+     * фабрика для создания модели
+     */
     class Factory(
         private val application: Application
     ) : ViewModelProvider.Factory {
         @Suppress("unchecked_cast")
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
             if (modelClass.isAssignableFrom(MainAcivityViewModel::class.java)) {
+//                mainAcivityViewModel =
                 return MainAcivityViewModel(application) as T
             }
             throw IllegalArgumentException("Unknown ViewModel class")
         }
+
+
     }
 }

@@ -12,12 +12,16 @@ import stas.batura.musicproject.utils.InjectorUtils
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var  mainViewModel : MainAcivityViewModel
+    lateinit var  mainViewModel : MainAcivityViewModel
 
+    /**
+     * создаем активити
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.main_activity)
 
+        // создаем начальный фрагмент
         if (savedInstanceState == null) {
             supportFragmentManager.beginTransaction()
                     .replace(R.id.container, ControlFragment.newInstance())
@@ -28,8 +32,10 @@ class MainActivity : AppCompatActivity() {
             .of(this, InjectorUtils.provideMainViewModel(this.application))
             .get(MainAcivityViewModel::class.java)
 
+        // инициализируем муз сервис
         mainViewModel.initMusicService()
 
+        // привязываем сервис к активити
         bindService(Intent(applicationContext!!, MusicService::class.java),
             mainViewModel.serviceConnection!!,
             Context.BIND_AUTO_CREATE)
