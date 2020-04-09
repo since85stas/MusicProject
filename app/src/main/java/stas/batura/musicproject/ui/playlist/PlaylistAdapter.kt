@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import kotlinx.android.synthetic.main.playlist_item_view.view.*
 import stas.batura.musicproject.R
 import stas.batura.musicproject.musicservice.MusicRepository
 
@@ -15,6 +16,7 @@ class PlaylistAdapter (val data : Array<MusicRepository.Track> ) : RecyclerView.
             view
         )
     }
+
     override fun getItemCount(): Int {
         return data.size
     }
@@ -26,8 +28,12 @@ class PlaylistAdapter (val data : Array<MusicRepository.Track> ) : RecyclerView.
     class ViewHolder (val view : View) : RecyclerView.ViewHolder (view) {
 
         fun bind (track: MusicRepository.Track) {
-
+            view.song_name.text = track.title
         }
+
+    }
+
+    fun setTrackIsPlaying (position : Int) {
 
     }
 

@@ -25,7 +25,7 @@ class PlaylistFragment : Fragment () {
         playlistViewModel = ViewModelProviders.of (this,
             InjectorUtils.providePlaylistViewModel(activity!!.application)).get(PlaylistViewModel::class.java)
 
-        return inflater.inflate(R.layout.control_fragment, container, false)
+        return inflater.inflate(R.layout.playlist_fragment, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

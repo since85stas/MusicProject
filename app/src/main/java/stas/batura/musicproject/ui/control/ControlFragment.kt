@@ -54,10 +54,7 @@ class ControlFragment () : Fragment() {
             }
         })
 
-
         super.onActivityCreated(savedInstanceState)
     }
-
-
 
 }

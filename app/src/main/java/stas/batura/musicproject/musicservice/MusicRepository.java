@@ -47,7 +47,7 @@ public final class MusicRepository {
 
     public static class Track {
 
-        private String title;
+        public String title;
         private String artist;
         private int bitmapResId;
         private Uri uri;
