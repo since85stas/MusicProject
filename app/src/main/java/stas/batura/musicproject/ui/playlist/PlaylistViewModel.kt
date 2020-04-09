@@ -10,8 +10,8 @@ import stas.batura.musicproject.musicservice.MusicRepository
 
 class PlaylistViewModel ( val application: Application) : ViewModel () {
 
-    private var _songListViewModel : MutableLiveData<Array<MusicRepository.Track>?> = MutableLiveData(null);
-    val songListViewModel : LiveData<Array<MusicRepository.Track>?>
+    private var _songListViewModel : MutableLiveData<List<MusicRepository.Track>?> = MutableLiveData(null);
+    val songListViewModel : LiveData<List<MusicRepository.Track>?>
     get() = _songListViewModel
 
     val musicRepository : MusicRepository = MusicRepository()
@@ -19,7 +19,7 @@ class PlaylistViewModel ( val application: Application) : ViewModel () {
     init {
         print("playlist init")
 
-        _songListViewModel.value = musicRepository.data
+        _songListViewModel.value = musicRepository.tracks
     }
 
 

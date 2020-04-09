@@ -36,13 +36,6 @@ class MainActivity : AppCompatActivity() {
 
         navContr = Navigation.findNavController(this, R.id.nav_host_fragment)
 
-        // создаем начальный фрагмент
-//        if (savedInstanceState == null) {
-//            supportFragmentManager.beginTransaction()
-//                    .replace(R.id.container, ControlFragment.newInstance())
-//                    .commitNow()
-//        }
-
         mainViewModel = ViewModelProviders
             .of(this, InjectorUtils.provideMainViewModel(this.application))
             .get(MainAcivityViewModel::class.java)
@@ -72,7 +65,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun navigateToRight () {
-
+        navContr.navigate(R.id.controlFragment)
     }
 
     override fun onTouchEvent(event: MotionEvent?): Boolean {
@@ -85,10 +78,9 @@ class MainActivity : AppCompatActivity() {
                 val deltaX = x2 - x1
                 if (Math.abs(deltaX) > MIN_DISTANCE) {
                     if (deltaX < 0) {
-                        println("right")
+                        navigateToRight()
                     } else {
                         navigateToLeft()
-                        println("left")
                     }
                 }
                 true
