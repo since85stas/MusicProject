@@ -2,6 +2,10 @@ package stas.batura.musicproject.musicservice;
 
 import android.net.Uri;
 
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
+
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
@@ -11,7 +15,20 @@ import stas.batura.musicproject.R;
 //https://simpleguics2pygame.readthedocs.io/en/latest/_static/links/snd_links.html
 public final class MusicRepository {
 
+    private static MusicRepository instance;
 
+    public static MusicRepository getInstance () {
+        if (instance == null) {
+            instance = new MusicRepository();
+            return instance;
+        } else {
+            return instance;
+        }
+    }
+
+    private MusicRepository () {
+
+    }
 
     private final Track[] data = {
             new Track(0,"Triangle", "Jason Shaw", R.drawable.image266680,                   Uri.parse("https://codeskulptor-demos.commondatastorage.googleapis.com/pang/paza-moduless.mp3"), (3 * 60 + 41) * 1000,false),
@@ -21,9 +38,9 @@ public final class MusicRepository {
             new Track(4,"Morning Snowflake", "Kevin MacLeod", R.drawable.image208815,       Uri.parse("https://commondatastorage.googleapis.com/codeskulptor-demos/riceracer_assets/music/race1.ogg"), (2 * 60 + 0) * 1000, false),
     };
 
-    public final List<Track> tracks = Arrays.asList(data);
+    public MutableLiveData<List<Track>> tracks = new  MutableLiveData<>(Arrays.asList(data));
 
-    private final int maxIndex = tracks.size() - 1;
+    private final int maxIndex = tracks.getValue().size() - 1;
     private int currentItemIndex = 0;
 
     Track getNext() {
@@ -47,8 +64,47 @@ public final class MusicRepository {
         return getCurrent();
     }
 
+    Track getTrackByUri(Uri uri) {
+        if (uri != null) {
+            currentItemIndex = getIndexByUri(uri);
+            return getCurrent();
+        }
+        return tracks.getValue().get(0);
+    }
+
     Track getCurrent() {
-        return tracks.get(currentItemIndex);
+        setIsPlaying();
+        return tracks.getValue().get(currentItemIndex);
+    }
+
+    // получаем номер по uri
+    private int getIndexByUri (Uri uri) {
+        for (int i = 0; i < tracks.getValue().size(); i++) {
+            if (tracks.getValue().get(i).uri.equals(uri)) {
+                return tracks.getValue().get(i).trackId;
+            }
+        }
+        return 0;
+    }
+
+    public void addTrack () {
+        try {
+            List<Track> newList = new ArrayList<>(Arrays.asList(data));
+            newList.add(new Track(0, "Triangle", "Jason Shaw", R.drawable.image266680, Uri.parse("https://codeskulptor-demos.commondatastorage.googleapis.com/pang/paza-moduless.mp3"), (3 * 60 + 41) * 1000, false));
+            tracks.setValue(newList);
+        } catch (Exception e) {
+            System.out.println(" E " + e);
+        }
+    }
+
+    // TODO : разобраться с обновлением лайв дэйта
+    private void setIsPlaying() {
+        for (Track tr :
+                tracks.getValue()) {
+            tr.isPlaying = false;
+        }
+        tracks.getValue().get(currentItemIndex).isPlaying = true;
+        tracks.setValue(new ArrayList<>(tracks.getValue()));
     }
 
     public static class Track {
@@ -56,7 +112,7 @@ public final class MusicRepository {
         public String title;
         private String artist;
         private int bitmapResId;
-        private Uri uri;
+        public Uri uri;
         private long duration; // in ms
         public boolean isPlaying;
 

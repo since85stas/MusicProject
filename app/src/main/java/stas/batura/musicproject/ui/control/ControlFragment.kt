@@ -43,6 +43,7 @@ class ControlFragment () : Fragment() {
         pause_button.setOnClickListener {mainViewModel.pauseyClicked()}
         stop_button.setOnClickListener {mainViewModel.stopClicked()}
         skip_to_previous_button.setOnClickListener{mainViewModel.prevClicked()}
+        skip_to_next_button.setOnClickListener{mainViewModel.nextClicked()}
 
         // наблюдаем за нажатием кнопок
         mainViewModel.callbackChanges.observe(viewLifecycleOwner, Observer {

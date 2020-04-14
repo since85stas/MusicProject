@@ -10,16 +10,17 @@ import stas.batura.musicproject.musicservice.MusicRepository
 
 class PlaylistViewModel ( val application: Application) : ViewModel () {
 
-    private var _songListViewModel : MutableLiveData<List<MusicRepository.Track>?> = MutableLiveData(null);
+    private var _songListViewModel : MutableLiveData<List<MusicRepository.Track>?> =
+        MusicRepository.getInstance().tracks
     val songListViewModel : LiveData<List<MusicRepository.Track>?>
     get() = _songListViewModel
 
-    val musicRepository : MusicRepository = MusicRepository()
+    val musicRepository : MusicRepository = MusicRepository.getInstance()
 
     init {
         print("playlist init")
 
-        _songListViewModel.value = musicRepository.tracks
+//        _songListViewModel = musicRepository.tracks
     }
 
 
@@ -39,5 +40,10 @@ class PlaylistViewModel ( val application: Application) : ViewModel () {
             }
             throw IllegalArgumentException("Unknown ViewModel class")
         }
+    }
+
+
+    fun addTrack() {
+        musicRepository.addTrack()
     }
 }

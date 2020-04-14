@@ -5,6 +5,7 @@ import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.content.ServiceConnection
+import android.net.Uri
 import android.os.IBinder
 import android.os.RemoteException
 import android.support.v4.media.session.MediaControllerCompat
@@ -15,9 +16,12 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import kotlinx.android.synthetic.main.main_activity.*
+import stas.batura.musicproject.musicservice.MusicRepository
 import stas.batura.musicproject.musicservice.MusicService
 
 class MainAcivityViewModel (val application: Application) : ViewModel(  ) {
+
+    private val repository : MusicRepository = MusicRepository.getInstance()
 
     private var playerServiceBinder: MusicService.PlayerServiceBinder? = null
     private var mediaController: MediaControllerCompat? = null
@@ -28,6 +32,7 @@ class MainAcivityViewModel (val application: Application) : ViewModel(  ) {
 
     init {
         println("init main view model")
+        print("Repo is $repository")
 //        initMusicService()
     }
 
@@ -87,6 +92,10 @@ class MainAcivityViewModel (val application: Application) : ViewModel(  ) {
 
     fun prevClicked () {
         if (mediaController != null) mediaController!!.transportControls.skipToPrevious()
+    }
+
+    fun onItemClicked (uri: Uri) {
+        if (mediaController != null) mediaController!!.transportControls.playFromUri(uri, null)
     }
 
     /**

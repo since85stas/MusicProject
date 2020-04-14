@@ -11,6 +11,7 @@ import android.media.AudioManager.OnAudioFocusChangeListener
 import android.net.Uri
 import android.os.Binder
 import android.os.Build
+import android.os.Bundle
 import android.os.IBinder
 import android.support.v4.media.MediaMetadataCompat
 import android.support.v4.media.session.MediaSessionCompat
@@ -35,7 +36,7 @@ import stas.batura.musicproject.MainActivity
 import stas.batura.musicproject.R
 import java.io.File
 
-class MusicService : Service () {
+class MusicService (): Service () {
 
     private val NOTIFICATION_ID = 404
     private val NOTIFICATION_DEFAULT_CHANNEL_ID = "default_channel"
@@ -65,7 +66,7 @@ class MusicService : Service () {
     private var extractorsFactory: ExtractorsFactory? = null
     private var dataSourceFactory: DataSource.Factory? = null
 
-    val musicRepository: MusicRepository = MusicRepository()
+    val musicRepository: MusicRepository = MusicRepository.getInstance()
 
     override fun onCreate() {
         super.onCreate()
@@ -307,6 +308,24 @@ class MusicService : Service () {
         // при переходе на предыдущий трек
         override fun onSkipToPrevious() {
             val track = musicRepository.previous
+            updateMetadataFromTrack(track)
+
+            refreshNotificationAndForegroundStatus(currentState)
+
+            prepareToPlay(track.uri)
+        }
+
+        fun onPlayByTrackId (id : Int) {
+            val track = musicRepository.getTrackByIndex(id)
+            updateMetadataFromTrack(track)
+
+            refreshNotificationAndForegroundStatus(currentState)
+
+            prepareToPlay(track.uri)
+        }
+
+        override fun onPlayFromUri(uri: Uri?, extras: Bundle?) {
+            val track = musicRepository.getTrackByUri(uri)
             updateMetadataFromTrack(track)
 
             refreshNotificationAndForegroundStatus(currentState)
