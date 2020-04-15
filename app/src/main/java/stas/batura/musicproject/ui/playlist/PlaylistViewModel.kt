@@ -23,9 +23,6 @@ class PlaylistViewModel ( val application: Application) : ViewModel () {
 //        _songListViewModel = musicRepository.tracks
     }
 
-
-
-
     /**
      * фабрика для создания модели
      */

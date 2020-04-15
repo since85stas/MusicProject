@@ -10,13 +10,17 @@
         <variable
             name="mainViewModel"
             type="stas.batura.musicproject.MainAcivityViewModel" />
+
+        <variable
+            name="viewHolder"
+            type="stas.batura.musicproject.ui.playlist.PlaylistAdapter.ViewHolder" />
     </data>
 
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:onClick="@{() -> mainViewModel.onItemClicked(track.uri)}"
+        android:onClick="@{() -> viewHolder.onItemClicked()}"
         >
 
         <LinearLayout

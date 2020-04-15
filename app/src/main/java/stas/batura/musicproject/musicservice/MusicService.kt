@@ -324,6 +324,8 @@ class MusicService (): Service () {
             prepareToPlay(track.uri)
         }
 
+
+
         override fun onPlayFromUri(uri: Uri?, extras: Bundle?) {
             val track = musicRepository.getTrackByUri(uri)
             updateMetadataFromTrack(track)

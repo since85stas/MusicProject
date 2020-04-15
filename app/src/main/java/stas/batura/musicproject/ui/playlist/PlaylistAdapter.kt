@@ -1,5 +1,6 @@
 package stas.batura.musicproject.ui.playlist
 
+import android.support.v4.media.session.PlaybackStateCompat
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -27,18 +28,24 @@ class PlaylistAdapter (val mainAcivityViewModel: MainAcivityViewModel):
     class ViewHolder (val binding: PlaylistItemViewBinding,
                       val mainAcivityViewModel: MainAcivityViewModel) : RecyclerView.ViewHolder (binding.root) {
 
-//        lateinit var trackIn : MusicRepository.Track
-
         fun bind (track: MusicRepository.Track) {
-//            trackIn = track
             binding.track = track
             binding.mainViewModel = mainAcivityViewModel
+            binding.viewHolder = this
             binding.executePendingBindings()
         }
 
-//        fun onItemClick () {
-//            mainAcivityViewModel.onItemClicked(binding.track.uri)
-//        }
+        fun onItemClicked () {
+            if (mainAcivityViewModel.callbackChanges.value?.state == PlaybackStateCompat.STATE_PLAYING) {
+                mainAcivityViewModel.onItemClicked(binding.track!!.uri)
+            } else {
+                if (binding.track!!.isPlaying) {
+                    mainAcivityViewModel.playClicked()
+                } else {
+                    mainAcivityViewModel.onItemClicked(binding.track!!.uri)
+                }
+            }
+        }
 
         companion object {
             fun from(parent: ViewGroup, mainAcivityViewModel: MainAcivityViewModel): ViewHolder {
