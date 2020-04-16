@@ -5,14 +5,17 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.MotionEvent
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.MotionEventCompat
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
+import com.developer.filepicker.model.DialogConfigs
+import com.developer.filepicker.model.DialogProperties
+import com.developer.filepicker.view.FilePickerDialog
 import stas.batura.musicproject.musicservice.MusicService
 import stas.batura.musicproject.utils.InjectorUtils
+import java.io.File
 
 
 class MainActivity : AppCompatActivity() {
@@ -48,6 +51,14 @@ class MainActivity : AppCompatActivity() {
             mainViewModel.serviceConnection!!,
             Context.BIND_AUTO_CREATE)
 
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        when (requestCode) {
+            9999 -> Log.i("Test", "Result URI " + data!!.data)
+        }
     }
 
     override fun onPause() {

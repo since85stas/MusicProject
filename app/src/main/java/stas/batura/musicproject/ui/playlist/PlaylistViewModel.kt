@@ -19,7 +19,6 @@ class PlaylistViewModel ( val application: Application) : ViewModel () {
 
     init {
         print("playlist init")
-
 //        _songListViewModel = musicRepository.tracks
     }
 
