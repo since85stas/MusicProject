@@ -9,10 +9,7 @@ import android.media.AudioFocusRequest
 import android.media.AudioManager
 import android.media.AudioManager.OnAudioFocusChangeListener
 import android.net.Uri
-import android.os.Binder
-import android.os.Build
-import android.os.Bundle
-import android.os.IBinder
+import android.os.*
 import android.support.v4.media.MediaMetadataCompat
 import android.support.v4.media.session.MediaSessionCompat
 import android.support.v4.media.session.PlaybackStateCompat
@@ -21,17 +18,18 @@ import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
 import androidx.media.session.MediaButtonReceiver
 import com.google.android.exoplayer2.*
-import com.google.android.exoplayer2.ext.okhttp.OkHttpDataSourceFactory
 import com.google.android.exoplayer2.extractor.DefaultExtractorsFactory
 import com.google.android.exoplayer2.extractor.ExtractorsFactory
 import com.google.android.exoplayer2.source.ExtractorMediaSource
+import com.google.android.exoplayer2.source.MediaSource
 import com.google.android.exoplayer2.source.TrackGroupArray
 import com.google.android.exoplayer2.trackselection.DefaultTrackSelector
 import com.google.android.exoplayer2.trackselection.TrackSelectionArray
 import com.google.android.exoplayer2.upstream.DataSource
+import com.google.android.exoplayer2.upstream.DataSpec
+import com.google.android.exoplayer2.upstream.FileDataSource
+import com.google.android.exoplayer2.upstream.FileDataSource.FileDataSourceException
 import com.google.android.exoplayer2.upstream.cache.*
-import com.google.android.exoplayer2.util.Util
-import okhttp3.OkHttpClient
 import stas.batura.musicproject.MainActivity
 import stas.batura.musicproject.R
 import java.io.File
@@ -67,6 +65,8 @@ class MusicService (): Service () {
     private var dataSourceFactory: DataSource.Factory? = null
 
     val musicRepository: MusicRepository = MusicRepository.getInstance()
+
+    var fileDataSource : DataSource? = null
 
     override fun onCreate() {
         super.onCreate()
@@ -147,14 +147,31 @@ class MusicService (): Service () {
         // добавляем слушатель
         exoPlayer!!.addListener(exoPlayerListener)
 
-        val httpDataSourceFactory: DataSource.Factory =
-            OkHttpDataSourceFactory(
-                OkHttpClient(),
-                Util.getUserAgent(
-                    this,
-                    getString(R.string.app_name)
-                )
-            )
+//        val httpDataSourceFactory: DataSource.Factory =
+//            OkHttpDataSourceFactory(
+//                OkHttpClient(),
+//                Util.getUserAgent(
+//                    this,
+//                    getString(R.string.app_name)
+//                )
+//            )
+
+        val testUri =
+            Uri.fromFile(File(Environment.getExternalStorageDirectory().absolutePath +
+                    "/Music/Moonspell/Studio and Compilation/1995-Wolfheart (Original 1CD Release)/02 Love Crimes.mp3"))
+
+        val dataSpec = DataSpec(testUri)
+        fileDataSource =
+            FileDataSource()
+        try {
+            fileDataSource!!.open(dataSpec)
+        } catch (e: FileDataSourceException) {
+            e.printStackTrace()
+        }
+
+
+        val factory =
+            DataSource.Factory { fileDataSource }
 
         val cache: Cache =
             SimpleCache(
@@ -164,9 +181,15 @@ class MusicService (): Service () {
 
         dataSourceFactory = CacheDataSourceFactory(
             cache,
-            httpDataSourceFactory,
+            factory,
             CacheDataSource.FLAG_BLOCK_ON_CACHE or CacheDataSource.FLAG_IGNORE_CACHE_ON_ERROR
         )
+
+//        val audioSource: MediaSource = ExtractorMediaSource(
+//            fileDataSource!!.getUri(),
+//            factory, DefaultExtractorsFactory(), null, null
+//        )
+
         extractorsFactory = DefaultExtractorsFactory()
 
     }
