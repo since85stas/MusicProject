@@ -15,6 +15,8 @@ import com.developer.filepicker.model.DialogConfigs
 import com.developer.filepicker.model.DialogProperties
 import com.developer.filepicker.view.FilePickerDialog
 import stas.batura.musicproject.musicservice.MusicService
+import stas.batura.musicproject.repository.room.TracksDao
+import stas.batura.musicproject.repository.room.TracksDatabase
 import stas.batura.musicproject.utils.InjectorUtils
 import java.io.File
 
@@ -31,12 +33,16 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var navContr : NavController
 
+//    private lateinit var dataSource : TracksDao
+
     /**
      * создаем активити
      */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.main_activity)
+
+//        dataSource = TracksDatabase.getInstance(this).tracksDatabaseDao
 
         navContr = Navigation.findNavController(this, R.id.nav_host_fragment)
 

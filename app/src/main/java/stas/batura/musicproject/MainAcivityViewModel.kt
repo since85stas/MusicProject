@@ -2,26 +2,24 @@ package stas.batura.musicproject
 
 import android.app.Application
 import android.content.ComponentName
-import android.content.Context
-import android.content.Intent
 import android.content.ServiceConnection
 import android.net.Uri
 import android.os.IBinder
 import android.os.RemoteException
 import android.support.v4.media.session.MediaControllerCompat
 import android.support.v4.media.session.PlaybackStateCompat
-import android.view.View
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import kotlinx.android.synthetic.main.main_activity.*
 import stas.batura.musicproject.musicservice.MusicRepository
 import stas.batura.musicproject.musicservice.MusicService
+import stas.batura.musicproject.repository.room.TracksDao
 
-class MainAcivityViewModel (val application: Application) : ViewModel(  ) {
+class MainAcivityViewModel (private val application: Application,
+                            private val database:TracksDao) : ViewModel(  ) {
 
-    private val repository : MusicRepository = MusicRepository.getInstance()
+    private val musicRepository : MusicRepository = MusicRepository.getInstance()
 
     private var playerServiceBinder: MusicService.PlayerServiceBinder? = null
     private var mediaController: MediaControllerCompat? = null
@@ -36,7 +34,7 @@ class MainAcivityViewModel (val application: Application) : ViewModel(  ) {
 
     init {
         println("init main view model")
-        print("Repo is $repository")
+        print("Repo is $musicRepository")
 //        initMusicService()
     }
 
@@ -113,13 +111,14 @@ class MainAcivityViewModel (val application: Application) : ViewModel(  ) {
      * фабрика для создания модели
      */
     class Factory(
-        private val application: Application
+        private val application: Application,
+        private val data : TracksDao
     ) : ViewModelProvider.Factory {
         @Suppress("unchecked_cast")
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
             if (modelClass.isAssignableFrom(MainAcivityViewModel::class.java)) {
 //                mainAcivityViewModel =
-                return MainAcivityViewModel(application) as T
+                return MainAcivityViewModel(application, data) as T
             }
             throw IllegalArgumentException("Unknown ViewModel class")
         }
