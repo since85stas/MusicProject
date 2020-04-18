@@ -9,13 +9,20 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.developer.filepicker.controller.DialogSelectionListener
+import com.developer.filepicker.model.DialogConfigs
+import com.developer.filepicker.model.DialogProperties
+import com.developer.filepicker.view.FilePickerDialog
 import kotlinx.android.synthetic.main.playlist_fragment.*
 import stas.batura.musicproject.MainAcivityViewModel
 import stas.batura.musicproject.R
 import stas.batura.musicproject.databinding.PlaylistFragmentBinding
+import stas.batura.musicproject.musicservice.MusicRepository
 import stas.batura.musicproject.utils.InjectorUtils
+import stas.batura.musicproject.utils.SongsManager
+import java.io.File
 
-class PlaylistFragment : Fragment () {
+class PlaylistFragment : Fragment (), DialogSelectionListener {
 
     private lateinit var playlistViewModel: PlaylistViewModel
 
@@ -62,6 +69,27 @@ class PlaylistFragment : Fragment () {
             layoutManager = LinearLayoutManager(parentFragment!!.requireContext())
         }
 
+        // test
+        val properties = DialogProperties()
+        properties.selection_mode = DialogConfigs.MULTI_MODE;
+        properties.selection_type = DialogConfigs.FILE_AND_DIR_SELECT;
+        properties.root = File(DialogConfigs.DEFAULT_DIR);
+        properties.error_dir = File(DialogConfigs.DEFAULT_DIR);
+        properties.offset = File(DialogConfigs.DEFAULT_DIR);
+        properties.extensions = null;
+        properties.show_hidden_files = false;
+        val dialog = FilePickerDialog(activity, properties)
+        dialog.setTitle("Select a File")
+        dialog.setDialogSelectionListener (this)
+        dialog.show()
+
         super.onViewCreated(view, savedInstanceState)
+    }
+
+    override fun onSelectedFilePaths(files: Array<out String>?) {
+        print("test select")
+//        val songsManager = SongsManager(files!![0]);
+//        val list = songsManager.playList
+        MusicRepository.getInstance().setData(File(files!![0]))
     }
 }

@@ -7,6 +7,7 @@ import android.util.Log
 import android.view.MotionEvent
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.MotionEventCompat
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
@@ -43,14 +44,21 @@ class MainActivity : AppCompatActivity() {
             .of(this, InjectorUtils.provideMainViewModel(this.application))
             .get(MainAcivityViewModel::class.java)
 
+        mainViewModel.createServiceListner.observe(this, Observer {
+            if (it) {
+                createMusicService()
+            }
+        })
+    }
+
+    private fun createMusicService() {
         // инициализируем муз сервис
-        mainViewModel.initMusicService()
+        mainViewModel.initMusicService(false)
 
         // привязываем сервис к активити
         bindService(Intent(applicationContext!!, MusicService::class.java),
             mainViewModel.serviceConnection!!,
             Context.BIND_AUTO_CREATE)
-
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

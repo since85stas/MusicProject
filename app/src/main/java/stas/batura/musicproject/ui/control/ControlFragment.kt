@@ -19,7 +19,7 @@ import stas.batura.musicproject.utils.InjectorUtils
 import stas.batura.musicproject.utils.SongsManager
 import java.io.File
 
-class ControlFragment () : Fragment(), DialogSelectionListener {
+class ControlFragment () : Fragment() {
 
     companion object {
         fun newInstance() = ControlFragment()
@@ -45,7 +45,10 @@ class ControlFragment () : Fragment(), DialogSelectionListener {
      */
     override fun onActivityCreated(savedInstanceState: Bundle?) {
 
-        play_button.setOnClickListener { mainViewModel.playClicked() }
+        play_button.setOnClickListener {
+            mainViewModel.checkServiseCreation()
+            mainViewModel.playClicked()
+        }
         pause_button.setOnClickListener {mainViewModel.pauseyClicked()}
         stop_button.setOnClickListener {mainViewModel.stopClicked()}
         skip_to_previous_button.setOnClickListener{mainViewModel.prevClicked()}
@@ -61,26 +64,10 @@ class ControlFragment () : Fragment(), DialogSelectionListener {
             }
         })
 
-        // test
-        val properties = DialogProperties()
-        properties.selection_mode = DialogConfigs.MULTI_MODE;
-        properties.selection_type = DialogConfigs.FILE_AND_DIR_SELECT;
-        properties.root = File(DialogConfigs.DEFAULT_DIR);
-        properties.error_dir = File(DialogConfigs.DEFAULT_DIR);
-        properties.offset = File(DialogConfigs.DEFAULT_DIR);
-        properties.extensions = null;
-        properties.show_hidden_files = false;
-        val dialog = FilePickerDialog(activity, properties)
-        dialog.setTitle("Select a File")
-        dialog.setDialogSelectionListener (this)
-        dialog.show()
+
 
         super.onActivityCreated(savedInstanceState)
     }
 
-    override fun onSelectedFilePaths(files: Array<out String>?) {
-        print("test select")
-        val songsManager = SongsManager(files!![0]);
-        songsManager.playList
-    }
+
 }

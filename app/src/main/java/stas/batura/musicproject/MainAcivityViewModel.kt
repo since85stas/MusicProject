@@ -30,47 +30,58 @@ class MainAcivityViewModel (val application: Application) : ViewModel(  ) {
 
     val callbackChanges : MutableLiveData<PlaybackStateCompat?> = MutableLiveData(null)
 
+    private var _createServiceListner : MutableLiveData<Boolean> = MutableLiveData()
+    val createServiceListner : LiveData<Boolean>
+        get() = _createServiceListner
+
     init {
         println("init main view model")
         print("Repo is $repository")
 //        initMusicService()
     }
 
+    fun checkServiseCreation() {
+        _createServiceListner.value = true
+        _createServiceListner.value = false
+    }
 
-    fun initMusicService() {
-
-        // привязываем колбека и лайв дэйта
-        callback = object : MediaControllerCompat.Callback() {
-            override fun onPlaybackStateChanged(state: PlaybackStateCompat?) {
-                callbackChanges.value = state
-            }
-        }
-
-        // соединение с сервисом
-        serviceConnection = object : ServiceConnection {
-            override fun onServiceConnected(name: ComponentName, service: IBinder) {
-                playerServiceBinder = service as MusicService.PlayerServiceBinder
-                try {
-                    mediaController = MediaControllerCompat(
-                        application,
-                        playerServiceBinder!!.getMediaSessionToke()
-                    )
-                    mediaController!!.registerCallback(callback!!)
-                    callback!!.onPlaybackStateChanged(mediaController!!.playbackState)
-                } catch (e: RemoteException) {
-                    mediaController = null
+    /**
+     * создает музыкальный сервис и его контроллер
+     */
+    fun initMusicService(isRecreate : Boolean) {
+        if (serviceConnection == null || isRecreate) {
+            // привязываем колбека и лайв дэйта
+            callback = object : MediaControllerCompat.Callback() {
+                override fun onPlaybackStateChanged(state: PlaybackStateCompat?) {
+                    callbackChanges.value = state
                 }
             }
 
-            override fun onServiceDisconnected(name: ComponentName) {
-                playerServiceBinder = null
-                if (mediaController != null) {
-                    mediaController!!.unregisterCallback(callback!!)
-                    mediaController = null
+            // соединение с сервисом
+            serviceConnection = object : ServiceConnection {
+                override fun onServiceConnected(name: ComponentName, service: IBinder) {
+                    playerServiceBinder = service as MusicService.PlayerServiceBinder
+                    try {
+                        mediaController = MediaControllerCompat(
+                            application,
+                            playerServiceBinder!!.getMediaSessionToke()
+                        )
+                        mediaController!!.registerCallback(callback!!)
+                        callback!!.onPlaybackStateChanged(mediaController!!.playbackState)
+                    } catch (e: RemoteException) {
+                        mediaController = null
+                    }
+                }
+
+                override fun onServiceDisconnected(name: ComponentName) {
+                    playerServiceBinder = null
+                    if (mediaController != null) {
+                        mediaController!!.unregisterCallback(callback!!)
+                        mediaController = null
+                    }
                 }
             }
         }
-
     }
 
 

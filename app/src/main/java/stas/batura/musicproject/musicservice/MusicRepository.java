@@ -28,25 +28,44 @@ public final class MusicRepository {
         }
     }
 
-    private MusicRepository () {
+    private MusicRepository (  ) {
 
     }
 
-    private final Track[] data = {
-            new Track(0,"Triangle", "Jason Shaw", R.drawable.image266680,
-                    Uri.fromFile(new File(Environment.getExternalStorageDirectory().getAbsolutePath() +
-                            "/Music/Moonspell/Studio and Compilation/1995-Wolfheart (Original 1CD Release)/02 Love Crimes.mp3")),
-                    (3 * 60 + 41) * 1000,false),
-            new Track(1,"Rubix Cube", "Jason Shaw", R.drawable.image396168,                 Uri.parse("https://codeskulptor-demos.commondatastorage.googleapis.com/descent/background%20music.mp3"), (3 * 60 + 44) * 1000, false),
-            new Track(2,"MC Ballad S Early Eighties", "Frank Nora", R.drawable.image533998, Uri.parse("https://commondatastorage.googleapis.com/codeskulptor-assets/sounddogs/soundtrack.mp3"), (2 * 60 + 50) * 1000, false),
-            new Track(3,"Folk Song", "Brian Boyko", R.drawable.image544064,                 Uri.parse("https://commondatastorage.googleapis.com/codeskulptor-demos/riceracer_assets/music/lose.ogg"), (3 * 60 + 5) * 1000, false),
-            new Track(4,"Morning Snowflake", "Kevin MacLeod", R.drawable.image208815,       Uri.parse("https://commondatastorage.googleapis.com/codeskulptor-demos/riceracer_assets/music/race1.ogg"), (2 * 60 + 0) * 1000, false),
-    };
+    public void setData(File file) {
+        data = new Track[1];
+
+        data[0] =    new Track(0,"Triangle",
+                "Jason Shaw",
+                R.drawable.image266680,
+                Uri.fromFile(file),
+                (3 * 60 + 41) * 1000,false);
+
+        updateTracksLive();
+    }
+
+    private Track[] data = new Track[0];
+//            = {
+//            new Track(0,"Triangle",
+//                    "Jason Shaw",
+//                    R.drawable.image266680,
+//                    Uri.fromFile(new File(Environment.getExternalStorageDirectory().getAbsolutePath() +
+//                            "/Music/Moonspell/Studio and Compilation/1995-Wolfheart (Original 1CD Release)/02 Love Crimes.mp3")),
+//                    (3 * 60 + 41) * 1000,false),
+//            new Track(1,"Rubix Cube", "Jason Shaw", R.drawable.image396168,                 Uri.parse("https://codeskulptor-demos.commondatastorage.googleapis.com/descent/background%20music.mp3"), (3 * 60 + 44) * 1000, false),
+//            new Track(2,"MC Ballad S Early Eighties", "Frank Nora", R.drawable.image533998, Uri.parse("https://commondatastorage.googleapis.com/codeskulptor-assets/sounddogs/soundtrack.mp3"), (2 * 60 + 50) * 1000, false),
+//            new Track(3,"Folk Song", "Brian Boyko", R.drawable.image544064,                 Uri.parse("https://commondatastorage.googleapis.com/codeskulptor-demos/riceracer_assets/music/lose.ogg"), (3 * 60 + 5) * 1000, false),
+//            new Track(4,"Morning Snowflake", "Kevin MacLeod", R.drawable.image208815,       Uri.parse("https://commondatastorage.googleapis.com/codeskulptor-demos/riceracer_assets/music/race1.ogg"), (2 * 60 + 0) * 1000, false),
+//    };
 
     public MutableLiveData<List<Track>> tracks = new  MutableLiveData<>(Arrays.asList(data));
 
     private final int maxIndex = tracks.getValue().size() - 1;
     private int currentItemIndex = 0;
+
+    void updateTracksLive () {
+        tracks = new MutableLiveData<>(Arrays.asList(data));
+    }
 
     Track getNext() {
         if (currentItemIndex == maxIndex)
