@@ -14,12 +14,21 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import stas.batura.musicproject.musicservice.MusicRepository
 import stas.batura.musicproject.musicservice.MusicService
+import stas.batura.musicproject.repository.Repository
+import stas.batura.musicproject.repository.room.TrackKot
 import stas.batura.musicproject.repository.room.TracksDao
 
 class MainAcivityViewModel (private val application: Application,
                             private val database:TracksDao) : ViewModel(  ) {
 
+    // music repository
     private val musicRepository : MusicRepository = MusicRepository.getInstance()
+
+    // database repository
+    private val repository : Repository = Repository(database)
+
+    //
+    private val trackDbLive = repository.getAllTracks()
 
     private var playerServiceBinder: MusicService.PlayerServiceBinder? = null
     private var mediaController: MediaControllerCompat? = null
@@ -108,6 +117,13 @@ class MainAcivityViewModel (private val application: Application,
     }
 
     /**
+     * добавляем трек в базу данных
+     */
+    fun addTrackToDb(trackKot: TrackKot) {
+        repository.insertTrack(trackKot)
+    }
+
+    /**
      * фабрика для создания модели
      */
     class Factory(
@@ -123,5 +139,7 @@ class MainAcivityViewModel (private val application: Application,
             throw IllegalArgumentException("Unknown ViewModel class")
         }
     }
+
+
 
 }

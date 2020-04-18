@@ -1,7 +1,10 @@
 package stas.batura.musicproject.repository.room
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.room.Dao
+import androidx.room.Insert
+import androidx.room.Query
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -27,5 +30,9 @@ abstract class TracksDao {
     private val ioScope = CoroutineScope(Dispatchers.IO + repositoryJob)
 
 
+    @Insert
+    abstract fun insertTrack(trackKot: TrackKot)
 
+    @Query ("SELECT * FROM tracks_table ORDER BY id")
+    abstract fun getAllTracks() : LiveData<List<TrackKot>>
 }
