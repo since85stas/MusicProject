@@ -4,6 +4,7 @@ import android.app.Application
 import android.content.ComponentName
 import android.content.ServiceConnection
 import android.net.Uri
+import android.os.Environment
 import android.os.IBinder
 import android.os.RemoteException
 import android.support.v4.media.session.MediaControllerCompat
@@ -17,12 +18,13 @@ import stas.batura.musicproject.musicservice.MusicService
 import stas.batura.musicproject.repository.Repository
 import stas.batura.musicproject.repository.room.TrackKot
 import stas.batura.musicproject.repository.room.TracksDao
+import java.io.File
 
 class MainAcivityViewModel (private val application: Application,
                             private val database:TracksDao) : ViewModel(  ) {
 
     // music repository
-    private val musicRepository : MusicRepository = MusicRepository.getInstance()
+    private val musicRepository : MusicRepository = MusicRepository.getInstance(application)
 
     // database repository
     private val repository : Repository = Repository(database)
@@ -43,8 +45,19 @@ class MainAcivityViewModel (private val application: Application,
 
     init {
         println("init main view model")
-        print("Repo is $musicRepository")
+//        print("Repo is $musicRepository")
 //        initMusicService()
+        val trackKot = TrackKot(0,"Triangle",
+                    "Jason Shaw",
+                    R.drawable.image266680,
+                    Uri.fromFile(
+                        File(
+                            Environment.getExternalStorageDirectory().getAbsolutePath() +
+                            "/Music/Moonspell/Studio and Compilation/1995-Wolfheart (Original 1CD Release)/02 Love Crimes.mp3")
+                    ),
+                    (3 * 60 + 41) * 1000)
+
+        repository.insertTrack(trackKot)
     }
 
     fun checkServiseCreation() {

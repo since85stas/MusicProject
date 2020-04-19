@@ -69,6 +69,12 @@ class PlaylistFragment : Fragment (), DialogSelectionListener {
             layoutManager = LinearLayoutManager(parentFragment!!.requireContext())
         }
 
+        playlistViewModel.musicRepository.tracksDb.observe(viewLifecycleOwner, Observer {
+            if (it != null) {
+                print(" tt")
+            }
+        })
+
         // test
         val properties = DialogProperties()
         properties.selection_mode = DialogConfigs.MULTI_MODE;
@@ -81,7 +87,7 @@ class PlaylistFragment : Fragment (), DialogSelectionListener {
         val dialog = FilePickerDialog(activity, properties)
         dialog.setTitle("Select a File")
         dialog.setDialogSelectionListener (this)
-        dialog.show()
+//        dialog.show()
 
         super.onViewCreated(view, savedInstanceState)
     }
@@ -90,6 +96,6 @@ class PlaylistFragment : Fragment (), DialogSelectionListener {
         print("test select")
 //        val songsManager = SongsManager(files!![0]);
 //        val list = songsManager.playList
-        MusicRepository.getInstance().setData(File(files!![0]))
+        MusicRepository.getInstance(requireActivity().application).setData(File(files!![0]))
     }
 }

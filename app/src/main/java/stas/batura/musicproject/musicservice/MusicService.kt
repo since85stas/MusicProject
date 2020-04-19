@@ -64,7 +64,7 @@ class MusicService (): Service () {
     private var extractorsFactory: ExtractorsFactory? = null
     private var dataSourceFactory: DataSource.Factory? = null
 
-    val musicRepository: MusicRepository = MusicRepository.getInstance()
+    val musicRepository: MusicRepository = MusicRepository.getInstance(application)
 
 
     var fileDataSource : DataSource? = null

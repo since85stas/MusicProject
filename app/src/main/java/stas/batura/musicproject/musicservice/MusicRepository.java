@@ -1,5 +1,6 @@
 package stas.batura.musicproject.musicservice;
 
+import android.app.Application;
 import android.net.Uri;
 import android.os.Environment;
 
@@ -13,23 +14,32 @@ import java.util.Objects;
 import java.io.File;
 
 import stas.batura.musicproject.R;
+import stas.batura.musicproject.repository.Repository;
+import stas.batura.musicproject.repository.room.TrackKot;
+import stas.batura.musicproject.repository.room.TracksDao;
+import stas.batura.musicproject.repository.room.TracksDatabase;
 
 //https://simpleguics2pygame.readthedocs.io/en/latest/_static/links/snd_links.html
 public final class MusicRepository {
 
     private static MusicRepository instance;
 
-    public static MusicRepository getInstance () {
+    private Repository repository;
+
+    public static MusicRepository getInstance(Application contex) {
         if (instance == null) {
-            instance = new MusicRepository();
+            instance = new MusicRepository(contex);
             return instance;
         } else {
+
             return instance;
         }
     }
 
-    private MusicRepository (  ) {
-
+    private MusicRepository(Application contex ) {
+        TracksDao tracksDao = TracksDatabase.Companion.getInstance(contex).getTracksDatabaseDao();
+        repository = new Repository(tracksDao);
+        tracksDb = repository.getAllTracks();
     }
 
     public void setData(File file) {
@@ -59,6 +69,8 @@ public final class MusicRepository {
 //    };
 
     public MutableLiveData<List<Track>> tracks = new  MutableLiveData<>(Arrays.asList(data));
+
+    public LiveData<List<TrackKot>> tracksDb;
 
     private final int maxIndex = tracks.getValue().size() - 1;
     private int currentItemIndex = 0;
