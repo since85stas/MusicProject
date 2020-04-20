@@ -69,11 +69,11 @@ class PlaylistFragment : Fragment (), DialogSelectionListener {
             layoutManager = LinearLayoutManager(parentFragment!!.requireContext())
         }
 
-        playlistViewModel.musicRepository.tracksDb.observe(viewLifecycleOwner, Observer {
-            if (it != null) {
-                print(" tt")
-            }
-        })
+//        playlistViewModel.musicRepository.tracksDb.observe(viewLifecycleOwner, Observer {
+//            if (it != null) {
+//                print(" tt")
+//            }
+//        })
 
         // test
         val properties = DialogProperties()
@@ -96,6 +96,6 @@ class PlaylistFragment : Fragment (), DialogSelectionListener {
         print("test select")
 //        val songsManager = SongsManager(files!![0]);
 //        val list = songsManager.playList
-        MusicRepository.getInstance(requireActivity().application).setData(File(files!![0]))
+//        MusicRepository.getInstance(requireActivity().application).setData(File(files!![0]))
     }
 }

@@ -7,12 +7,18 @@ import android.os.Environment;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 import java.io.File;
 
+import kotlin.coroutines.CoroutineContext;
+import kotlinx.coroutines.CoroutineScope;
+import kotlinx.coroutines.Dispatchers;
+import kotlinx.coroutines.Job;
 import stas.batura.musicproject.R;
 import stas.batura.musicproject.repository.Repository;
 import stas.batura.musicproject.repository.room.TrackKot;
@@ -39,20 +45,23 @@ public final class MusicRepository {
     private MusicRepository(Application contex ) {
         TracksDao tracksDao = TracksDatabase.Companion.getInstance(contex).getTracksDatabaseDao();
         repository = new Repository(tracksDao);
+
         tracksDb = repository.getAllTracks();
+        updateTracksLive(tracksDb);
+        System.out.println("end repos creat");
     }
 
-    public void setData(File file) {
-        data = new Track[1];
-
-        data[0] =    new Track(0,"Triangle",
-                "Jason Shaw",
-                R.drawable.image266680,
-                Uri.fromFile(file),
-                (3 * 60 + 41) * 1000,false);
-
-        updateTracksLive();
-    }
+//    public void setData(File file) {
+//        data = new Track[1];
+//
+//        data[0] =    new Track(0,"Triangle",
+//                "Jason Shaw",
+//                R.drawable.image266680,
+//                Uri.fromFile(file),
+//                (3 * 60 + 41) * 1000,false);
+//
+//        updateTracksLive();
+//    }
 
     private Track[] data = new Track[0];
 //            = {
@@ -68,15 +77,24 @@ public final class MusicRepository {
 //            new Track(4,"Morning Snowflake", "Kevin MacLeod", R.drawable.image208815,       Uri.parse("https://commondatastorage.googleapis.com/codeskulptor-demos/riceracer_assets/music/race1.ogg"), (2 * 60 + 0) * 1000, false),
 //    };
 
-    public MutableLiveData<List<Track>> tracks = new  MutableLiveData<>(Arrays.asList(data));
+    public MutableLiveData<List<Track>> tracks = new  MutableLiveData<>();
 
-    public LiveData<List<TrackKot>> tracksDb;
+    public List<TrackKot> tracksDb;
 
-    private final int maxIndex = tracks.getValue().size() - 1;
+//    private final int maxIndex = tracks.getValue().size() - 1;
+    private int maxIndex = 20;
     private int currentItemIndex = 0;
 
-    void updateTracksLive () {
-        tracks = new MutableLiveData<>(Arrays.asList(data));
+    void updateTracksLive (List<TrackKot> trackKotList) {
+
+        List<Track> tacksRep = new ArrayList<>();
+        for (int i = 0; i < trackKotList.size(); i++) {
+            Track track = new Track(trackKotList.get(i));
+            tacksRep.add(track );
+        }
+
+        tracks = new MutableLiveData<>(tacksRep);
+        maxIndex = tacksRep.size();
     }
 
     Track getNext() {
@@ -160,6 +178,16 @@ public final class MusicRepository {
             this.uri = uri;
             this.duration = duration;
             this.isPlaying = is;
+        }
+
+        Track(TrackKot trackKot) {
+            this.trackId = trackKot.getTrackId();
+            this.title = trackKot.getTitle();
+            this.artist = trackKot.getArtist();
+            this.bitmapResId = trackKot.getBitmapResId();
+            this.uri = trackKot.getUri();
+            this.duration = trackKot.getDuration();
+            this.isPlaying = false;
         }
 
         String getTitle() {

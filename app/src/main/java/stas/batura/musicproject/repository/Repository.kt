@@ -2,10 +2,7 @@ package stas.batura.musicproject.repository
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 import stas.batura.musicproject.repository.room.TrackKot
 import stas.batura.musicproject.repository.room.TracksDao
 
@@ -40,8 +37,14 @@ class Repository (private val dataSource : TracksDao) : TracksDao() {
     /**
      * получаем список все треков
     */
-    override fun getAllTracks(): LiveData<List<TrackKot>> {
-        return dataSource.getAllTracks()
+    override fun getAllTracks(): List<TrackKot>? {
+        var result : List<TrackKot>? = null
+            runBlocking {
+                ioScope.async {
+                    result = dataSource.getAllTracks()
+                }.await()
+            }
+        return result
     }
 
 

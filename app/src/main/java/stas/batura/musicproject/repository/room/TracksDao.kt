@@ -19,5 +19,5 @@ abstract class TracksDao {
     abstract fun insertTrack(trackKot: TrackKot)
 
     @Query ("SELECT * FROM tracks_table ORDER BY id")
-    abstract fun getAllTracks() : LiveData<List<TrackKot>>
+    abstract fun getAllTracks() : List<TrackKot>?
 }
