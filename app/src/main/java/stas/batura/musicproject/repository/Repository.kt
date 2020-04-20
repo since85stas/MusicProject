@@ -35,6 +35,15 @@ class Repository (private val dataSource : TracksDao) : TracksDao() {
     }
 
     /**
+     * сохраняем список треков
+     */
+    fun insertTracks(tracks: List<TrackKot>) {
+            for (track:TrackKot in tracks) {
+                insertTrack(track)
+            }
+    }
+
+    /**
      * получаем список все треков
     */
     override fun getAllTracks(): List<TrackKot>? {
@@ -47,5 +56,12 @@ class Repository (private val dataSource : TracksDao) : TracksDao() {
         return result
     }
 
-
+    /**
+     * удаляем все трэки из плэйлиста
+     */
+    override fun deleteTracksInPlayList() {
+        ioScope.launch {
+            dataSource.deleteTracksInPlayList()
+        }
+    }
 }

@@ -2,6 +2,7 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
 
     <data>
+
         <variable
             name="mainViewModel"
             type="stas.batura.musicproject.MainAcivityViewModel" />
@@ -12,22 +13,42 @@
 
     </data>
 
-    <LinearLayout
-        android:orientation="vertical"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/playlist_recycle_view"
+        >
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="add"
-            android:layout_gravity="center"
-            android:onClick="@{() -> playlistViewModel.addTrack()}"/>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/playlist_recycle_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
 
-    </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:onClick="@{() -> playlistViewModel.addButtonClicked()}"
+                    android:text="add" />
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:onClick="@{() -> playlistViewModel.deleteButtonclicked()}"
+                    android:text="delete" />
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
 </layout>

@@ -39,7 +39,7 @@ class MainAcivityViewModel (private val application: Application,
 
     val callbackChanges : MutableLiveData<PlaybackStateCompat?> = MutableLiveData(null)
 
-    private var _createServiceListner : MutableLiveData<Boolean> = MutableLiveData()
+    private var _createServiceListner : MutableLiveData<Boolean> = MutableLiveData(false)
     val createServiceListner : LiveData<Boolean>
         get() = _createServiceListner
 
@@ -49,6 +49,7 @@ class MainAcivityViewModel (private val application: Application,
 //        initMusicService()
         val trackKot = TrackKot(0,"Triangle",
                     "Jason Shaw",
+                    "album",
                     R.drawable.image266680,
                     Uri.fromFile(
                         File(
@@ -57,8 +58,13 @@ class MainAcivityViewModel (private val application: Application,
                     ),
                     (3 * 60 + 41) * 1000)
 
-        repository.insertTrack(trackKot)
+//        repository.insertTrack(trackKot)
+
+        // создаем сервис
+        checkServiseCreation()
     }
+
+
 
     fun checkServiseCreation() {
         _createServiceListner.value = true

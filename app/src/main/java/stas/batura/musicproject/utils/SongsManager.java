@@ -1,44 +1,74 @@
 package stas.batura.musicproject.utils;
 
+import android.net.Uri;
+import android.os.Environment;
+
 import java.io.File;
 import java.io.FilenameFilter;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+
+import stas.batura.musicproject.R;
+import stas.batura.musicproject.repository.room.TrackKot;
 
 public class SongsManager {
     // SDCard Path
     final String MEDIA_PATH;
-    private ArrayList<HashMap<String, String>> songsList = new ArrayList<HashMap<String, String>>();
+
+    //    /mnt/sdcard/Music/red elvises/The Best of Kick-Ass
 
     // Constructor
-    public SongsManager(String string){
+    public SongsManager(String string) {
         MEDIA_PATH = string;
+    }
+
+    public SongsManager() {
+        MEDIA_PATH = "/mnt/sdcard/Music/red elvises/The Best of Kick-Ass";
     }
 
     /**
      * Function to read all mp3 files from sdcard
      * and store the details in ArrayList
-     * */
-    public ArrayList<HashMap<String, String>> getPlayList(){
+     */
+    public List<TrackKot> getPlayList() {
         File home = new File(MEDIA_PATH);
 
-        if (home.listFiles(new FileExtensionFilter()).length > 0) {
-            for (File file : home.listFiles(new FileExtensionFilter())) {
-                HashMap<String, String> song = new HashMap<String, String>();
-                song.put("songTitle", file.getName().substring(0, (file.getName().length() - 4)));
-                song.put("songPath", file.getPath());
+        File[] files = home.listFiles(new FileExtensionFilter());
+
+        List<TrackKot> trackKot = new ArrayList<>();
+        if (files.length > 0) {
+            for (File file : files) {
+                String fileStr = file.toString();
+                String title = file.getName().substring(0, (file.getName().length() - 4));
+                String[] pathArray = file.toString().split("/");
+                String album = pathArray[pathArray.length - 2];
+                String artist = pathArray[pathArray.length - 3];
+                int pos = fileStr.indexOf("sdcard/");
+                String localPath = fileStr.substring(pos + "sdcard/".length());
+                Uri uri = Uri.fromFile(new File(
+                                Environment.getExternalStorageDirectory().getAbsolutePath() +
+                                        localPath));
+
+                TrackKot rackKot  = new TrackKot(0,
+                        title,
+                        artist,
+                        album,
+                        R.drawable.image266680,
+                        uri,
+                        (3 * 60 + 41) * 1000);
+                trackKot.add(rackKot);
 
                 // Adding each song to SongList
-                songsList.add(song);
             }
         }
         // return songs list array
-        return songsList;
+        return trackKot;
     }
 
     /**
      * Class to filter files which are having .mp3 extension
-     * */
+     */
     static class FileExtensionFilter implements FilenameFilter {
         public boolean accept(File dir, String name) {
             return (name.endsWith(".mp3") || name.endsWith(".MP3"));

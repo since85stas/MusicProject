@@ -1,6 +1,7 @@
 package stas.batura.musicproject.repository.room
 
 import android.net.Uri
+import androidx.annotation.ColorInt
 import androidx.room.*
 
 @Entity (tableName = "tracks_table")
@@ -14,9 +15,11 @@ data class TrackKot (
     @ColumnInfo(name = "artist")
     var artist: String = "artist",
 
+    @ColumnInfo(name = "album")
+    var album: String = "album",
+
     @ColumnInfo(name = "bitmap_res_id")
     var bitmapResId : Int = 0,
-
 
     @ColumnInfo(name = "uri")
     var uri: Uri? = null,

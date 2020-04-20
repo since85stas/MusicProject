@@ -42,6 +42,11 @@ public final class MusicRepository {
         }
     }
 
+    public static MusicRepository recreateMusicRepository(Application contex) {
+        instance = null;
+        return getInstance(contex);
+    }
+
     private MusicRepository(Application contex ) {
         TracksDao tracksDao = TracksDatabase.Companion.getInstance(contex).getTracksDatabaseDao();
         repository = new Repository(tracksDao);
@@ -144,7 +149,7 @@ public final class MusicRepository {
     public void addTrack () {
         try {
             List<Track> newList = new ArrayList<>(Arrays.asList(data));
-            newList.add(new Track(0, "Triangle", "Jason Shaw", R.drawable.image266680, Uri.parse("https://codeskulptor-demos.commondatastorage.googleapis.com/pang/paza-moduless.mp3"), (3 * 60 + 41) * 1000, false));
+            newList.add(new Track(0, "Triangle", "Jason Shaw", "album" ,R.drawable.image266680, Uri.parse("https://codeskulptor-demos.commondatastorage.googleapis.com/pang/paza-moduless.mp3"), (3 * 60 + 41) * 1000, false));
             tracks.setValue(newList);
         } catch (Exception e) {
             System.out.println(" E " + e);
@@ -165,15 +170,17 @@ public final class MusicRepository {
         public int trackId;
         public String title;
         private String artist;
+        public String album;
         private int bitmapResId;
         public Uri uri;
         private long duration; // in ms
         public boolean isPlaying;
 
-        Track(int id, String title, String artist, int bitmapResId, Uri uri, long duration, boolean is) {
+        Track(int id, String title, String artist,String album, int bitmapResId, Uri uri, long duration, boolean is) {
             this.trackId = id;
             this.title = title;
             this.artist = artist;
+            this.album = album;
             this.bitmapResId = bitmapResId;
             this.uri = uri;
             this.duration = duration;
@@ -184,6 +191,7 @@ public final class MusicRepository {
             this.trackId = trackKot.getTrackId();
             this.title = trackKot.getTitle();
             this.artist = trackKot.getArtist();
+            this.album = trackKot.getAlbum();
             this.bitmapResId = trackKot.getBitmapResId();
             this.uri = trackKot.getUri();
             this.duration = trackKot.getDuration();

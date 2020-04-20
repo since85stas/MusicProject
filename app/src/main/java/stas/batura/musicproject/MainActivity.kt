@@ -18,6 +18,7 @@ import stas.batura.musicproject.musicservice.MusicService
 import stas.batura.musicproject.repository.room.TracksDao
 import stas.batura.musicproject.repository.room.TracksDatabase
 import stas.batura.musicproject.utils.InjectorUtils
+import stas.batura.musicproject.utils.SongsManager
 import java.io.File
 
 
@@ -55,7 +56,14 @@ class MainActivity : AppCompatActivity() {
                 createMusicService()
             }
         })
+
+        val songsManager = SongsManager();
+        val playlist = songsManager.playList
+
+        createMusicService()
     }
+
+
 
     private fun createMusicService() {
         // инициализируем муз сервис
