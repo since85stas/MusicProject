@@ -66,6 +66,7 @@ class PlaylistViewModel ( val application: Application, val tracksDao: TracksDao
         val songsManager = SongsManager(pathStr);
         val songs = songsManager.playList
         repository.insertTracks(songs)
+        musicRepository = MusicRepository.recreateMusicRepository(application)
     }
 
     /**

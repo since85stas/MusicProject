@@ -33,9 +33,11 @@ class MainAcivityViewModel (private val application: Application,
     private val trackDbLive = repository.getAllTracks()
 
     private var playerServiceBinder: MusicService.PlayerServiceBinder? = null
-    private var mediaController: MediaControllerCompat? = null
+    var mediaController: MutableLiveData<MediaControllerCompat?> = MutableLiveData()
     private var callback: MediaControllerCompat.Callback? = null
-    var serviceConnection: ServiceConnection? = null
+    var serviceConnection: MutableLiveData<ServiceConnection?> = MutableLiveData()
+
+//    private var  LiveData<>
 
     val callbackChanges : MutableLiveData<PlaybackStateCompat?> = MutableLiveData(null)
 
@@ -61,11 +63,13 @@ class MainAcivityViewModel (private val application: Application,
 //        repository.insertTrack(trackKot)
 
         // создаем сервис
-        checkServiseCreation()
+//        checkServiseCreation()
     }
 
 
-
+    /**
+     * запускает создание сервиса
+     */
     fun checkServiseCreation() {
         _createServiceListner.value = true
         _createServiceListner.value = false
@@ -75,7 +79,7 @@ class MainAcivityViewModel (private val application: Application,
      * создает музыкальный сервис и его контроллер
      */
     fun initMusicService(isRecreate : Boolean) {
-        if (serviceConnection == null || isRecreate) {
+        if (serviceConnection.value == null || isRecreate) {
             // привязываем колбека и лайв дэйта
             callback = object : MediaControllerCompat.Callback() {
                 override fun onPlaybackStateChanged(state: PlaybackStateCompat?) {
@@ -84,26 +88,26 @@ class MainAcivityViewModel (private val application: Application,
             }
 
             // соединение с сервисом
-            serviceConnection = object : ServiceConnection {
+            serviceConnection.value = object : ServiceConnection {
                 override fun onServiceConnected(name: ComponentName, service: IBinder) {
                     playerServiceBinder = service as MusicService.PlayerServiceBinder
                     try {
-                        mediaController = MediaControllerCompat(
+                        mediaController.value = MediaControllerCompat(
                             application,
                             playerServiceBinder!!.getMediaSessionToke()
                         )
-                        mediaController!!.registerCallback(callback!!)
-                        callback!!.onPlaybackStateChanged(mediaController!!.playbackState)
+                        mediaController!!.value!!.registerCallback(callback!!)
+                        callback!!.onPlaybackStateChanged(mediaController!!.value!!.playbackState)
                     } catch (e: RemoteException) {
-                        mediaController = null
+                        mediaController.value = null
                     }
                 }
 
                 override fun onServiceDisconnected(name: ComponentName) {
                     playerServiceBinder = null
                     if (mediaController != null) {
-                        mediaController!!.unregisterCallback(callback!!)
-                        mediaController = null
+                        mediaController!!.value!!.unregisterCallback(callback!!)
+                        mediaController.value = null
                     }
                 }
             }
@@ -112,27 +116,27 @@ class MainAcivityViewModel (private val application: Application,
 
 
     fun playClicked () {
-        if (mediaController != null) mediaController!!.transportControls.play()
+        if (mediaController != null) mediaController!!.value!!.transportControls.play()
     }
 
     fun pauseyClicked () {
-        if (mediaController != null) mediaController!!.transportControls.pause()
+        if (mediaController != null) mediaController!!.value!!.transportControls.pause()
     }
 
     fun stopClicked () {
-        if (mediaController != null) mediaController!!.transportControls.stop()
+        if (mediaController != null) mediaController!!.value!!.transportControls.stop()
     }
 
     fun nextClicked () {
-        if (mediaController != null) mediaController!!.transportControls.skipToNext()
+        if (mediaController != null) mediaController!!.value!!.transportControls.skipToNext()
     }
 
     fun prevClicked () {
-        if (mediaController != null) mediaController!!.transportControls.skipToPrevious()
+        if (mediaController != null) mediaController!!.value!!.transportControls.skipToPrevious()
     }
 
     fun onItemClicked (uri: Uri) {
-        if (mediaController != null) mediaController!!.transportControls.playFromUri(uri, null)
+        if (mediaController != null) mediaController!!.value!!.transportControls.playFromUri(uri, null)
     }
 
     /**

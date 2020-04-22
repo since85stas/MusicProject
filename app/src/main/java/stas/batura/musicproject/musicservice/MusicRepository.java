@@ -140,7 +140,7 @@ public final class MusicRepository {
     private int getIndexByUri (Uri uri) {
         for (int i = 0; i < tracks.getValue().size(); i++) {
             if (tracks.getValue().get(i).uri.equals(uri)) {
-                return tracks.getValue().get(i).trackId;
+                return i;
             }
         }
         return 0;

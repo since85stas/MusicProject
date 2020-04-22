@@ -84,14 +84,17 @@ class PlaylistFragment : Fragment (), DialogSelectionListener {
         super.onViewCreated(view, savedInstanceState)
     }
 
+    /**
+     * после выборв директории
+     */
     override fun onSelectedFilePaths(files: Array<out String>?) {
         print("test select")
         playlistViewModel.addTracksToPlaylist(files!![0])
-//        val songsManager = SongsManager();
-//        val list = songsManager.playList
-//        MusicRepository.getInstance(requireActivity().application).setData(File(files!![0]))
     }
 
+    /**
+     * создаем диалог для выбора директории
+     */
     private fun openFileSelectDialog() {
         // test
         val properties = DialogProperties()
@@ -107,4 +110,6 @@ class PlaylistFragment : Fragment (), DialogSelectionListener {
         dialog.setDialogSelectionListener (this)
         dialog.show()
     }
+
+
 }

@@ -47,7 +47,7 @@ class ControlFragment () : Fragment() {
 
         play_button.setOnClickListener {
             mainViewModel.checkServiseCreation()
-            mainViewModel.playClicked()
+//            mainViewModel.playClicked()
         }
         pause_button.setOnClickListener {mainViewModel.pauseyClicked()}
         stop_button.setOnClickListener {mainViewModel.stopClicked()}

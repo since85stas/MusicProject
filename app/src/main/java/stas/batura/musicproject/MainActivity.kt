@@ -57,31 +57,39 @@ class MainActivity : AppCompatActivity() {
             }
         })
 
+        mainViewModel.serviceConnection.observe(this, Observer {
+            if (it != null) {
+                print("service created")
+//                mainViewModel.playClicked()
+            }
+        })
+
+        mainViewModel.mediaController.observe(this, Observer {
+            if (it != null) {
+                mainViewModel.playClicked()
+            }
+        })
+
         val songsManager = SongsManager();
         val playlist = songsManager.playList
 
-        createMusicService()
+//        createMusicService()
     }
 
 
-
+    /**
+     * создаем и привязываем сервис
+     */
     private fun createMusicService() {
         // инициализируем муз сервис
         mainViewModel.initMusicService(false)
 
         // привязываем сервис к активити
         bindService(Intent(applicationContext!!, MusicService::class.java),
-            mainViewModel.serviceConnection!!,
+            mainViewModel.serviceConnection!!.value!!,
             Context.BIND_AUTO_CREATE)
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-
-        when (requestCode) {
-            9999 -> Log.i("Test", "Result URI " + data!!.data)
-        }
-    }
 
     override fun onPause() {
         println("main activity pause")
@@ -93,14 +101,23 @@ class MainActivity : AppCompatActivity() {
         super.onStop()
     }
 
+    /**
+     * навигация в фрагмент с плейлистом
+     */
     private fun navigateToLeft () {
         navContr.navigate(R.id.playlistFragment)
     }
 
+    /**
+     * навигация с фрагментом с управлением
+     */
     private fun navigateToRight () {
         navContr.navigate(R.id.controlFragment)
     }
 
+    /**
+     * проверяем слайд вправо и влево
+     */
     override fun onTouchEvent(event: MotionEvent?): Boolean {
 
         val myAction: Int = MotionEventCompat.getActionMasked(event)

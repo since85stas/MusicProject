@@ -37,7 +37,7 @@ public class SongsManager {
         File[] files = home.listFiles(new FileExtensionFilter());
 
         List<TrackKot> trackKot = new ArrayList<>();
-        if (files.length > 0) {
+        if ( files != null && files.length > 0) {
             for (File file : files) {
                 String fileStr = file.toString();
                 String title = file.getName().substring(0, (file.getName().length() - 4));
@@ -48,7 +48,7 @@ public class SongsManager {
                 String localPath = fileStr.substring(pos + "sdcard/".length());
                 Uri uri = Uri.fromFile(new File(
                                 Environment.getExternalStorageDirectory().getAbsolutePath() +
-                                        localPath));
+                                       "/" + localPath));
 
                 TrackKot rackKot  = new TrackKot(0,
                         title,

@@ -66,7 +66,6 @@ class MusicService (): Service () {
 
     val musicRepository: MusicRepository = MusicRepository.getInstance(application)
 
-
     var fileDataSource : DataSource? = null
 
     override fun onCreate() {
