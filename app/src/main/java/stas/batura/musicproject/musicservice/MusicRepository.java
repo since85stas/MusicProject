@@ -99,7 +99,7 @@ public final class MusicRepository {
         }
 
         tracks = new MutableLiveData<>(tacksRep);
-        maxIndex = tacksRep.size();
+        maxIndex = tacksRep.size()-1;
     }
 
     Track getNext() {
@@ -132,8 +132,8 @@ public final class MusicRepository {
     }
 
     Track getCurrent() {
-        setIsPlaying();
-        return tracks.getValue().get(currentItemIndex);
+            setIsPlaying();
+            return tracks.getValue().get(currentItemIndex);
     }
 
     // получаем номер по uri

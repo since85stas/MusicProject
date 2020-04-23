@@ -46,13 +46,26 @@ class ControlFragment () : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
 
         play_button.setOnClickListener {
-            mainViewModel.checkServiseCreation()
+            if (mainViewModel.musicRepository.tracks.value!!.size > 0)
+                mainViewModel.checkServiseCreation()
 //            mainViewModel.playClicked()
         }
-        pause_button.setOnClickListener {mainViewModel.pauseyClicked()}
-        stop_button.setOnClickListener {mainViewModel.stopClicked()}
-        skip_to_previous_button.setOnClickListener{mainViewModel.prevClicked()}
-        skip_to_next_button.setOnClickListener{mainViewModel.nextClicked()}
+        pause_button.setOnClickListener {
+            if (mainViewModel.musicRepository.tracks.value!!.size > 0)
+                mainViewModel.pauseyClicked()
+        }
+        stop_button.setOnClickListener {
+            if (mainViewModel.musicRepository.tracks.value!!.size > 0)
+                mainViewModel.stopClicked()
+        }
+        skip_to_previous_button.setOnClickListener{
+            if (mainViewModel.musicRepository.tracks.value!!.size > 0)
+                mainViewModel.prevClicked()
+        }
+        skip_to_next_button.setOnClickListener{
+            if (mainViewModel.musicRepository.tracks.value!!.size > 0)
+            mainViewModel.nextClicked()
+        }
 
         // наблюдаем за нажатием кнопок
         mainViewModel.callbackChanges.observe(viewLifecycleOwner, Observer {

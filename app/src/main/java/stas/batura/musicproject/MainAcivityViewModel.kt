@@ -24,7 +24,7 @@ class MainAcivityViewModel (private val application: Application,
                             private val database:TracksDao) : ViewModel(  ) {
 
     // music repository
-    private val musicRepository : MusicRepository = MusicRepository.getInstance(application)
+    val musicRepository : MusicRepository = MusicRepository.getInstance(application)
 
     // database repository
     private val repository : Repository = Repository(database)
@@ -116,27 +116,27 @@ class MainAcivityViewModel (private val application: Application,
 
 
     fun playClicked () {
-        if (mediaController != null) mediaController!!.value!!.transportControls.play()
+        if (mediaController.value != null) mediaController.value!!.transportControls.play()
     }
 
     fun pauseyClicked () {
-        if (mediaController != null) mediaController!!.value!!.transportControls.pause()
+        if (mediaController.value != null) mediaController.value!!.transportControls.pause()
     }
 
     fun stopClicked () {
-        if (mediaController != null) mediaController!!.value!!.transportControls.stop()
+        if (mediaController.value != null) mediaController.value!!.transportControls.stop()
     }
 
     fun nextClicked () {
-        if (mediaController != null) mediaController!!.value!!.transportControls.skipToNext()
+        if (mediaController.value != null) mediaController.value!!.transportControls.skipToNext()
     }
 
     fun prevClicked () {
-        if (mediaController != null) mediaController!!.value!!.transportControls.skipToPrevious()
+        if (mediaController.value != null) mediaController.value!!.transportControls.skipToPrevious()
     }
 
     fun onItemClicked (uri: Uri) {
-        if (mediaController != null) mediaController!!.value!!.transportControls.playFromUri(uri, null)
+        if (mediaController.value != null) mediaController.value!!.transportControls.playFromUri(uri, null)
     }
 
     /**

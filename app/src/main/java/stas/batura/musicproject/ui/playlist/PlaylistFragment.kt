@@ -66,7 +66,7 @@ class PlaylistFragment : Fragment (), DialogSelectionListener {
         })
 
         playlist_recycle_view.apply {
-            layoutManager = LinearLayoutManager(parentFragment!!.requireContext())
+            layoutManager = LinearLayoutManager(activity!!.baseContext)
         }
 
         playlistViewModel.addButtonClicked.observe(viewLifecycleOwner, Observer {
