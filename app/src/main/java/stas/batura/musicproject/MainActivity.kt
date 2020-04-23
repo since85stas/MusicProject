@@ -3,26 +3,34 @@ package stas.batura.musicproject
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
-import android.view.MotionEvent
-import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.MotionEventCompat
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
+import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import androidx.navigation.NavController
-import androidx.navigation.Navigation
-import com.developer.filepicker.model.DialogConfigs
-import com.developer.filepicker.model.DialogProperties
-import com.developer.filepicker.view.FilePickerDialog
+import androidx.viewpager2.adapter.FragmentStateAdapter
+import androidx.viewpager2.widget.ViewPager2
 import stas.batura.musicproject.musicservice.MusicService
-import stas.batura.musicproject.repository.room.TracksDao
-import stas.batura.musicproject.repository.room.TracksDatabase
+import stas.batura.musicproject.ui.control.ControlFragment
+import stas.batura.musicproject.ui.playlist.PlaylistFragment
 import stas.batura.musicproject.utils.InjectorUtils
 import stas.batura.musicproject.utils.SongsManager
-import java.io.File
 
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : FragmentActivity() {
+
+    private val NUM_PAGES = 2
+
+    /**
+     * The pager widget, which handles animation and allows swiping horizontally to access previous
+     * and next wizard steps.
+     */
+    private var viewPager: ViewPager2? = null
+
+    /**
+     * The pager adapter, which provides the pages to the view pager widget.
+     */
+    private var pagerAdapter: ScreenSlidePagerAdapter? = null
 
     private var x1   = 0f
     private  var x2  = 0f
@@ -32,7 +40,7 @@ class MainActivity : AppCompatActivity() {
 
     lateinit var  mainViewModel : MainAcivityViewModel
 
-    private lateinit var navContr : NavController
+//    private lateinit var navContr : NavController
 
 //    private lateinit var dataSource : TracksDao
 
@@ -45,7 +53,15 @@ class MainActivity : AppCompatActivity() {
 
 //        dataSource = TracksDatabase.getInstance(this).tracksDatabaseDao
 
-        navContr = Navigation.findNavController(this, R.id.nav_host_fragment)
+        // Instantiate a ViewPager2 and a PagerAdapter.
+        viewPager = findViewById(R.id.pager);
+        pagerAdapter = ScreenSlidePagerAdapter(supportFragmentManager);
+        pagerAdapter!!.addFragment(ControlFragment())
+        pagerAdapter!!.addFragment(PlaylistFragment())
+
+        viewPager!!.orientation = ViewPager2.ORIENTATION_HORIZONTAL
+        viewPager!!.setAdapter(pagerAdapter);
+//        navContr = Navigation.findNavController(this, R.id.nav_host_fragment)
 
         mainViewModel = ViewModelProviders
             .of(this, InjectorUtils.provideMainViewModel(this.application))
@@ -102,54 +118,78 @@ class MainActivity : AppCompatActivity() {
     }
 
     /**
+     * A simple pager adapter that represents 5 ScreenSlidePageFragment objects, in
+     * sequence.
+     */
+    inner final class ScreenSlidePagerAdapter(val fragmentManager: FragmentManager) :
+        FragmentStateAdapter(fragmentManager, this@MainActivity.lifecycle) {
+
+        private val arrayList: ArrayList<Fragment> = ArrayList()
+
+        override fun createFragment(position: Int): Fragment {
+            return arrayList.get(position)
+        }
+
+
+
+        public fun addFragment(fragment: Fragment?) {
+            arrayList.add(fragment!!)
+        }
+
+        override fun getItemCount(): Int {
+            return NUM_PAGES
+        }
+    }
+
+    /**
      * навигация в фрагмент с плейлистом
      */
-    private fun navigateToLeft () {
-        navContr.navigate(R.id.playlistFragment)
-    }
+//    private fun navigateToLeft () {
+//        navContr.navigate(R.id.playlistFragment)
+//    }
 
     /**
      * навигация с фрагментом с управлением
      */
-    private fun navigateToRight () {
-        navContr.navigate(R.id.controlFragment)
-    }
+//    private fun navigateToRight () {
+//        navContr.navigate(R.id.controlFragment)
+//    }
 
     /**
      * проверяем слайд вправо и влево
      */
-    override fun onTouchEvent(event: MotionEvent?): Boolean {
-
-        val myAction: Int = MotionEventCompat.getActionMasked(event)
-
-        return when (myAction) {
-            MotionEvent.ACTION_UP -> {
-                x2 = event!!.x
-                val deltaX = x2 - x1
-                if (Math.abs(deltaX) > MIN_DISTANCE) {
-                    if (deltaX < 0) {
-                        navigateToRight()
-                    } else {
-                        navigateToLeft()
-                    }
-                }
-                true
-            }
-
-            MotionEvent.ACTION_DOWN -> {
-                x1 = event!!.getX()
-                true
-            }
-
-            MotionEvent.ACTION_MOVE -> {
-                true
-            }
-            MotionEvent.ACTION_CANCEL -> {
-                true
-            }
-            else -> super.onTouchEvent(event)
-        }
-    }
+//    override fun onTouchEvent(event: MotionEvent?): Boolean {
+//
+//        val myAction: Int = MotionEventCompat.getActionMasked(event)
+//
+//        return when (myAction) {
+//            MotionEvent.ACTION_UP -> {
+//                x2 = event!!.x
+//                val deltaX = x2 - x1
+//                if (Math.abs(deltaX) > MIN_DISTANCE) {
+//                    if (deltaX < 0) {
+//                        navigateToRight()
+//                    } else {
+//                        navigateToLeft()
+//                    }
+//                }
+//                true
+//            }
+//
+//            MotionEvent.ACTION_DOWN -> {
+//                x1 = event!!.getX()
+//                true
+//            }
+//
+//            MotionEvent.ACTION_MOVE -> {
+//                true
+//            }
+//            MotionEvent.ACTION_CANCEL -> {
+//                true
+//            }
+//            else -> super.onTouchEvent(event)
+//        }
+//    }
 
 
 }
