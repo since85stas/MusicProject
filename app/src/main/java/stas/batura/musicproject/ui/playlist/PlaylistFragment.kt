@@ -1,13 +1,17 @@
 package stas.batura.musicproject.ui.playlist
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.MotionEventCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.developer.filepicker.controller.DialogSelectionListener
 import com.developer.filepicker.model.DialogConfigs
@@ -23,6 +27,12 @@ import stas.batura.musicproject.utils.SongsManager
 import java.io.File
 
 class PlaylistFragment : Fragment (), DialogSelectionListener {
+
+    private var x1   = 0f
+    private  var x2  = 0f
+    val MIN_DISTANCE = 150
+
+//    private val TAG = PlaylistFragment::class.simpleName
 
     private lateinit var playlistViewModel: PlaylistViewModel
 
@@ -49,7 +59,16 @@ class PlaylistFragment : Fragment (), DialogSelectionListener {
 
         bindings.playlistViewModel = playlistViewModel
         bindings.lifecycleOwner = this
-        return bindings.root
+
+        val view = bindings.root
+//        view.setOnTouchListener(View.OnTouchListener { v, event ->
+//            onTouchEvent(event)
+//            true
+//        })
+
+
+
+        return view
     }
 
     /**
@@ -68,12 +87,18 @@ class PlaylistFragment : Fragment (), DialogSelectionListener {
         playlist_recycle_view.apply {
             layoutManager = LinearLayoutManager(activity!!.baseContext)
         }
+        playlist_recycle_view.setOnTouchListener({v, event ->
+            onTouchEvent(event)
+            true
+        })
 
         playlistViewModel.addButtonClicked.observe(viewLifecycleOwner, Observer {
             if (it) {
                 openFileSelectDialog()
             }
         })
+
+
 
 //        playlistViewModel.musicRepository.tracksDb.observe(viewLifecycleOwner, Observer {
 //            if (it != null) {
@@ -110,6 +135,43 @@ class PlaylistFragment : Fragment (), DialogSelectionListener {
         dialog.setDialogSelectionListener (this)
         dialog.show()
     }
+
+    /**
+     * проверяем слайд вправо и влево
+     */
+    private fun onTouchEvent(ev: MotionEvent?): Boolean {
+
+        val myAction: Int = MotionEventCompat.getActionMasked(ev)
+
+        return when (myAction) {
+            MotionEvent.ACTION_UP -> {
+                x2 = ev!!.x
+                val deltaX = x2 - x1
+                if (Math.abs(deltaX) > MIN_DISTANCE) {
+                    if (deltaX < 0) {
+                        findNavController().navigate(R.id.controlFragment)
+                    } else {
+                        Log.d("playlist", "mot: ")
+                    }
+                }
+                true
+            }
+
+            MotionEvent.ACTION_DOWN -> {
+                x1 = ev!!.getX()
+                true
+            }
+
+            MotionEvent.ACTION_MOVE -> {
+                false
+            }
+            MotionEvent.ACTION_CANCEL -> {
+                true
+            }
+            else -> false
+        }
+    }
+
 
 
 }

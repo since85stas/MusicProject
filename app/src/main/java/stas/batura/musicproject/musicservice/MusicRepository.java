@@ -51,9 +51,15 @@ public final class MusicRepository {
         TracksDao tracksDao = TracksDatabase.Companion.getInstance(contex).getTracksDatabaseDao();
         repository = new Repository(tracksDao);
 
+        getDbTracks();
+//        tracksDb = repository.getAllTracks();
+//        updateTracksLive(tracksDb);
+        System.out.println("end repos creat");
+    }
+
+    public void getDbTracks() {
         tracksDb = repository.getAllTracks();
         updateTracksLive(tracksDb);
-        System.out.println("end repos creat");
     }
 
 //    public void setData(File file) {
@@ -98,7 +104,8 @@ public final class MusicRepository {
             tacksRep.add(track );
         }
 
-        tracks = new MutableLiveData<>(tacksRep);
+        tracks.setValue(tacksRep);
+        tracks.postValue(tacksRep);
         maxIndex = tacksRep.size()-1;
     }
 

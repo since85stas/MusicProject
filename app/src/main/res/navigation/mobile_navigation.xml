@@ -15,7 +15,8 @@
         tools:layout="@layout/control_fragment" >
         <action
             android:id="@+id/action_controlFragment_to_playlistFragment"
-            app:destination="@id/playlistFragment" />
+            app:destination="@id/playlistFragment"
+            app:exitAnim="@android:anim/slide_in_left" />
     </fragment>
 
 
@@ -25,7 +26,8 @@
         android:label="PlaylistFragment" >
         <action
             android:id="@+id/action_playlistFragment_to_controlFragment"
-            app:destination="@id/controlFragment" />
+            app:destination="@id/controlFragment"
+            app:exitAnim="@android:anim/slide_out_right" />
     </fragment>
 
 

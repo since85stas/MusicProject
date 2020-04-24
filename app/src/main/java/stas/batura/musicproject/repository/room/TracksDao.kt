@@ -21,4 +21,9 @@ abstract class TracksDao {
 
     @Query ("DELETE FROM tracks_table")
     abstract fun deleteTracksInPlayList()
+
+    @Insert
+    abstract fun insertPlaylist(playlist: Playlist)
+
+
 }

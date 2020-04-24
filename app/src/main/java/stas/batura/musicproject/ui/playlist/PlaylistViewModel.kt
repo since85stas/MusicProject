@@ -35,8 +35,6 @@ class PlaylistViewModel ( val application: Application, val tracksDao: TracksDao
 //        _songListViewModel = musicRepository.tracks
     }
 
-
-
     /**
      * вызывается при нажатии на кнопку добавления
      */
@@ -56,7 +54,8 @@ class PlaylistViewModel ( val application: Application, val tracksDao: TracksDao
      */
     fun deleteButtonclicked() {
         repository.deleteTracksInPlayList()
-        musicRepository = MusicRepository.recreateMusicRepository(application)
+//        musicRepository = MusicRepository.recreateMusicRepository(application)
+        musicRepository.getDbTracks()
     }
 
     /**
@@ -66,7 +65,8 @@ class PlaylistViewModel ( val application: Application, val tracksDao: TracksDao
         val songsManager = SongsManager(pathStr);
         val songs = songsManager.playList
         repository.insertTracks(songs)
-        musicRepository = MusicRepository.recreateMusicRepository(application)
+        musicRepository.getDbTracks()
+//        musicRepository = MusicRepository.recreateMusicRepository(application)
     }
 
     /**

@@ -1,25 +1,28 @@
 package stas.batura.musicproject.ui.control
 
-import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.v4.media.session.PlaybackStateCompat
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
+import android.view.View.OnTouchListener
 import android.view.ViewGroup
+import androidx.core.view.MotionEventCompat
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import com.developer.filepicker.controller.DialogSelectionListener
-import com.developer.filepicker.model.DialogConfigs
-import com.developer.filepicker.model.DialogProperties
-import com.developer.filepicker.view.FilePickerDialog
+import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.fragment.findNavController
 import kotlinx.android.synthetic.main.control_fragment.*
 import stas.batura.musicproject.MainAcivityViewModel
 import stas.batura.musicproject.R
 import stas.batura.musicproject.utils.InjectorUtils
-import stas.batura.musicproject.utils.SongsManager
-import java.io.File
+
 
 class ControlFragment () : Fragment() {
+
+    private var x1   = 0f
+    private  var x2  = 0f
+    val MIN_DISTANCE = 150
 
     companion object {
         fun newInstance() = ControlFragment()
@@ -37,7 +40,14 @@ class ControlFragment () : Fragment() {
             .of(this.activity!!, InjectorUtils.provideMainViewModel(this.activity!!.application))
             .get(MainAcivityViewModel::class.java)
 
-        return inflater.inflate(R.layout.control_fragment, container, false)
+        val view = inflater.inflate(R.layout.control_fragment, container, false)
+
+        view.setOnTouchListener(OnTouchListener { v, event ->
+                onTouchEvent(event)
+            true
+        })
+
+        return view
     }
 
     /**
@@ -81,6 +91,43 @@ class ControlFragment () : Fragment() {
 
         super.onActivityCreated(savedInstanceState)
     }
+
+    /**
+     * проверяем слайд вправо и влево
+     */
+    private fun onTouchEvent(ev: MotionEvent?): Boolean {
+
+        val myAction: Int = MotionEventCompat.getActionMasked(ev)
+
+        return when (myAction) {
+            MotionEvent.ACTION_UP -> {
+                x2 = ev!!.x
+                val deltaX = x2 - x1
+                if (Math.abs(deltaX) > MIN_DISTANCE) {
+                    if (deltaX < 0) {
+                        print("right")
+                    } else {
+                        findNavController().navigate(R.id.playlistFragment)
+                    }
+                }
+                true
+            }
+
+            MotionEvent.ACTION_DOWN -> {
+                x1 = ev!!.getX()
+                true
+            }
+
+            MotionEvent.ACTION_MOVE -> {
+                false
+            }
+            MotionEvent.ACTION_CANCEL -> {
+                true
+            }
+            else -> false
+        }
+    }
+
 
 
 }
