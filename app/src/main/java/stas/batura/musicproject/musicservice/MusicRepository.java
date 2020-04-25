@@ -2,23 +2,14 @@ package stas.batura.musicproject.musicservice;
 
 import android.app.Application;
 import android.net.Uri;
-import android.os.Environment;
 
-import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
-
-import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
-import java.io.File;
 
-import kotlin.coroutines.CoroutineContext;
-import kotlinx.coroutines.CoroutineScope;
-import kotlinx.coroutines.Dispatchers;
-import kotlinx.coroutines.Job;
 import stas.batura.musicproject.R;
 import stas.batura.musicproject.repository.Repository;
 import stas.batura.musicproject.repository.room.TrackKot;
@@ -58,7 +49,7 @@ public final class MusicRepository {
     }
 
     public void getDbTracks() {
-        tracksDb = repository.getAllTracks();
+        tracksDb = repository.getAllTracksFromMainPlaylist();
         updateTracksLive(tracksDb);
     }
 

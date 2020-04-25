@@ -17,10 +17,14 @@
 package stas.batura.musicproject.repository.room
 
 import android.content.Context
+import android.util.Log
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
+import androidx.sqlite.db.SupportSQLiteDatabase
+import java.util.concurrent.Executors
+
 
 /**
  * A database that stores SleepNight information.
@@ -79,6 +83,18 @@ abstract class TracksDatabase : RoomDatabase() {
             // it once by using synchronized. Only one thread may enter a synchronized block at a
             // time.
             synchronized(this) {
+                val rdc: Callback = object : Callback() {
+                    override fun onCreate(db: SupportSQLiteDatabase) {
+                        Executors.newSingleThreadScheduledExecutor()
+                            .execute(Runnable { INSTANCE!!.tracksDatabaseDao.setMainPlaylistId(MainData(0)) })
+                        Log.d("room","dab created")
+
+                    }
+
+                    override fun onOpen(db: SupportSQLiteDatabase) {
+                        // do something every time database is open
+                    }
+                }
                 // Copy the current value of INSTANCE to a local variable so Kotlin can smart cast.
                 // Smart cast is only available to local variables.
                 var instance = INSTANCE
@@ -94,6 +110,7 @@ abstract class TracksDatabase : RoomDatabase() {
                             // migration with Room in this blog post:
                             // https://medium.com/androiddevelopers/understanding-migrations-with-room-f01e04b07929
                             .fallbackToDestructiveMigration()
+                            .addCallback(rdc)
                             .build()
                     // Assign INSTANCE to the newly created database.
                     INSTANCE = instance

@@ -9,6 +9,7 @@ import android.os.IBinder
 import android.os.RemoteException
 import android.support.v4.media.session.MediaControllerCompat
 import android.support.v4.media.session.PlaybackStateCompat
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -16,11 +17,13 @@ import androidx.lifecycle.ViewModelProvider
 import stas.batura.musicproject.musicservice.MusicRepository
 import stas.batura.musicproject.musicservice.MusicService
 import stas.batura.musicproject.repository.Repository
+import stas.batura.musicproject.repository.room.MainData
 import stas.batura.musicproject.repository.room.Playlist
 import stas.batura.musicproject.repository.room.TrackKot
 import stas.batura.musicproject.repository.room.TracksDao
 import stas.batura.musicproject.utils.SongsManager
 import java.io.File
+import java.lang.NullPointerException
 
 class MainAcivityViewModel (private val application: Application,
                             private val database:TracksDao) : ViewModel(  ) {
@@ -41,6 +44,8 @@ class MainAcivityViewModel (private val application: Application,
     private var _createServiceListner : MutableLiveData<Boolean> = MutableLiveData(false)
     val createServiceListner : LiveData<Boolean>
         get() = _createServiceListner
+
+    val mainDataLive = repository.getNewMainPlaylistId()
 
     val playlistListLive:LiveData<List<Playlist>> = repository.getAllPlaylists()
 
@@ -144,19 +149,28 @@ class MainAcivityViewModel (private val application: Application,
         repository.insertTrack(trackKot)
     }
 
+    /**
+     * добавляем новый плейлист в базу
+     */
     fun addNewPlaylist(name:String) {
-        repository.insertPlaylist(Playlist(name))
+        val newPlaylistId = repository.insertPlaylist(Playlist(name))
+
+//        repository.updateMainPlayilistId((newPlaylistId.toInt()))
+        repository.setMainPlaylistId(MainData(newPlaylistId.toInt()))
     }
 
     /**
      * поллучаем путь папки, создаем список треков и сохраняем в БД
      */
     fun addTracksToPlaylist(pathStr : String) {
-        val songsManager = SongsManager(pathStr);
-        val songs = songsManager.playList
-        repository.insertTracks(songs)
-        musicRepository.getDbTracks()
-//        musicRepository = MusicRepository.recreateMusicRepository(application)
+        try {
+            val songsManager = SongsManager(pathStr, mainDataLive.value!!.currentPlaylistId);
+            val songs = songsManager.playList
+            repository.insertTracks(songs)
+            musicRepository.getDbTracks()
+        } catch (e: NullPointerException) {
+            Log.d("mainviewm", e.toString())
+        }
     }
 
     /**

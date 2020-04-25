@@ -15,11 +15,11 @@ import stas.batura.musicproject.repository.room.TrackKot;
 public class SongsManager {
     // SDCard Path
     final String MEDIA_PATH;
-
-    //    /mnt/sdcard/Music/red elvises/The Best of Kick-Ass
+    int playlistId;
 
     // Constructor
-    public SongsManager(String string) {
+    public SongsManager(String string, int playlistId) {
+        this.playlistId = playlistId;
         MEDIA_PATH = string;
     }
 
@@ -56,10 +56,9 @@ public class SongsManager {
                         album,
                         R.drawable.image266680,
                         uri,
-                        (3 * 60 + 41) * 1000);
+                        (3 * 60 + 41) * 1000,
+                        playlistId);
                 trackKot.add(rackKot);
-
-                // Adding each song to SongList
             }
         }
         // return songs list array

@@ -25,8 +25,10 @@ data class TrackKot (
     var uri: Uri? = null,
 
     @ColumnInfo(name = "duration")
-    var duration // in ms
-            : Long = 0
+    var duration: Long = 0,
+
+    @ColumnInfo(name = "playlist_id")
+    var playlistId: Int = 0
 
 ) {
     @PrimaryKey(autoGenerate = true)

@@ -91,6 +91,14 @@ class MainActivity : AppCompatActivity(), DialogSelectionListener {
             }
         })
 
+        mainViewModel.mainDataLive.observe(this, Observer {
+            if (it != null) {
+                Log.d("MainAct", "main")
+            }
+        })
+
+
+
         val songsManager = SongsManager();
         val playlist = songsManager.playList
 //        createMusicService()
@@ -210,7 +218,7 @@ class MainActivity : AppCompatActivity(), DialogSelectionListener {
      * создает новый диалог для создания плейлиста
      */
     private fun createNewPlaylistDialog() {
-       val dialog:PlaylistNameDialog = PlaylistNameDialog()
+       val dialog: PlaylistNameDialog = PlaylistNameDialog()
         val fragmentManage = supportFragmentManager
         dialog.show(fragmentManage, "playlist")
     }

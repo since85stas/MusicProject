@@ -13,7 +13,7 @@ import stas.batura.musicproject.utils.SongsManager
 
 class PlaylistViewModel ( val application: Application, val tracksDao: TracksDao) : ViewModel () {
 
-    var musicRepository : MusicRepository = MusicRepository.getInstance(application)
+    val musicRepository : MusicRepository = MusicRepository.getInstance(application)
 
     // смотрим за списком трэков для отображения в плейлисте
     private var _songListViewModel : MutableLiveData<List<MusicRepository.Track>?> =
@@ -26,9 +26,9 @@ class PlaylistViewModel ( val application: Application, val tracksDao: TracksDao
     val addButtonClicked : LiveData<Boolean>
     get () = _addButtonClicked
 
-    val repository : Repository = Repository(tracksDao)
+    val repository: Repository = Repository(tracksDao)
 
-
+    val mainDataLive = repository.getNewMainPlaylistId()
 
     init {
         print("playlist init")
@@ -53,7 +53,7 @@ class PlaylistViewModel ( val application: Application, val tracksDao: TracksDao
      * удаляем все треки из выбранного плэйлиста
      */
     fun deleteButtonclicked() {
-        repository.deleteTracksInPlayList()
+        repository.deleteTracksInPlayList(0)
 //        musicRepository = MusicRepository.recreateMusicRepository(application)
         musicRepository.getDbTracks()
     }
@@ -62,7 +62,7 @@ class PlaylistViewModel ( val application: Application, val tracksDao: TracksDao
      * поллучаем путь папки, создаем список треков и сохраняем в БД
      */
     fun addTracksToPlaylist(pathStr : String) {
-        val songsManager = SongsManager(pathStr);
+        val songsManager = SongsManager(pathStr, mainDataLive.value!!.currentPlaylistId);
         val songs = songsManager.playList
         repository.insertTracks(songs)
         musicRepository.getDbTracks()

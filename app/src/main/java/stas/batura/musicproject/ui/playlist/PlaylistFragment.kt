@@ -47,12 +47,12 @@ class PlaylistFragment : Fragment (), DialogSelectionListener {
         savedInstanceState: Bundle?
     ): View? {
 
-        playlistViewModel = ViewModelProviders.of (this,
-            InjectorUtils.providePlaylistViewModel(activity!!.application)).get(PlaylistViewModel::class.java)
-
         mainViewModel = ViewModelProviders
             .of(this.activity!!, InjectorUtils.provideMainViewModel(this.activity!!.application))
             .get(MainAcivityViewModel::class.java)
+
+        playlistViewModel = ViewModelProviders.of (this,
+            InjectorUtils.providePlaylistViewModel(activity!!.application)).get(PlaylistViewModel::class.java)
 
         val bindings : PlaylistFragmentBinding =
             DataBindingUtil.inflate(inflater, R.layout.playlist_fragment ,container, false)
@@ -98,7 +98,11 @@ class PlaylistFragment : Fragment (), DialogSelectionListener {
             }
         })
 
-
+        playlistViewModel.mainDataLive.observe(viewLifecycleOwner, Observer {
+            if (it != null) {
+                Log.d("playlist", "pla")
+            }
+        })
 
 //        playlistViewModel.musicRepository.tracksDb.observe(viewLifecycleOwner, Observer {
 //            if (it != null) {

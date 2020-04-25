@@ -28,14 +28,25 @@ class Repository (private val dataSource : TracksDao) : TracksDao() {
     private val ioScope = CoroutineScope(Dispatchers.IO + repositoryJob)
 
 
-    override fun setMainPlaylistId(id: Int) {
+    override fun setMainPlaylistId(mainData: MainData) {
         ioScope.launch {
-            dataSource.setMainPlaylistId(id)
+            dataSource.setMainPlaylistId(mainData)
         }
     }
 
-    override fun getMainPlaylistId(): LiveData<MainData> {
-        return dataSource.getMainPlaylistId()
+    override fun updateMainPlayilistId(playlistId: Int) {
+        ioScope.launch {
+            dataSource.updateMainPlayilistId(playlistId)
+        }
+    }
+
+    fun getNewMainPlaylistId(): LiveData<MainData> {
+        val id = 0L
+        return getMainPlaylistId(id)
+    }
+
+    override fun getMainPlaylistId(id: Long): LiveData<MainData> {
+        return dataSource.getMainPlaylistId(id)
     }
 
     /**
@@ -57,34 +68,55 @@ class Repository (private val dataSource : TracksDao) : TracksDao() {
     }
 
     /**
-     * получаем список все треков
+     * получаем список все треков в заданном плейлисте
     */
-    override fun getAllTracks(): List<TrackKot>? {
+    override fun getAllTracksFromMainPlaylist(): List<TrackKot>? {
         var result : List<TrackKot>? = null
             runBlocking {
                 ioScope.async {
-                    result = dataSource.getAllTracks()
+                    result = dataSource.getAllTracksFromMainPlaylist()
                 }.await()
             }
         return result
     }
 
     /**
+     * получаем список все треков в вфбранном плейлисте
+     */
+    override fun getAllTracksFromPlaylist(playlistId: Int): List<TrackKot>? {
+        var result : List<TrackKot>? = null
+        runBlocking {
+            ioScope.async {
+                result = dataSource.getAllTracksFromPlaylist(playlistId)
+            }.await()
+        }
+        return result
+    }
+
+    override fun getAllTracks(): List<TrackKot>? {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    /**
      * удаляем все трэки из плэйлиста
      */
-    override fun deleteTracksInPlayList() {
+    override fun deleteTracksInPlayList(playlistId: Int) {
         ioScope.launch {
-            dataSource.deleteTracksInPlayList()
+            dataSource.deleteTracksInPlayList(playlistId)
         }
     }
 
     /**
      * вставляем новый плейлист в базу
      */
-    override fun insertPlaylist(playlist: Playlist) {
-        ioScope.launch {
-            dataSource.insertPlaylist(playlist)
+    override fun insertPlaylist(playlist: Playlist): Long {
+        var result: Long = 0
+        runBlocking {
+            ioScope.async {
+                result = dataSource.insertPlaylist(playlist)
+            }.await()
         }
+        return result
     }
 
     /**
