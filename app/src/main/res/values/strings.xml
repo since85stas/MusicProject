@@ -9,4 +9,9 @@
 
     <string name="previous">Previous</string>
     <string name="next">Next</string>
+
+    <!-- playlist name dialog  -->
+    <string name="message_text">New Playlist</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
 </resources>

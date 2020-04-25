@@ -3,6 +3,8 @@ package stas.batura.musicproject.repository
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.*
+import stas.batura.musicproject.repository.room.MainData
+import stas.batura.musicproject.repository.room.Playlist
 import stas.batura.musicproject.repository.room.TrackKot
 import stas.batura.musicproject.repository.room.TracksDao
 
@@ -24,6 +26,17 @@ class Repository (private val dataSource : TracksDao) : TracksDao() {
      * a [ViewModel] update the UI after performing some processing.
      */
     private val ioScope = CoroutineScope(Dispatchers.IO + repositoryJob)
+
+
+    override fun setMainPlaylistId(id: Int) {
+        ioScope.launch {
+            dataSource.setMainPlaylistId(id)
+        }
+    }
+
+    override fun getMainPlaylistId(): LiveData<MainData> {
+        return dataSource.getMainPlaylistId()
+    }
 
     /**
      * сохраняем информацию о треке в базе данных
@@ -64,4 +77,29 @@ class Repository (private val dataSource : TracksDao) : TracksDao() {
             dataSource.deleteTracksInPlayList()
         }
     }
+
+    /**
+     * вставляем новый плейлист в базу
+     */
+    override fun insertPlaylist(playlist: Playlist) {
+        ioScope.launch {
+            dataSource.insertPlaylist(playlist)
+        }
+    }
+
+    /**
+     * получаем список всех плейлистов
+     */
+    override fun getAllPlaylists(): LiveData<List<Playlist>> {
+        return dataSource.getAllPlaylists()
+    }
+
+    /**
+     * удаляем выбранный плейлист из базы
+     */
+    override fun deletePlaylist(playlistId: Int) {
+        dataSource.deletePlaylist(playlistId)
+    }
+
+
 }

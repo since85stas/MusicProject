@@ -16,8 +16,10 @@ import androidx.lifecycle.ViewModelProvider
 import stas.batura.musicproject.musicservice.MusicRepository
 import stas.batura.musicproject.musicservice.MusicService
 import stas.batura.musicproject.repository.Repository
+import stas.batura.musicproject.repository.room.Playlist
 import stas.batura.musicproject.repository.room.TrackKot
 import stas.batura.musicproject.repository.room.TracksDao
+import stas.batura.musicproject.utils.SongsManager
 import java.io.File
 
 class MainAcivityViewModel (private val application: Application,
@@ -29,21 +31,18 @@ class MainAcivityViewModel (private val application: Application,
     // database repository
     private val repository : Repository = Repository(database)
 
-    //
-    private val trackDbLive = repository.getAllTracks()
-
     private var playerServiceBinder: MusicService.PlayerServiceBinder? = null
     var mediaController: MutableLiveData<MediaControllerCompat?> = MutableLiveData()
     private var callback: MediaControllerCompat.Callback? = null
     var serviceConnection: MutableLiveData<ServiceConnection?> = MutableLiveData()
-
-//    private var  LiveData<>
 
     val callbackChanges : MutableLiveData<PlaybackStateCompat?> = MutableLiveData(null)
 
     private var _createServiceListner : MutableLiveData<Boolean> = MutableLiveData(false)
     val createServiceListner : LiveData<Boolean>
         get() = _createServiceListner
+
+    val playlistListLive:LiveData<List<Playlist>> = repository.getAllPlaylists()
 
     init {
         println("init main view model")
@@ -65,7 +64,6 @@ class MainAcivityViewModel (private val application: Application,
         // создаем сервис
 //        checkServiseCreation()
     }
-
 
     /**
      * запускает создание сервиса
@@ -96,8 +94,8 @@ class MainAcivityViewModel (private val application: Application,
                             application,
                             playerServiceBinder!!.getMediaSessionToke()
                         )
-                        mediaController!!.value!!.registerCallback(callback!!)
-                        callback!!.onPlaybackStateChanged(mediaController!!.value!!.playbackState)
+                        mediaController.value!!.registerCallback(callback!!)
+                        callback!!.onPlaybackStateChanged(mediaController.value!!.playbackState)
                     } catch (e: RemoteException) {
                         mediaController.value = null
                     }
@@ -105,8 +103,8 @@ class MainAcivityViewModel (private val application: Application,
 
                 override fun onServiceDisconnected(name: ComponentName) {
                     playerServiceBinder = null
-                    if (mediaController != null) {
-                        mediaController!!.value!!.unregisterCallback(callback!!)
+                    if (mediaController.value != null) {
+                        mediaController.value!!.unregisterCallback(callback!!)
                         mediaController.value = null
                     }
                 }
@@ -144,6 +142,21 @@ class MainAcivityViewModel (private val application: Application,
      */
     fun addTrackToDb(trackKot: TrackKot) {
         repository.insertTrack(trackKot)
+    }
+
+    fun addNewPlaylist(name:String) {
+        repository.insertPlaylist(Playlist(name))
+    }
+
+    /**
+     * поллучаем путь папки, создаем список треков и сохраняем в БД
+     */
+    fun addTracksToPlaylist(pathStr : String) {
+        val songsManager = SongsManager(pathStr);
+        val songs = songsManager.playList
+        repository.insertTracks(songs)
+        musicRepository.getDbTracks()
+//        musicRepository = MusicRepository.recreateMusicRepository(application)
     }
 
     /**

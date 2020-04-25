@@ -3,6 +3,7 @@ package stas.batura.musicproject
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
@@ -15,14 +16,23 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import com.developer.filepicker.controller.DialogSelectionListener
+import com.developer.filepicker.model.DialogConfigs
+import com.developer.filepicker.model.DialogProperties
+import com.developer.filepicker.view.FilePickerDialog
 import com.google.android.material.navigation.NavigationView
 import kotlinx.android.synthetic.main.activity_main.*
 import stas.batura.musicproject.musicservice.MusicService
+import stas.batura.musicproject.repository.room.Playlist
+import stas.batura.musicproject.ui.dialogs.PlaylistNameDialog
 import stas.batura.musicproject.utils.InjectorUtils
 import stas.batura.musicproject.utils.SongsManager
+import java.io.File
 
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), DialogSelectionListener {
+
+    val SECT_GROUP_ID : Int = 4476
 
     private lateinit var navContr : NavController
 
@@ -74,6 +84,13 @@ class MainActivity : AppCompatActivity() {
             }
         })
 
+        mainViewModel.playlistListLive.observe(this, Observer {
+            if (it != null) {
+                Log.d("MainAct","Play")
+                createSectionsInMenu(it)
+            }
+        })
+
         val songsManager = SongsManager();
         val playlist = songsManager.playList
 //        createMusicService()
@@ -112,15 +129,18 @@ class MainActivity : AppCompatActivity() {
         val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
         val navView: NavigationView = findViewById(R.id.nav_view)
         navContr = findNavController(R.id.nav_host_fragment)
+
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.nav_home, R.id.nav_tools, R.id.nav_share, R.id.nav_send
+                R.id.nav_home, R.id.nav_tools, R.id.nav_share, R.id.nav_add
             ), drawerLayout
         )
         setupActionBarWithNavController(this, navContr)
         navView.setupWithNavController(navContr)
+
+//        createSectionsInMenu(ma)
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -137,38 +157,37 @@ class MainActivity : AppCompatActivity() {
     /**
      * создает отображение списка секций в меню
      */
-    private fun createSectionsInMenu(sections : List<Int>) {
+    private fun createSectionsInMenu(playlists : List<Playlist>) {
         var menu = nav_view.menu
+        var count : Int = 0
         var listId: MutableList<Int> = ArrayList()
 
-        var count : Int = 0
+        // если уже присутствуют секции то их удаляем
+        menu.removeGroup(SECT_GROUP_ID)
 
-//        // если уже присутствуют секции то их удаляем
-//        menu.removeGroup(SECT_GROUP_ID)
-//
-//        for (section in sections) {
-//            menu.add(SECT_GROUP_ID,section.sectionId.toInt(),2, section.sectionName + count  )
-//            count++
-//            listId.add(section.sectionId.toInt())
-//        }
-//
+        for (playlist in playlists) {
+            menu.add(SECT_GROUP_ID, playlist.playlistId, 2, playlist.name + count  )
+            count++
+            listId.add(playlist.playlistId)
+        }
+
 //        // устанавливаем слушатель на нажатие клавиш
-//        nav_view.setNavigationItemSelectedListener( (NavigationView.OnNavigationItemSelectedListener {
-//            when (it.itemId) {
-//                R.id.nav_home -> {
-//                    Log.d("main", "Home")
-//                    drawer_layout.closeDrawers()
-//                    true
-//                }
-//                in listId ->  {
-//                    Log.d("main", "frag$listId")
-//                    val result = mainActivityViewModel.setCurrentSection(it.itemId)
-//                    drawer_layout.closeDrawers()
-//                    true
-//                }
-//                else -> false
-//            }
-//        }) )
+        nav_view.setNavigationItemSelectedListener( (NavigationView.OnNavigationItemSelectedListener {
+            when (it.itemId) {
+                R.id.nav_add -> {
+                    Log.d("main", "Home")
+                    drawer_layout.closeDrawers()
+                    createNewPlaylistDialog()
+                    true
+                }
+                in listId ->  {
+                    Log.d("main", "frag$listId")
+                    drawer_layout.closeDrawers()
+                    true
+                }
+                else -> false
+            }
+        }) )
 
     }
 
@@ -185,6 +204,42 @@ class MainActivity : AppCompatActivity() {
      */
     private fun navigateToRight () {
         navContr.navigate(R.id.controlFragment)
+    }
+
+    /**
+     * создает новый диалог для создания плейлиста
+     */
+    private fun createNewPlaylistDialog() {
+       val dialog:PlaylistNameDialog = PlaylistNameDialog()
+        val fragmentManage = supportFragmentManager
+        dialog.show(fragmentManage, "playlist")
+    }
+
+    /**
+     * после выборв директории
+     */
+    override fun onSelectedFilePaths(files: Array<out String>?) {
+        print("test select")
+        mainViewModel.addTracksToPlaylist(files!![0])
+    }
+
+    /**
+     * создаем диалог для выбора директории
+     */
+    private fun openFileSelectDialog() {
+        // test
+        val properties = DialogProperties()
+        properties.selection_mode = DialogConfigs.MULTI_MODE;
+        properties.selection_type = DialogConfigs.FILE_AND_DIR_SELECT;
+        properties.root = File(DialogConfigs.DEFAULT_DIR);
+        properties.error_dir = File(DialogConfigs.DEFAULT_DIR);
+        properties.offset = File(DialogConfigs.DEFAULT_DIR);
+        properties.extensions = null;
+        properties.show_hidden_files = false;
+        val dialog = FilePickerDialog(this, properties)
+        dialog.setTitle("Select a File")
+        dialog.setDialogSelectionListener (this)
+        dialog.show()
     }
 
 

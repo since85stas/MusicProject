@@ -29,7 +29,7 @@ import androidx.room.TypeConverters
  * This pattern is pretty much the same for any database,
  * so you can reuse it.
  */
-@Database(entities =[TrackKot::class], version = 2, exportSchema = false)
+@Database(entities =[TrackKot::class, Playlist::class, MainData::class], version = 4, exportSchema = false)
 @TypeConverters(UriRoomConverter::class)
 abstract class TracksDatabase : RoomDatabase() {
 

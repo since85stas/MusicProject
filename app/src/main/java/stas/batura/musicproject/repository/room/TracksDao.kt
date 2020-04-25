@@ -14,6 +14,12 @@ import kotlinx.coroutines.Job
 abstract class TracksDao {
 
     @Insert
+    abstract fun setMainPlaylistId(id:Int)
+
+    @Query("SELECT * FROM main_table")
+    abstract fun getMainPlaylistId():LiveData<MainData>
+
+    @Insert
     abstract fun insertTrack(trackKot: TrackKot)
 
     @Query ("SELECT * FROM tracks_table ORDER BY id")
@@ -25,5 +31,9 @@ abstract class TracksDao {
     @Insert
     abstract fun insertPlaylist(playlist: Playlist)
 
+    @Query ("SELECT * FROM playlist_table ORDER BY playlist_id")
+    abstract fun getAllPlaylists() : LiveData<List<Playlist>>
 
+    @Query ("DELETE FROM playlist_table WHERE playlist_id = :playlistId  ")
+    abstract fun deletePlaylist(playlistId: Int)
 }
