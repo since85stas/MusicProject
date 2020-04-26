@@ -121,7 +121,19 @@ class Repository (private val dataSource : TracksDao) : TracksDao() {
             dataSource.deleteTracksInPlayList(playlistId)
         }
     }
-//----------------------------PLAYLIST PART---------------------------------------------------------
+
+    /**
+     * отмечаем играющий трек
+     */
+    override fun setTrackIsPlaying(trackId: Int) {
+        runBlocking {
+            ioScope.async {
+                dataSource.setTrackIsPlaying(trackId)
+            }.await()
+        }
+    }
+
+    //----------------------------PLAYLIST PART---------------------------------------------------------
     /**
      * вставляем новый плейлист в базу
      */

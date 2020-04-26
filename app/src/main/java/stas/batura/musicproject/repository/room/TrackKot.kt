@@ -7,7 +7,7 @@ import androidx.room.*
 @Entity (tableName = "tracks_table")
 data class TrackKot (
     @ColumnInfo(name = "track_playlist_id")
-    var trackId: Int = 0,
+    var trackPlaylistId: Int = 0,
 
     @ColumnInfo(name = "title")
     var title: String = "title",
@@ -25,11 +25,11 @@ data class TrackKot (
     var uri: Uri? = null,
 
     @ColumnInfo(name = "duration")
-    var duration: Long = 0
+    var duration: Long = 0L
 ) {
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id")
-    var _ID: Long = 0
+    var _ID: Int = 0
 
     @ColumnInfo(name = "is_playing")
     var isPlaying = false

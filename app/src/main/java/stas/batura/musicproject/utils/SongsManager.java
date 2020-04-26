@@ -39,16 +39,20 @@ public class SongsManager {
         List<TrackKot> trackKot = new ArrayList<>();
         if ( files != null && files.length > 0) {
             for (File file : files) {
+
+                MediaDataInfo dataInfo = new MediaDataInfo(file);
                 String fileStr = file.toString();
-                String title = file.getName().substring(0, (file.getName().length() - 4));
-                String[] pathArray = file.toString().split("/");
-                String album = pathArray[pathArray.length - 2];
-                String artist = pathArray[pathArray.length - 3];
+
+                String title = dataInfo.getTitle();
+                String album = dataInfo.getAlbum();
+                String artist = dataInfo.getArtist();
                 int pos = fileStr.indexOf("sdcard/");
                 String localPath = fileStr.substring(pos + "sdcard/".length());
                 Uri uri = Uri.fromFile(new File(
                                 Environment.getExternalStorageDirectory().getAbsolutePath() +
                                        "/" + localPath));
+
+                Long duration = dataInfo.getDuration();
 
                 TrackKot rackKot  = new TrackKot(playlistId,
                         title,
@@ -56,7 +60,7 @@ public class SongsManager {
                         album,
                         R.drawable.image266680,
                         uri,
-                        (3 * 60 + 41) * 1000
+                        duration
                         );
                 trackKot.add(rackKot);
             }

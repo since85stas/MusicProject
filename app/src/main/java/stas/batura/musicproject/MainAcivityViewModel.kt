@@ -51,23 +51,6 @@ class MainAcivityViewModel (private val application: Application,
 
     init {
         println("init main view model")
-//        print("Repo is $musicRepository")
-//        initMusicService()
-        val trackKot = TrackKot(0,"Triangle",
-                    "Jason Shaw",
-                    "album",
-                    R.drawable.image266680,
-                    Uri.fromFile(
-                        File(
-                            Environment.getExternalStorageDirectory().getAbsolutePath() +
-                            "/Music/Moonspell/Studio and Compilation/1995-Wolfheart (Original 1CD Release)/02 Love Crimes.mp3")
-                    ),
-                    (3 * 60 + 41) * 1000)
-
-//        repository.insertTrack(trackKot)
-
-        // создаем сервис
-//        checkServiseCreation()
     }
 
     /**

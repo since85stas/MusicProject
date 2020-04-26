@@ -61,12 +61,6 @@ class PlaylistFragment : Fragment (), DialogSelectionListener {
         bindings.lifecycleOwner = this
 
         val view = bindings.root
-//        view.setOnTouchListener(View.OnTouchListener { v, event ->
-//            onTouchEvent(event)
-//            true
-//        })
-
-
 
         return view
     }
