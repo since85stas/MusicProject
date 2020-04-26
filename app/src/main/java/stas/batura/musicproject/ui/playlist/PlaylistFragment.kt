@@ -101,6 +101,7 @@ class PlaylistFragment : Fragment (), DialogSelectionListener {
         playlistViewModel.mainDataLive.observe(viewLifecycleOwner, Observer {
             if (it != null) {
                 Log.d("playlist", "pla")
+                playlistViewModel.musicRepository.getDbTracks()
             }
         })
 

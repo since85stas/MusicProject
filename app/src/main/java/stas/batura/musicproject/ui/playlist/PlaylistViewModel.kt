@@ -53,7 +53,7 @@ class PlaylistViewModel ( val application: Application, val tracksDao: TracksDao
      * удаляем все треки из выбранного плэйлиста
      */
     fun deleteButtonclicked() {
-        repository.deleteTracksInPlayList(0)
+        repository.deleteTracksInMainPlayList()
 //        musicRepository = MusicRepository.recreateMusicRepository(application)
         musicRepository.getDbTracks()
     }

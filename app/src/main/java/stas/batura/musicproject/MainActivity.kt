@@ -191,6 +191,7 @@ class MainActivity : AppCompatActivity(), DialogSelectionListener {
                 in listId ->  {
                     Log.d("main", "frag$listId")
                     drawer_layout.closeDrawers()
+                    mainViewModel.onNavPlaylistItemClicked(it.itemId)
                     true
                 }
                 else -> false

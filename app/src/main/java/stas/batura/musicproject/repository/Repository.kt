@@ -27,7 +27,7 @@ class Repository (private val dataSource : TracksDao) : TracksDao() {
      */
     private val ioScope = CoroutineScope(Dispatchers.IO + repositoryJob)
 
-
+    //----------------------------MAIN PART---------------------------------------------------------
     override fun setMainPlaylistId(mainData: MainData) {
         ioScope.launch {
             dataSource.setMainPlaylistId(mainData)
@@ -49,6 +49,7 @@ class Repository (private val dataSource : TracksDao) : TracksDao() {
         return dataSource.getMainPlaylistId(id)
     }
 
+//----------------------------TRAKS PART---------------------------------------------------------
     /**
      * сохраняем информацию о треке в базе данных
      */
@@ -94,7 +95,22 @@ class Repository (private val dataSource : TracksDao) : TracksDao() {
     }
 
     override fun getAllTracks(): List<TrackKot>? {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        var result : List<TrackKot>? = null
+        runBlocking {
+            ioScope.async {
+                result = dataSource.getAllTracks()
+            }.await()
+        }
+        return result
+    }
+
+    /**
+     * удаляем все трэки из основного плэйлиста
+     */
+    override fun deleteTracksInMainPlayList() {
+        ioScope.launch {
+            dataSource.deleteTracksInMainPlayList()
+        }
     }
 
     /**
@@ -105,7 +121,7 @@ class Repository (private val dataSource : TracksDao) : TracksDao() {
             dataSource.deleteTracksInPlayList(playlistId)
         }
     }
-
+//----------------------------PLAYLIST PART---------------------------------------------------------
     /**
      * вставляем новый плейлист в базу
      */
@@ -124,13 +140,6 @@ class Repository (private val dataSource : TracksDao) : TracksDao() {
      */
     override fun getAllPlaylists(): LiveData<List<Playlist>> {
         return dataSource.getAllPlaylists()
-    }
-
-    /**
-     * удаляем выбранный плейлист из базы
-     */
-    override fun deletePlaylist(playlistId: Int) {
-        dataSource.deletePlaylist(playlistId)
     }
 
 

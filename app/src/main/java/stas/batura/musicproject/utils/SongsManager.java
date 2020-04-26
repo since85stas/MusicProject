@@ -50,14 +50,14 @@ public class SongsManager {
                                 Environment.getExternalStorageDirectory().getAbsolutePath() +
                                        "/" + localPath));
 
-                TrackKot rackKot  = new TrackKot(0,
+                TrackKot rackKot  = new TrackKot(playlistId,
                         title,
                         artist,
                         album,
                         R.drawable.image266680,
                         uri,
-                        (3 * 60 + 41) * 1000,
-                        playlistId);
+                        (3 * 60 + 41) * 1000
+                        );
                 trackKot.add(rackKot);
             }
         }

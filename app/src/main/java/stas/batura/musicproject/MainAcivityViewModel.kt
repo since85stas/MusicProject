@@ -154,9 +154,16 @@ class MainAcivityViewModel (private val application: Application,
      */
     fun addNewPlaylist(name:String) {
         val newPlaylistId = repository.insertPlaylist(Playlist(name))
-
-//        repository.updateMainPlayilistId((newPlaylistId.toInt()))
         repository.setMainPlaylistId(MainData(newPlaylistId.toInt()))
+        musicRepository.getDbTracks()
+    }
+
+    /**
+     * при нажатии на выбор плейлиста
+     */
+    fun onNavPlaylistItemClicked(playlistId: Int) {
+        repository.setMainPlaylistId(MainData(playlistId))
+        musicRepository.getDbTracks()
     }
 
     /**

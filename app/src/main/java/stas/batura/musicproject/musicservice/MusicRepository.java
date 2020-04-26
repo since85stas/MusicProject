@@ -50,6 +50,8 @@ public final class MusicRepository {
 
     public void getDbTracks() {
         tracksDb = repository.getAllTracksFromMainPlaylist();
+//        traksAll = repository.get/AllTracks();
+        List<TrackKot> traksId = repository.getAllTracksFromPlaylist(4);
         updateTracksLive(tracksDb);
     }
 
@@ -82,6 +84,8 @@ public final class MusicRepository {
     public MutableLiveData<List<Track>> tracks = new  MutableLiveData<>();
 
     public List<TrackKot> tracksDb;
+
+//    public List<TrackKot> traksAll;
 
 //    private final int maxIndex = tracks.getValue().size() - 1;
     private int maxIndex = 20;
