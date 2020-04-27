@@ -4,10 +4,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import stas.batura.musicproject.MainAcivityViewModel
 import stas.batura.musicproject.R
+import stas.batura.musicproject.databinding.SongDecorFragmentBinding
 import stas.batura.musicproject.utils.InjectorUtils
 
 class SongDecorFragment : Fragment() {
@@ -24,12 +27,24 @@ class SongDecorFragment : Fragment() {
             .of(this.activity!!, InjectorUtils.provideMainViewModel(this.activity!!.application))
             .get(MainAcivityViewModel::class.java)
 
-        val view = inflater.inflate(R.layout.song_decor_fragment, container, false)
+        val bindings : SongDecorFragmentBinding = DataBindingUtil.inflate(inflater,
+            R.layout.song_decor_fragment, container, false)
 
-        return view
+        bindings.mainViewModel = mainViewModel
+
+        bindings.lifecycleOwner = viewLifecycleOwner
+
+        return bindings.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+
+        mainViewModel.currentTrackPlaying.observe(viewLifecycleOwner, Observer {
+            if (it != null) {
+                print("play")
+            }
+        })
+
         super.onViewCreated(view, savedInstanceState)
     }
 }

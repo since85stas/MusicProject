@@ -52,6 +52,8 @@ class MainAcivityViewModel (private val application: Application,
 
     val playlistListLive:LiveData<List<Playlist>> = repository.getAllPlaylists()
 
+    val currentTrackPlaying = repository.getPlayingTrack()
+
     init {
         println("init main view model")
     }

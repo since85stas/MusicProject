@@ -1,42 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    <!-- Player Header -->
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+        <variable
+            name="mainViewModel"
+            type="stas.batura.musicproject.MainAcivityViewModel" />
+    </data>
+
     <LinearLayout
-        android:id="@+id/player_header_bg"
-        android:layout_width="fill_parent"
-        android:layout_height="60dip"
-        android:paddingLeft="5dp"
-        android:paddingRight="5dp"
-        android:orientation="horizontal"
-        >
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_gravity="center">
+        <!-- Player Header -->
+        <LinearLayout
+            android:id="@+id/player_header_bg"
+            android:layout_width="fill_parent"
+            android:layout_height="60dp"
+            android:orientation="horizontal"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp">
+
+            <!-- Playlist button -->
+            <ImageButton
+                android:id="@+id/btnPlaylist"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:src="@android:drawable/ic_menu_edit" />
+        </LinearLayout>
+
+        <!-- Song Thumbnail Image -->
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:layout_gravity="center"
+            android:src="@drawable/image208815" />
+
+        <!-- Song Title -->
+        <TextView
+            android:id="@+id/albumTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:paddingLeft="10dp"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            albumTitleBinding="@{mainViewModel.currentTrackPlaying}"
+            android:gravity="center"
+            />
+
         <!-- Song Title -->
         <TextView
             android:id="@+id/songTitle"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:textColor="#04b3d2"
-            android:textSize="16dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
             android:paddingLeft="10dp"
-            android:textStyle="bold"
-            android:text="The Good, The Bad And The Ugly"
-            android:layout_marginTop="10dp"/>
+            trackTitleBinding="@{mainViewModel.currentTrackPlaying}"
+            android:textSize="16sp"
+            android:gravity="center"
+            />
 
-        <!-- Playlist button -->
-        <ImageButton
-            android:id="@+id/btnPlaylist"
-            android:layout_width="wrap_content"
-            android:layout_height="fill_parent"
-            android:src="@android:drawable/ic_menu_edit"
-            android:background="@null"/>
     </LinearLayout>
-
-    <!-- Song Thumbnail Image -->
-        <ImageView android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:src="@drawable/image208815"
-            android:layout_gravity="center"/>
-
-</LinearLayout>
+</layout>

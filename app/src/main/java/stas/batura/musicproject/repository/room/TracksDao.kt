@@ -36,6 +36,9 @@ abstract class TracksDao {
     @Query ("UPDATE tracks_table SET is_playing = 1 WHERE id = :trackId AND track_playlist_id IN ( SELECT current_playlist_id FROM main_table) ")
     abstract fun setTrackIsPlaying(trackId: Int)
 
+    @Query ("SELECT * FROM tracks_table WHERE is_playing = 1")
+    abstract fun getPlayingTrack(): LiveData<TrackKot>
+
     @Query ("UPDATE tracks_table SET is_playing = 0")
     abstract fun setAllTrackIsNOTPlaying()
 

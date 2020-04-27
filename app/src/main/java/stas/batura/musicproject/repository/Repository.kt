@@ -133,6 +133,10 @@ class Repository (private val dataSource : TracksDao) : TracksDao() {
         }
     }
 
+    override fun getPlayingTrack(): LiveData<TrackKot> {
+        return dataSource.getPlayingTrack()
+    }
+
     override fun setAllTrackIsNOTPlaying() {
         runBlocking {
             ioScope.async {

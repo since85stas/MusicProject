@@ -40,7 +40,10 @@
             android:layout_width="0dp"
             android:layout_height="26dp"
             android:layout_weight="1"
-            app:unplayed_color="@color/colorAccent" />
+            app:unplayed_color="@color/colorAccent"
+            app:played_color="@color/colorPrimary"
+            app:buffered_color="@color/colorAccent"
+            />
 
         <TextView
             android:id="@id/exo_duration"
