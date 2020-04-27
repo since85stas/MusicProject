@@ -60,7 +60,7 @@ class MusicService (): Service () {
 
     private var isAudioFocusRequested = false
 
-    private var exoPlayer: SimpleExoPlayer? = null
+    var exoPlayer: SimpleExoPlayer? = null
     private var extractorsFactory: ExtractorsFactory? = null
     private var dataSourceFactory: DataSource.Factory? = null
 
@@ -286,6 +286,8 @@ class MusicService (): Service () {
             refreshNotificationAndForegroundStatus(currentState)
         }
 
+
+
         // при остановки проигрыша
         override fun onStop() {
             if (exoPlayer!!.playWhenReady) {
@@ -379,6 +381,7 @@ class MusicService (): Service () {
             metadataBuilder.putString(MediaMetadataCompat.METADATA_KEY_ARTIST, track.artist)
             metadataBuilder.putLong(MediaMetadataCompat.METADATA_KEY_DURATION, track.duration)
             mediaSession!!.setMetadata(metadataBuilder.build())
+
         }
     }
 
@@ -444,6 +447,10 @@ class MusicService (): Service () {
     inner class PlayerServiceBinder : Binder () {
         fun  getMediaSessionToke() : MediaSessionCompat.Token{
             return mediaSession!!.sessionToken
+        }
+
+        fun getPlayer(): ExoPlayer? {
+            return exoPlayer
         }
     }
 

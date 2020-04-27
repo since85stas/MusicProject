@@ -7,6 +7,7 @@ import android.net.Uri
 import android.os.Environment
 import android.os.IBinder
 import android.os.RemoteException
+import android.support.v4.media.MediaMetadataCompat
 import android.support.v4.media.session.MediaControllerCompat
 import android.support.v4.media.session.PlaybackStateCompat
 import android.util.Log
@@ -14,6 +15,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.google.android.exoplayer2.ExoPlayer
 import stas.batura.musicproject.musicservice.MusicRepository
 import stas.batura.musicproject.musicservice.MusicService
 import stas.batura.musicproject.repository.Repository
@@ -38,6 +40,7 @@ class MainAcivityViewModel (private val application: Application,
     var mediaController: MutableLiveData<MediaControllerCompat?> = MutableLiveData()
     private var callback: MediaControllerCompat.Callback? = null
     var serviceConnection: MutableLiveData<ServiceConnection?> = MutableLiveData()
+    var exoPlayer: MutableLiveData<ExoPlayer> = MutableLiveData()
 
     val callbackChanges : MutableLiveData<PlaybackStateCompat?> = MutableLiveData(null)
 
@@ -57,8 +60,12 @@ class MainAcivityViewModel (private val application: Application,
      * запускает создание сервиса
      */
     fun checkServiseCreation() {
-        _createServiceListner.value = true
-        _createServiceListner.value = false
+        if (!_createServiceListner.value!!) {
+            _createServiceListner.value = true
+        } else {
+            playClicked()
+        }
+//        _createServiceListner.value = false
     }
 
     /**
@@ -73,6 +80,7 @@ class MainAcivityViewModel (private val application: Application,
                 }
             }
 
+
             // соединение с сервисом
             serviceConnection.value = object : ServiceConnection {
                 override fun onServiceConnected(name: ComponentName, service: IBinder) {
@@ -82,6 +90,9 @@ class MainAcivityViewModel (private val application: Application,
                             application,
                             playerServiceBinder!!.getMediaSessionToke()
                         )
+
+                        exoPlayer.value = playerServiceBinder!!.getPlayer()
+
                         mediaController.value!!.registerCallback(callback!!)
                         callback!!.onPlaybackStateChanged(mediaController.value!!.playbackState)
                     } catch (e: RemoteException) {
@@ -95,6 +106,7 @@ class MainAcivityViewModel (private val application: Application,
                         mediaController.value!!.unregisterCallback(callback!!)
                         mediaController.value = null
                     }
+                    _createServiceListner.value = false
                 }
             }
         }

@@ -24,8 +24,10 @@ import com.developer.filepicker.controller.DialogSelectionListener
 import com.developer.filepicker.model.DialogConfigs
 import com.developer.filepicker.model.DialogProperties
 import com.developer.filepicker.view.FilePickerDialog
+import com.google.android.exoplayer2.ui.PlayerControlView
 import com.google.android.material.navigation.NavigationView
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.control_fragment_new.*
 import kotlinx.android.synthetic.main.pager_activity.*
 import stas.batura.musicproject.musicservice.MusicService
 import stas.batura.musicproject.repository.room.Playlist
@@ -126,6 +128,19 @@ private val NUM_PAGES = 2
             }
         })
 
+        mainViewModel.exoPlayer.observe(this, Observer {
+            if (it != null) {
+                exoplayer_control.player = it
+            } else {
+
+            }
+        })
+
+//        exoplayer_control.setVrButtonListener(  {
+//
+//            when (it.id) {
+//            }
+//
 
 
         val songsManager = SongsManager();
@@ -144,8 +159,9 @@ private val NUM_PAGES = 2
 
         // привязываем сервис к активити
         bindService(Intent(applicationContext!!, MusicService::class.java),
-            mainViewModel.serviceConnection!!.value!!,
+            mainViewModel.serviceConnection.value!!,
             Context.BIND_AUTO_CREATE)
+
     }
 
     override fun onPause() {
