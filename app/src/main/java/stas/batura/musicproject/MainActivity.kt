@@ -8,6 +8,8 @@ import android.view.Menu
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.NavController
@@ -16,15 +18,21 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import androidx.viewpager2.adapter.FragmentStateAdapter
+import androidx.viewpager2.widget.ViewPager2
 import com.developer.filepicker.controller.DialogSelectionListener
 import com.developer.filepicker.model.DialogConfigs
 import com.developer.filepicker.model.DialogProperties
 import com.developer.filepicker.view.FilePickerDialog
 import com.google.android.material.navigation.NavigationView
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.pager_activity.*
 import stas.batura.musicproject.musicservice.MusicService
 import stas.batura.musicproject.repository.room.Playlist
+import stas.batura.musicproject.ui.control.ControlFragment
 import stas.batura.musicproject.ui.dialogs.PlaylistNameDialog
+import stas.batura.musicproject.ui.playlist.PlaylistFragment
+import stas.batura.musicproject.ui.song_decor.SongDecorFragment
 import stas.batura.musicproject.utils.InjectorUtils
 import stas.batura.musicproject.utils.SongsManager
 import java.io.File
@@ -46,6 +54,18 @@ class MainActivity : AppCompatActivity(), DialogSelectionListener {
 //    private lateinit var navContr : NavController
 
 //    private lateinit var dataSource : TracksDao
+private val NUM_PAGES = 2
+
+    /**
+     * The pager widget, which handles animation and allows swiping horizontally to access previous
+     * and next wizard steps.
+     */
+    private var viewPager: ViewPager2? = null
+
+    /**
+     * The pager adapter, which provides the pages to the view pager widget.
+     */
+    private var pagerAdapter: ScreenSlidePagerAdapter? = null
 
     /**
      * создаем активити
@@ -58,6 +78,15 @@ class MainActivity : AppCompatActivity(), DialogSelectionListener {
         setSupportActionBar(toolbar)
         getSupportActionBar()!!.setDisplayHomeAsUpEnabled(true);
         toolbar.setNavigationIcon(R.drawable.ic_menu_send)
+
+        // Instantiate a ViewPager2 and a PagerAdapter.
+        viewPager = findViewById(R.id.pager);
+        pagerAdapter = ScreenSlidePagerAdapter(supportFragmentManager);
+        pagerAdapter!!.addFragment(SongDecorFragment())
+        pagerAdapter!!.addFragment(PlaylistFragment())
+
+        viewPager!!.orientation = ViewPager2.ORIENTATION_HORIZONTAL
+        viewPager!!.setAdapter(pagerAdapter);
 
         navContr = findNavController(this,R.id.nav_host_fragment)
 
@@ -119,7 +148,6 @@ class MainActivity : AppCompatActivity(), DialogSelectionListener {
             Context.BIND_AUTO_CREATE)
     }
 
-
     override fun onPause() {
         println("main activity pause")
         super.onPause()
@@ -128,6 +156,11 @@ class MainActivity : AppCompatActivity(), DialogSelectionListener {
     override fun onStop() {
         println("main activity stop")
         super.onStop()
+    }
+
+    override fun onDestroy() {
+        mainViewModel.onActivityDestroyed()
+        super.onDestroy()
     }
 
     /**
@@ -191,6 +224,9 @@ class MainActivity : AppCompatActivity(), DialogSelectionListener {
                 in listId ->  {
                     Log.d("main", "frag$listId")
                     drawer_layout.closeDrawers()
+
+                    pager.currentItem = 1
+
                     mainViewModel.onNavPlaylistItemClicked(it.itemId)
                     true
                 }
@@ -222,6 +258,7 @@ class MainActivity : AppCompatActivity(), DialogSelectionListener {
        val dialog: PlaylistNameDialog = PlaylistNameDialog()
         val fragmentManage = supportFragmentManager
         dialog.show(fragmentManage, "playlist")
+        pager.currentItem = 1
     }
 
     /**
@@ -233,25 +270,30 @@ class MainActivity : AppCompatActivity(), DialogSelectionListener {
     }
 
     /**
-     * создаем диалог для выбора директории
+     * A simple pager adapter that represents 5 ScreenSlidePageFragment objects, in
+     * sequence.
      */
-    private fun openFileSelectDialog() {
-        // test
-        val properties = DialogProperties()
-        properties.selection_mode = DialogConfigs.MULTI_MODE;
-        properties.selection_type = DialogConfigs.FILE_AND_DIR_SELECT;
-        properties.root = File(DialogConfigs.DEFAULT_DIR);
-        properties.error_dir = File(DialogConfigs.DEFAULT_DIR);
-        properties.offset = File(DialogConfigs.DEFAULT_DIR);
-        properties.extensions = null;
-        properties.show_hidden_files = false;
-        val dialog = FilePickerDialog(this, properties)
-        dialog.setTitle("Select a File")
-        dialog.setDialogSelectionListener (this)
-        dialog.show()
+    inner class ScreenSlidePagerAdapter(val fragmentManager: FragmentManager) :
+        FragmentStateAdapter(fragmentManager, this@MainActivity.lifecycle) {
+
+        private val arrayList: ArrayList<Fragment> = ArrayList()
+
+        override fun createFragment(position: Int): Fragment {
+            return arrayList.get(position)
+        }
+
+
+
+        public fun addFragment(fragment: Fragment?) {
+            arrayList.add(fragment!!)
+        }
+
+        override fun getItemCount(): Int {
+            return NUM_PAGES
+        }
+
+
     }
-
-
 
 
 }

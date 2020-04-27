@@ -133,6 +133,14 @@ class Repository (private val dataSource : TracksDao) : TracksDao() {
         }
     }
 
+    override fun setAllTrackIsNOTPlaying() {
+        runBlocking {
+            ioScope.async {
+                dataSource.setAllTrackIsNOTPlaying()
+            }.await()
+        }
+    }
+
     //----------------------------PLAYLIST PART---------------------------------------------------------
     /**
      * вставляем новый плейлист в базу

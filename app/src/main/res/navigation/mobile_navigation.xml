@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
     app:startDestination="@id/controlFragment"
-
     >
 
 
@@ -12,7 +11,7 @@
         android:id="@+id/controlFragment"
         android:name="stas.batura.musicproject.ui.control.ControlFragment"
         android:label="control_fragment"
-        tools:layout="@layout/control_fragment" >
+        tools:layout="@layout/control_fragment_new" >
         <action
             android:id="@+id/action_controlFragment_to_playlistFragment"
             app:destination="@id/playlistFragment"

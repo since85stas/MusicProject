@@ -110,7 +110,11 @@ class MainAcivityViewModel (private val application: Application,
     }
 
     fun stopClicked () {
-        if (mediaController.value != null) mediaController.value!!.transportControls.stop()
+        if (mediaController.value != null) {
+            mediaController.value!!.transportControls.stop()
+            repository.setAllTrackIsNOTPlaying()
+            musicRepository.getDbTracks()
+        }
     }
 
     fun nextClicked () {
@@ -161,6 +165,10 @@ class MainAcivityViewModel (private val application: Application,
         } catch (e: NullPointerException) {
             Log.d("mainviewm", e.toString())
         }
+    }
+
+    fun onActivityDestroyed() {
+        repository.setAllTrackIsNOTPlaying()
     }
 
     /**

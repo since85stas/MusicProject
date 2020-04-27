@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
 import kotlinx.android.synthetic.main.playlist_name_dialog.*
 import kotlinx.android.synthetic.main.playlist_name_dialog.view.*
+import stas.batura.musicproject.MainAcivityViewModel
 import stas.batura.musicproject.MainActivity
 import stas.batura.musicproject.R
 import stas.batura.musicproject.generated.callback.OnClickListener

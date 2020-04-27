@@ -138,6 +138,7 @@ public final class MusicRepository {
                 tracks.getValue()) {
             tr.isPlaying = false;
         }
+        repository.setAllTrackIsNOTPlaying();
         repository.setTrackIsPlaying(tracks.getValue().get(currentItemIndex).trackId);
         getDbTracks();
 //        tracks.getValue().get(currentItemIndex).isPlaying = true;

@@ -36,6 +36,9 @@ abstract class TracksDao {
     @Query ("UPDATE tracks_table SET is_playing = 1 WHERE id = :trackId AND track_playlist_id IN ( SELECT current_playlist_id FROM main_table) ")
     abstract fun setTrackIsPlaying(trackId: Int)
 
+    @Query ("UPDATE tracks_table SET is_playing = 0")
+    abstract fun setAllTrackIsNOTPlaying()
+
     //----------------------------PLAYLIST PART---------------------------------------------------------
     @Query ("DELETE FROM tracks_table WHERE track_playlist_id = :playlistId")
     abstract fun deleteTracksInPlayList(playlistId: Int)
