@@ -75,6 +75,12 @@ class PlaylistFragment : Fragment (), DialogSelectionListener {
                 val adapter = PlaylistAdapter(mainViewModel)
                 adapter.submitList(it)
                 playlist_recycle_view.adapter = adapter
+
+                val builder: AlbumsDataInfo = AlbumsDataInfo(it)
+                val albums = builder.getAlbumsData()
+                print("albums")
+                val expandAdapter = PlaylistExpandebleAdapter(albums, requireContext())
+//                simpleExpandableListView.setAdapter(expandAdapter)
             }
         })
 

@@ -7,11 +7,11 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import kotlinx.android.synthetic.main.playlist_item_view.view.*
+import kotlinx.android.synthetic.main.playlist_child_item_view.view.*
 import stas.batura.musicproject.MainAcivityViewModel
 import stas.batura.musicproject.R
-import stas.batura.musicproject.databinding.PlaylistFragmentBinding
-import stas.batura.musicproject.databinding.PlaylistItemViewBinding
+import stas.batura.musicproject.databinding.PlaylistChildItemViewBinding
+import stas.batura.musicproject.databinding.PlaylistChildItemViewBindingImpl
 import stas.batura.musicproject.musicservice.MusicRepository
 
 class PlaylistAdapter (val mainAcivityViewModel: MainAcivityViewModel):
@@ -25,7 +25,7 @@ class PlaylistAdapter (val mainAcivityViewModel: MainAcivityViewModel):
         holder.bind(getItem(position))
     }
 
-    class ViewHolder (val binding: PlaylistItemViewBinding,
+    class ViewHolder (val binding: PlaylistChildItemViewBinding,
                       val mainAcivityViewModel: MainAcivityViewModel) : RecyclerView.ViewHolder (binding.root) {
 
         fun bind (track: MusicRepository.Track) {
@@ -50,7 +50,7 @@ class PlaylistAdapter (val mainAcivityViewModel: MainAcivityViewModel):
         companion object {
             fun from(parent: ViewGroup, mainAcivityViewModel: MainAcivityViewModel): ViewHolder {
                 val layoutInflater = LayoutInflater.from(parent.context)
-                val binding = PlaylistItemViewBinding.inflate(layoutInflater, parent, false)
+                val binding = PlaylistChildItemViewBinding.inflate(layoutInflater, parent, false)
                 return ViewHolder(binding, mainAcivityViewModel)
             }
         }
@@ -73,5 +73,7 @@ class PlaylistAdapter (val mainAcivityViewModel: MainAcivityViewModel):
             return  oldItem == newItem
         }
     }
+
+
 
 }
