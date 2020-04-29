@@ -26,14 +26,16 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/playlist_recycle_view"
                 android:layout_width="match_parent"
-                android:layout_height="300dp" />
+                android:layout_height="300dp"
+                android:visibility="gone"
+                />
 
-<!--            <ExpandableListView-->
-<!--                android:id="@+id/simpleExpandableListView"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:divider="#0f0"-->
-<!--                android:dividerHeight="1dp" />-->
+            <ExpandableListView
+                android:id="@+id/simpleExpandableListView"
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
+                android:divider="#0f0"
+                android:dividerHeight="1dp" />
 
             <LinearLayout
                 android:layout_width="match_parent"

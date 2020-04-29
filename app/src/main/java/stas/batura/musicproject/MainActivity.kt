@@ -135,18 +135,6 @@ private val NUM_PAGES = 2
 
             }
         })
-
-//        exoplayer_control.setVrButtonListener(  {
-//
-//            when (it.id) {
-//            }
-//
-
-
-        val songsManager = SongsManager();
-        val playlist = songsManager.playList
-//        createMusicService()
-
         createBasicNavView()
     }
 

@@ -11,7 +11,6 @@ import kotlinx.android.synthetic.main.playlist_child_item_view.view.*
 import stas.batura.musicproject.MainAcivityViewModel
 import stas.batura.musicproject.R
 import stas.batura.musicproject.databinding.PlaylistChildItemViewBinding
-import stas.batura.musicproject.databinding.PlaylistChildItemViewBindingImpl
 import stas.batura.musicproject.musicservice.MusicRepository
 
 class PlaylistAdapter (val mainAcivityViewModel: MainAcivityViewModel):

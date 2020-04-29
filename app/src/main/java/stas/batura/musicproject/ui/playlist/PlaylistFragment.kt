@@ -1,11 +1,13 @@
 package stas.batura.musicproject.ui.playlist
 
 import android.os.Bundle
+import android.support.v4.media.session.PlaybackStateCompat
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ExpandableListView
 import androidx.core.view.MotionEventCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -74,13 +76,37 @@ class PlaylistFragment : Fragment (), DialogSelectionListener {
             if (it != null) {
                 val adapter = PlaylistAdapter(mainViewModel)
                 adapter.submitList(it)
-                playlist_recycle_view.adapter = adapter
+//                playlist_recycle_view.adapter = adapter
 
                 val builder: AlbumsDataInfo = AlbumsDataInfo(it)
                 val albums = builder.getAlbumsData()
                 print("albums")
-                val expandAdapter = PlaylistExpandebleAdapter(albums, requireContext())
-//                simpleExpandableListView.setAdapter(expandAdapter)
+                val expandAdapter = PlaylistExpandJava(albums)
+                simpleExpandableListView.setAdapter(expandAdapter)
+                for (i in 0 until expandAdapter.groupCount) {
+                    simpleExpandableListView.expandGroup(i)
+                }
+                simpleExpandableListView.setOnChildClickListener(object : ExpandableListView.OnChildClickListener {
+                    override fun onChildClick(
+                        parent: ExpandableListView?,
+                        v: View?,
+                        groupPosition: Int,
+                        childPosition: Int,
+                        id: Long
+                    ): Boolean {
+                        val track = expandAdapter.getTrack(groupPosition, childPosition)
+                        if (mainViewModel.callbackChanges.value?.state == PlaybackStateCompat.STATE_PLAYING) {
+                            mainViewModel.onItemClicked(track!!.uri)
+                        } else {
+                            if (track!!.isPlaying) {
+                                mainViewModel.playClicked()
+                            } else {
+                                mainViewModel.onItemClicked(track!!.uri)
+                            }
+                        }
+                        return false
+                    }
+                })
             }
         })
 

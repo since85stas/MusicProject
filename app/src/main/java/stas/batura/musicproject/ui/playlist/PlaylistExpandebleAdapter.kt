@@ -5,11 +5,12 @@ import android.database.DataSetObserver
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.BaseExpandableListAdapter
 import android.widget.ExpandableListAdapter
 import android.widget.TextView
 import stas.batura.musicproject.R
 
-class PlaylistExpandebleAdapter : ExpandableListAdapter  {
+class PlaylistExpandebleAdapter : BaseExpandableListAdapter {
 
     private lateinit var albums: List<AlbumsDataInfo.AlbumsViewHolder>
 
@@ -32,7 +33,7 @@ class PlaylistExpandebleAdapter : ExpandableListAdapter  {
     }
 
     override fun isEmpty(): Boolean {
-        return  albums.size == 0
+        return  false
     }
 
     override fun registerDataSetObserver(observer: DataSetObserver?) {
@@ -71,7 +72,7 @@ class PlaylistExpandebleAdapter : ExpandableListAdapter  {
 
         if (convertView == null) {
             var view: View? = null
-            val inflater = contex.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+            val inflater = parent!!.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
             view = inflater.inflate(R.layout.playlist_child_expand, null)
             view.findViewById<TextView>(R.id.track_child_title).text =
                 albums.get(groupPosition).albumTracks!!.get(childPosition).title
@@ -83,7 +84,7 @@ class PlaylistExpandebleAdapter : ExpandableListAdapter  {
     }
 
     override fun areAllItemsEnabled(): Boolean {
-        return true
+        return false
     }
 
     override fun getChildId(groupPosition: Int, childPosition: Int): Long {
@@ -100,9 +101,9 @@ class PlaylistExpandebleAdapter : ExpandableListAdapter  {
         convertView: View?,
         parent: ViewGroup?
     ): View {
-        if (convertView == null) {
+        if (convertView == null ) {
             var view: View? = null
-            val inflater = contex.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+            val inflater = parent!!.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
             view = inflater.inflate(R.layout.playlist_parent_item_view, null)
             view.findViewById<TextView>(R.id.parent_albums_title_view).text =
                 albums.get(groupPosition).albumName
