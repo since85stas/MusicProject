@@ -74,6 +74,8 @@ private val NUM_PAGES = 2
      */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+
         setContentView(R.layout.activity_main)
         val toolbar: Toolbar = findViewById(R.id.toolbar)
 
@@ -95,6 +97,8 @@ private val NUM_PAGES = 2
         mainViewModel = ViewModelProviders
             .of(this, InjectorUtils.provideMainViewModel(this.application))
             .get(MainAcivityViewModel::class.java)
+
+        mainViewModel.onActivityCreated()
 
         mainViewModel.createServiceListner.observe(this, Observer {
             if (it) {

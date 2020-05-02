@@ -4,6 +4,7 @@ import android.net.Uri;
 import android.os.Environment;
 
 import java.io.File;
+import java.io.FileFilter;
 import java.io.FilenameFilter;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -80,18 +81,11 @@ public class SongsManager {
     private void getTracksInSubs(File file) {
         if (file != null) {
             for (File fileIn : file.listFiles(new FileExtensionFilter())) {
-                File[] filesIn = fileIn.listFiles(new FileExtensionFilter());
-                if (filesIn != null && filesIn.length > 0) {
-                    for (File tracks : filesIn
-                    ) {
-                        files.add(tracks);
-                    }
-                }
-                if (fileIn.isDirectory()) {
-                    getTracksInSubs(fileIn);
-                } else if (fileIn.isFile()) {
-                    files.add(fileIn);
-                }
+                files.add(fileIn);
+            }
+            for (File fileDir: file.listFiles(new FileDirFilter())
+                 ) {
+                getTracksInSubs(fileDir);
             }
         }
 }
@@ -102,6 +96,14 @@ public class SongsManager {
 static class FileExtensionFilter implements FilenameFilter {
     public boolean accept(File dir, String name) {
         return (name.endsWith(".mp3") || name.endsWith(".MP3"));
+    }
+}
+
+static class FileDirFilter implements FileFilter {
+
+    @Override
+    public boolean accept(File pathname) {
+        return pathname.isDirectory();
     }
 }
 }

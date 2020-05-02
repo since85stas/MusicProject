@@ -182,6 +182,14 @@ class MainAcivityViewModel (private val application: Application,
     }
 
     fun onActivityDestroyed() {
+        setAllTracksNotPlaying()
+    }
+
+    fun onActivityCreated() {
+        repository.setAllTrackIsNOTPlaying()
+    }
+
+    fun setAllTracksNotPlaying() {
         repository.setAllTrackIsNOTPlaying()
     }
 

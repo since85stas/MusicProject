@@ -86,6 +86,9 @@ class PlaylistFragment : Fragment (), DialogSelectionListener {
                 for (i in 0 until expandAdapter.groupCount) {
                     simpleExpandableListView.expandGroup(i)
                 }
+                simpleExpandableListView.setSelectedChild(
+                        expandAdapter.selAlbId, expandAdapter.selTrackId, true)
+
                 simpleExpandableListView.setOnChildClickListener(object : ExpandableListView.OnChildClickListener {
                     override fun onChildClick(
                         parent: ExpandableListView?,

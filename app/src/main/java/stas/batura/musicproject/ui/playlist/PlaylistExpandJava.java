@@ -19,8 +19,24 @@ public class PlaylistExpandJava extends BaseExpandableListAdapter {
 
     List<AlbumsDataInfo.AlbumsViewHolder> albums;
 
+    int selAlbId = 0;
+    int selTrackId = 0;
+
     PlaylistExpandJava(List<AlbumsDataInfo.AlbumsViewHolder> albums) {
         this.albums = albums;
+        findSelectedTrack();
+    }
+
+    private void findSelectedTrack() {
+
+        for (int i = 0; i < albums.size(); i++) {
+            for (int j = 0; j < albums.get(i).getAlbumTracks().size(); j++) {
+                if (albums.get(i).getAlbumTracks().get(j).isPlaying) {
+                    selAlbId = i;
+                    selTrackId = j;
+                }
+            }
+        }
     }
 
     @Override
@@ -55,7 +71,7 @@ public class PlaylistExpandJava extends BaseExpandableListAdapter {
 
     @Override
     public boolean hasStableIds() {
-        return false;
+        return true;
     }
 
     @Override
@@ -77,15 +93,25 @@ public class PlaylistExpandJava extends BaseExpandableListAdapter {
         }
             TextView textView = convertView.findViewById(R.id.track_child_title);
             textView.setText(albums.get(groupPosition).getAlbumTracks().get(childPosition).title);
+
+            TextView textViewg = convertView.findViewById(R.id.group_test_id);
+            textViewg.setText("" + groupPosition);
+
+        TextView textViewc = convertView.findViewById(R.id.child_test_id);
+        textViewc.setText("" + childPosition);
+
+
             if (albums.get(groupPosition).getAlbumTracks().get(childPosition).isPlaying ) {
                 textView.setBackgroundColor(parent.getContext().getResources().getColor(R.color.colorAccent));
+            } else {
+                textView.setBackgroundColor(parent.getContext().getResources().getColor(R.color.backGroundPrim));
             }
             return convertView;
     }
 
     @Override
     public boolean isChildSelectable(int groupPosition, int childPosition) {
-        return false;
+        return true;
     }
 
     @Override
