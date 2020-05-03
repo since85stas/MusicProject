@@ -62,11 +62,16 @@ class Repository (private val dataSource : TracksDao) : TracksDao() {
     /**
      * сохраняем список треков
      */
-    fun insertTracks(tracks: List<TrackKot>) {
-            for (track:TrackKot in tracks) {
-                insertTrack(track)
-            }
+    override fun insertTracks(tracks: List<TrackKot>) {
+        ioScope.launch {
+            dataSource.insertTracks(tracks)
+        }
     }
+    //    fun insertTracks(tracks: List<TrackKot>) {
+//            for (track:TrackKot in tracks) {
+//                insertTrack(track)
+//            }
+//    }
 
     /**
      * получаем список все треков в заданном плейлисте

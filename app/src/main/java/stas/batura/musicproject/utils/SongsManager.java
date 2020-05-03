@@ -2,6 +2,7 @@ package stas.batura.musicproject.utils;
 
 import android.net.Uri;
 import android.os.Environment;
+import android.util.Log;
 
 import java.io.File;
 import java.io.FileFilter;
@@ -63,13 +64,25 @@ public class SongsManager {
 
                 Long duration = dataInfo.getDuration();
 
+                String year = dataInfo.getYear();
+                int yearInt = 0;
+                try {
+                    if (!year.equals("")) {
+                        yearInt = Integer.parseInt(year);
+                    };
+                }catch (Exception e) {
+                    Log.d("songmanager", "getPlayList: " +e);
+                }
+
                 TrackKot rackKot = new TrackKot(playlistId,
                         title,
                         artist,
                         album,
                         R.drawable.image266680,
                         uri,
-                        duration
+                        duration,
+                        dataInfo.getBitrate(),
+                        yearInt
                 );
                 trackKot.add(rackKot);
             }

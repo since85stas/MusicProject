@@ -27,6 +27,8 @@ class AlbumsDataInfo {
     }
 
     class AlbumsViewHolder {
+
+        var albumYear: Int = 0
         var albumName: String? = null
         var albumTracks: MutableList<MusicRepository.Track>? = null
 
@@ -37,6 +39,7 @@ class AlbumsDataInfo {
 
         fun addTrack(track: MusicRepository.Track) {
             albumTracks!!.add(track)
+            albumYear = track.year
         }
     }
 

@@ -19,6 +19,10 @@ class MediaDataInfo {
 
             val hasPicture = metaRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_HAS_IMAGE)
 
+            val year = metaRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_YEAR)
+
+            val bit = metaRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_BITRATE)
+
             var duration: String =
                 metaRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION)
             var dur: Long = duration.toLong()
@@ -26,6 +30,36 @@ class MediaDataInfo {
             return dur;
         }
         return 0L
+    }
+
+    fun getYear(): String {
+        if (filePath != null) {
+            var metaRetriever: MediaMetadataRetriever = MediaMetadataRetriever()
+            metaRetriever.setDataSource(filePath!!.absolutePath)
+
+            val year = metaRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_YEAR)
+
+            metaRetriever.release()
+            if (year != null) {
+                return year
+            } else {
+                return ""
+            }
+        }
+        return ""
+    }
+
+    fun getBitrate(): String {
+        if (filePath != null) {
+            var metaRetriever: MediaMetadataRetriever = MediaMetadataRetriever()
+            metaRetriever.setDataSource(filePath!!.absolutePath)
+
+            val year = metaRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_BITRATE)
+
+            metaRetriever.release()
+            return year
+        }
+        return ""
     }
 
     fun getArtist(): String {

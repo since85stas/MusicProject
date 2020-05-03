@@ -6,9 +6,18 @@
 
     <TextView
         android:id="@+id/parent_albums_title_view"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="parent"
+        android:layout_marginLeft="24dp"
+        android:textSize="16sp"
+        />
+
+    <TextView
+        android:id="@+id/parent_albums_year"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="1985"
         android:layout_marginLeft="24dp"
         android:textSize="16sp"
         />

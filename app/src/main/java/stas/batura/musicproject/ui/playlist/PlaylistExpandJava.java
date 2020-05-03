@@ -82,6 +82,9 @@ public class PlaylistExpandJava extends BaseExpandableListAdapter {
         }
         TextView textView = convertView.findViewById(R.id.parent_albums_title_view);
         textView.setText(albums.get(groupPosition).getAlbumName());
+
+        TextView textViewYear = convertView.findViewById(R.id.parent_albums_year);
+        textViewYear.setText("" + albums.get(groupPosition).getAlbumYear());
         return convertView;
     }
 

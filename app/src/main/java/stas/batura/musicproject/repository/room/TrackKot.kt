@@ -25,7 +25,15 @@ data class TrackKot (
     var uri: Uri? = null,
 
     @ColumnInfo(name = "duration")
-    var duration: Long = 0L
+    var duration: Long = 0L,
+
+    @ColumnInfo(name = "bitrate")
+    var bitrate: String = "",
+
+    @ColumnInfo(name = "year")
+    var year: Int = 0
+
+
 ) {
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id")

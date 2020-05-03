@@ -158,8 +158,11 @@ public final class MusicRepository {
         public Uri uri;
         public Long duration; // in ms
         public boolean isPlaying;
+        public String bitrate;
+        public int year;
 
-        Track(int id, String title, String artist,String album, int bitmapResId, Uri uri, Long duration, boolean is) {
+        Track(int id, String title, String artist,String album, int bitmapResId, Uri uri, Long duration, boolean is,
+              String bitrate, int year) {
             this.trackId = id;
             this.title = title;
             this.artist = artist;
@@ -168,6 +171,8 @@ public final class MusicRepository {
             this.uri = uri;
             this.duration = duration;
             this.isPlaying = is;
+            this.bitrate = bitrate;
+            this.year    = year;
         }
 
         Track(TrackKot trackKot) {
@@ -179,6 +184,8 @@ public final class MusicRepository {
             this.uri = trackKot.getUri();
             this.duration = trackKot.getDuration();
             this.isPlaying = trackKot.isPlaying();
+            this.bitrate = trackKot.getBitrate();
+            this.year    = trackKot.getYear();
         }
 
         String getTitle() {

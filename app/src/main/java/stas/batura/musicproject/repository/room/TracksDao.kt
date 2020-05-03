@@ -24,13 +24,16 @@ abstract class TracksDao {
     @Insert
     abstract fun insertTrack(trackKot: TrackKot)
 
-    @Query ("SELECT * FROM tracks_table WHERE track_playlist_id = :playlistId ORDER BY id")
+    @Insert
+    abstract fun insertTracks(tracks: List<TrackKot>)
+
+    @Query ("SELECT * FROM tracks_table WHERE track_playlist_id = :playlistId ORDER BY id ASC")
     abstract fun getAllTracksFromPlaylist(playlistId: Int): List<TrackKot>?
 
     @Query ("SELECT * FROM tracks_table ORDER BY id")
     abstract fun getAllTracks(): List<TrackKot>?
 
-    @Query ("SELECT * FROM tracks_table WHERE track_playlist_id IN ( SELECT current_playlist_id FROM main_table)")
+    @Query ("SELECT * FROM tracks_table  WHERE track_playlist_id IN ( SELECT current_playlist_id FROM main_table) ORDER BY year")
     abstract fun getAllTracksFromMainPlaylist(): List<TrackKot>?
 
     @Query ("UPDATE tracks_table SET is_playing = 1 WHERE id = :trackId AND track_playlist_id IN ( SELECT current_playlist_id FROM main_table) ")
