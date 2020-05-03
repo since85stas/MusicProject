@@ -114,8 +114,9 @@ private val NUM_PAGES = 2
         })
 
         mainViewModel.mediaController.observe(this, Observer {
-            if (it != null) {
+            if (it != null && mainViewModel.playIsClicked) {
                 mainViewModel.playClicked()
+                mainViewModel.playIsClicked = false
             }
         })
 

@@ -99,12 +99,12 @@ class PlaylistFragment : Fragment (), DialogSelectionListener {
                     ): Boolean {
                         val track = expandAdapter.getTrack(groupPosition, childPosition)
                         if (mainViewModel.callbackChanges.value?.state == PlaybackStateCompat.STATE_PLAYING) {
-                            mainViewModel.onItemClicked(track!!.uri)
+                            mainViewModel.onItemClickedPlayed(track.uri)
                         } else {
-                            if (track!!.isPlaying) {
+                            if (track.isPlaying) {
                                 mainViewModel.playClicked()
                             } else {
-                                mainViewModel.onItemClicked(track!!.uri)
+                                mainViewModel.onItemClicked(track.uri)
                             }
                         }
                         return false

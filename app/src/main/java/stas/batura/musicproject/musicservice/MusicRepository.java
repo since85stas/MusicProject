@@ -107,6 +107,10 @@ public final class MusicRepository {
         return tracks.getValue().get(0);
     }
 
+    public void setPlayByUri(Uri uri) {
+        currentItemIndex = getIndexByUri(uri);
+    }
+
     Track getCurrent() {
             setIsPlaying();
             return tracks.getValue().get(currentItemIndex);

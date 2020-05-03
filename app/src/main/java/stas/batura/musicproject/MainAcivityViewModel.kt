@@ -54,6 +54,8 @@ class MainAcivityViewModel (private val application: Application,
 
     val currentTrackPlaying = repository.getPlayingTrack()
 
+    var playIsClicked: Boolean = false
+
     init {
         println("init main view model")
     }
@@ -63,6 +65,7 @@ class MainAcivityViewModel (private val application: Application,
      */
     fun checkServiseCreation() {
         if (!_createServiceListner.value!!) {
+            playIsClicked = true
             _createServiceListner.value = true
         } else {
             playClicked()
@@ -116,7 +119,10 @@ class MainAcivityViewModel (private val application: Application,
 
 
     fun playClicked () {
-        if (mediaController.value != null) mediaController.value!!.transportControls.play()
+        if (mediaController.value != null) {
+
+            mediaController.value!!.transportControls.play()
+        }
     }
 
     fun pauseyClicked () {
@@ -140,7 +146,16 @@ class MainAcivityViewModel (private val application: Application,
     }
 
     fun onItemClicked (uri: Uri) {
-        if (mediaController.value != null) mediaController.value!!.transportControls.playFromUri(uri, null)
+//        initMusicService(false)
+        musicRepository.setPlayByUri(uri)
+        checkServiseCreation()
+//        if (mediaController.value != null) mediaController.value!!.transportControls.playFromUri(uri, null)
+    }
+
+    fun onItemClickedPlayed(uri: Uri) {
+        musicRepository.setPlayByUri(uri)
+//        playClicked()
+        mediaController.value!!.transportControls.playFromUri(uri, null)
     }
 
     /**
@@ -183,10 +198,12 @@ class MainAcivityViewModel (private val application: Application,
 
     fun onActivityDestroyed() {
         setAllTracksNotPlaying()
+        _createServiceListner.value = false
     }
 
     fun onActivityCreated() {
         repository.setAllTrackIsNOTPlaying()
+//        checkServiseCreation()
     }
 
     fun setAllTracksNotPlaying() {
