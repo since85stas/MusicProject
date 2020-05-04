@@ -14,7 +14,7 @@ class AlbumsDataInfo {
 
     fun getAlbumsData(): List<AlbumsViewHolder> {
         var list = ArrayList<AlbumsViewHolder>()
-        var albumNames = HashMap<String, AlbumsViewHolder>()
+        var albumNames = LinkedHashMap<String, AlbumsViewHolder>()
 
         for (track in tracks) {
             albumNames.put(track.album, AlbumsViewHolder(track.album))

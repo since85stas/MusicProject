@@ -74,8 +74,8 @@ class PlaylistFragment : Fragment (), DialogSelectionListener {
 
         playlistViewModel.songListViewModel.observe(viewLifecycleOwner, Observer {
             if (it != null) {
-                val adapter = PlaylistAdapter(mainViewModel)
-                adapter.submitList(it)
+//                val adapter = PlaylistAdapter(mainViewModel)
+//                adapter.submitList(it)
 //                playlist_recycle_view.adapter = adapter
 
                 val builder: AlbumsDataInfo = AlbumsDataInfo(it)

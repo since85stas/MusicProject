@@ -63,8 +63,10 @@ class Repository (private val dataSource : TracksDao) : TracksDao() {
      * сохраняем список треков
      */
     override fun insertTracks(tracks: List<TrackKot>) {
-        ioScope.launch {
-            dataSource.insertTracks(tracks)
+        runBlocking {
+            ioScope.async {
+                dataSource.insertTracks(tracks)
+            }.await()
         }
     }
     //    fun insertTracks(tracks: List<TrackKot>) {
@@ -113,8 +115,10 @@ class Repository (private val dataSource : TracksDao) : TracksDao() {
      * удаляем все трэки из основного плэйлиста
      */
     override fun deleteTracksInMainPlayList() {
-        ioScope.launch {
-            dataSource.deleteTracksInMainPlayList()
+        runBlocking {
+            ioScope.async {
+                dataSource.deleteTracksInMainPlayList()
+            }.await()
         }
     }
 

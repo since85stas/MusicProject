@@ -4,6 +4,8 @@ import android.net.Uri;
 import android.os.Environment;
 import android.util.Log;
 
+import androidx.annotation.VisibleForTesting;
+
 import java.io.File;
 import java.io.FileFilter;
 import java.io.FilenameFilter;
@@ -56,12 +58,9 @@ public class SongsManager {
                 String title = dataInfo.getTitle();
                 String album = dataInfo.getAlbum();
                 String artist = dataInfo.getArtist();
-                int pos = fileStr.indexOf("sdcard/");
-                String localPath = fileStr.substring(pos + "sdcard/".length());
-                Uri uri = Uri.fromFile(new File(
-                        Environment.getExternalStorageDirectory().getAbsolutePath() +
-                                "/" + localPath));
-
+//                Uri uri = getUriValue(fileStr);
+                Uri uri = Uri.fromFile(new File(getUriValue(fileStr)
+                        ));
                 Long duration = dataInfo.getDuration();
 
                 String year = dataInfo.getYear();
@@ -91,6 +90,15 @@ public class SongsManager {
         return trackKot;
     }
 
+    @VisibleForTesting
+    private String getUriValue(String fileStr) {
+        int pos = fileStr.indexOf("sdcard/");
+        String localPath = fileStr.substring(pos + "sdcard/".length());
+
+        return Environment.getExternalStorageDirectory().getAbsolutePath() +
+                "/" + localPath;
+    }
+
     private void getTracksInSubs(File file) {
         if (file != null) {
             for (File fileIn : file.listFiles(new FileExtensionFilter())) {
@@ -101,7 +109,7 @@ public class SongsManager {
                 getTracksInSubs(fileDir);
             }
         }
-}
+    }
 
 /**
  * Class to filter files which are having .mp3 extension
