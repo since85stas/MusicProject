@@ -28,13 +28,15 @@ import java.io.File
 import java.lang.NullPointerException
 
 class MainAcivityViewModel (private val application: Application,
-                            private val database:TracksDao) : ViewModel(  ) {
+                            private val repository: Repository,
+                            val musicRepository: MusicRepository
+                            ) : ViewModel(  ) {
 
     // music repository
-    val musicRepository : MusicRepository = MusicRepository.getInstance(application)
+//    val musicRepository : MusicRepository = MusicRepository.getInstance(application)
 
     // database repository
-    private val repository : Repository = Repository(database)
+//    private val repository : Repository = Repository(database)
 
     private var playerServiceBinder: MusicService.PlayerServiceBinder? = null
     var mediaController: MutableLiveData<MediaControllerCompat?> = MutableLiveData()
@@ -215,13 +217,13 @@ class MainAcivityViewModel (private val application: Application,
      */
     class Factory(
         private val application: Application,
-        private val data : TracksDao
+        private val repository: Repository,
+        private val musicRepository: MusicRepository
     ) : ViewModelProvider.Factory {
         @Suppress("unchecked_cast")
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
             if (modelClass.isAssignableFrom(MainAcivityViewModel::class.java)) {
-//                mainAcivityViewModel =
-                return MainAcivityViewModel(application, data) as T
+                return MainAcivityViewModel(application, repository, musicRepository) as T
             }
             throw IllegalArgumentException("Unknown ViewModel class")
         }

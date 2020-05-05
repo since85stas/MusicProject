@@ -15,6 +15,7 @@ import stas.batura.musicproject.repository.Repository;
 import stas.batura.musicproject.repository.room.TrackKot;
 import stas.batura.musicproject.repository.room.TracksDao;
 import stas.batura.musicproject.repository.room.TracksDatabase;
+import stas.batura.musicproject.utils.InjectorUtils;
 
 //https://simpleguics2pygame.readthedocs.io/en/latest/_static/links/snd_links.html
 public final class MusicRepository {
@@ -39,8 +40,8 @@ public final class MusicRepository {
     }
 
     private MusicRepository(Application contex ) {
-        TracksDao tracksDao = TracksDatabase.Companion.getInstance(contex).getTracksDatabaseDao();
-        repository = new Repository(tracksDao);
+//        TracksDao tracksDao = TracksDatabase.Companion.getInstance(contex).getTracksDatabaseDao();
+        repository = InjectorUtils.INSTANCE.provideRep(contex);
 
         getDbTracks();
 //        tracksDb = repository.getAllTracks();

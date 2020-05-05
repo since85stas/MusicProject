@@ -47,6 +47,19 @@ buildscript {
             version_room = '2.2.3'
             version_lifecycle_extensions = '2.2.0'
             dagger_version = "2.27"
+
+            // testing
+            junitVersion = '4.12'
+            mockitoVersion = '2.8.9'
+            robolectricVersion = '4.3.1'
+            archTestingVersion = '2.0.0'
+            coroutinesVersion = '1.2.1'
+            androidXVersion = '1.0.0'
+            androidXTestCoreVersion = '1.2.0'
+            androidXTestExtKotlinRunnerVersion = '1.1.1'
+            espressoVersion = '3.2.0-beta01'
+            fragmentVersion = '1.1.0-alpha07'
+            fragmentKtxVersion = '1.1.0-rc01'
         }
 }
 
