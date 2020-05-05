@@ -46,6 +46,10 @@ class FakeRepository(): TracksDao() {
         return trackList.values.toList()
     }
 
+    override fun deleteAllTracks() {
+        trackList = HashMap()
+    }
+
     override fun getAllTracksFromMainPlaylist(): List<TrackKot>? {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }

@@ -45,6 +45,9 @@ abstract class TracksDao {
     @Query ("UPDATE tracks_table SET is_playing = 0")
     abstract fun setAllTrackIsNOTPlaying()
 
+    @Query ("DELETE FROM tracks_table")
+    abstract fun deleteAllTracks()
+
     //----------------------------PLAYLIST PART---------------------------------------------------------
     @Query ("DELETE FROM tracks_table WHERE track_playlist_id = :playlistId")
     abstract fun deleteTracksInPlayList(playlistId: Int)

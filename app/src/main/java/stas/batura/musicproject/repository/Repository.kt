@@ -154,6 +154,10 @@ class Repository (private val dataSource : TracksDao) : TracksDao() {
         }
     }
 
+    override fun deleteAllTracks() {
+        dataSource.deleteAllTracks()
+    }
+
     //----------------------------PLAYLIST PART---------------------------------------------------------
     /**
      * вставляем новый плейлист в базу

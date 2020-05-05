@@ -32,6 +32,7 @@ import com.google.android.exoplayer2.upstream.FileDataSource.FileDataSourceExcep
 import com.google.android.exoplayer2.upstream.cache.*
 import stas.batura.musicproject.MainActivity
 import stas.batura.musicproject.R
+import stas.batura.musicproject.utils.InjectorUtils
 import java.io.File
 
 class MusicService (): Service () {
@@ -64,12 +65,15 @@ class MusicService (): Service () {
     private var extractorsFactory: ExtractorsFactory? = null
     private var dataSourceFactory: DataSource.Factory? = null
 
-    val musicRepository: MusicRepository = MusicRepository.getInstance(application)
+    lateinit var musicRepository: MusicRepository
 
     var fileDataSource : DataSource? = null
 
     override fun onCreate() {
         super.onCreate()
+
+        musicRepository = MusicRepository.getInstance(InjectorUtils.provideRep(application))
+
 
         println("Music service created")
 

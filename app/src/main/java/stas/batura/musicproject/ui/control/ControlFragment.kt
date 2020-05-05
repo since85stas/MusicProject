@@ -42,11 +42,6 @@ class ControlFragment () : Fragment() {
 
         val view = inflater.inflate(R.layout.control_fragment_new, container, false)
 
-//        view.setOnTouchListener(OnTouchListener { v, event ->
-//                onTouchEvent(event)
-//            true
-//        })
-
         return view
     }
 
@@ -87,47 +82,8 @@ class ControlFragment () : Fragment() {
             }
         })
 
-
-
         super.onActivityCreated(savedInstanceState)
     }
-
-//    /**
-//     * проверяем слайд вправо и влево
-//     */
-//    private fun onTouchEvent(ev: MotionEvent?): Boolean {
-//
-//        val myAction: Int = MotionEventCompat.getActionMasked(ev)
-//
-//        return when (myAction) {
-//            MotionEvent.ACTION_UP -> {
-//                x2 = ev!!.x
-//                val deltaX = x2 - x1
-//                if (Math.abs(deltaX) > MIN_DISTANCE) {
-//                    if (deltaX < 0) {
-//                        print("right")
-//                    } else {
-//                        findNavController().navigate(R.id.playlistFragment)
-//                    }
-//                }
-//                true
-//            }
-//
-//            MotionEvent.ACTION_DOWN -> {
-//                x1 = ev!!.getX()
-//                true
-//            }
-//
-//            MotionEvent.ACTION_MOVE -> {
-//                false
-//            }
-//            MotionEvent.ACTION_CANCEL -> {
-//                true
-//            }
-//            else -> false
-//        }
-//    }
-
 
 
 }

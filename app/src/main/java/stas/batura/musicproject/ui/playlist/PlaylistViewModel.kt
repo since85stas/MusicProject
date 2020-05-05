@@ -11,7 +11,7 @@ import stas.batura.musicproject.repository.Repository
 import stas.batura.musicproject.repository.room.TracksDao
 import stas.batura.musicproject.utils.SongsManager
 
-class PlaylistViewModel ( val application: Application, val repository: Repository,
+class PlaylistViewModel ( val repository: TracksDao,
                           val musicRepository: MusicRepository) : ViewModel () {
 
 //    val musicRepository : MusicRepository = MusicRepository.getInstance(application)
@@ -29,7 +29,7 @@ class PlaylistViewModel ( val application: Application, val repository: Reposito
 
 //    val repository: Repository = Repository(tracksDao)
 
-    val mainDataLive = repository.getNewMainPlaylistId()
+    val mainDataLive = repository.getMainPlaylistId(0L)
 
     init {
         print("playlist init")
@@ -74,15 +74,14 @@ class PlaylistViewModel ( val application: Application, val repository: Reposito
      * фабрика для создания модели
      */
     class Factory(
-        private val application: Application,
-        private val repository: Repository,
+        private val repository: TracksDao,
         private val musicRepository: MusicRepository
     ) : ViewModelProvider.Factory {
         @Suppress("unchecked_cast")
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
             if (modelClass.isAssignableFrom(PlaylistViewModel::class.java)) {
 //                mainAcivityViewModel =
-                return PlaylistViewModel(application, repository, musicRepository) as T
+                return PlaylistViewModel(repository, musicRepository) as T
             }
             throw IllegalArgumentException("Unknown ViewModel class")
         }

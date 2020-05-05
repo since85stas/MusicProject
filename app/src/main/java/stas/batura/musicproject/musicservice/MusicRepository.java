@@ -22,11 +22,11 @@ public final class MusicRepository {
 
     private static MusicRepository instance;
 
-    private Repository repository;
+    private TracksDao repository;
 
-    public static MusicRepository getInstance(Application contex) {
+    public static MusicRepository getInstance(TracksDao repository) {
         if (instance == null) {
-            instance = new MusicRepository(contex);
+            instance = new MusicRepository(repository);
             return instance;
         } else {
 
@@ -34,14 +34,14 @@ public final class MusicRepository {
         }
     }
 
-    public static MusicRepository recreateMusicRepository(Application contex) {
-        instance = null;
-        return getInstance(contex);
-    }
+//    public static MusicRepository recreateMusicRepository(Application contex) {
+//        instance = null;
+//        return getInstance(contex);
+//    }
 
-    private MusicRepository(Application contex ) {
+    private MusicRepository(TracksDao repository ) {
 //        TracksDao tracksDao = TracksDatabase.Companion.getInstance(contex).getTracksDatabaseDao();
-        repository = InjectorUtils.INSTANCE.provideRep(contex);
+        this.repository = repository;
 
         getDbTracks();
 //        tracksDb = repository.getAllTracks();

@@ -28,15 +28,9 @@ import java.io.File
 import java.lang.NullPointerException
 
 class MainAcivityViewModel (private val application: Application,
-                            private val repository: Repository,
+                            private val repository: TracksDao,
                             val musicRepository: MusicRepository
                             ) : ViewModel(  ) {
-
-    // music repository
-//    val musicRepository : MusicRepository = MusicRepository.getInstance(application)
-
-    // database repository
-//    private val repository : Repository = Repository(database)
 
     private var playerServiceBinder: MusicService.PlayerServiceBinder? = null
     var mediaController: MutableLiveData<MediaControllerCompat?> = MutableLiveData()
@@ -50,7 +44,7 @@ class MainAcivityViewModel (private val application: Application,
     val createServiceListner : LiveData<Boolean>
         get() = _createServiceListner
 
-    val mainDataLive = repository.getNewMainPlaylistId()
+    val mainDataLive = repository.getMainPlaylistId(0L)
 
     val playlistListLive:LiveData<List<Playlist>> = repository.getAllPlaylists()
 
@@ -217,7 +211,7 @@ class MainAcivityViewModel (private val application: Application,
      */
     class Factory(
         private val application: Application,
-        private val repository: Repository,
+        private val repository: TracksDao,
         private val musicRepository: MusicRepository
     ) : ViewModelProvider.Factory {
         @Suppress("unchecked_cast")
