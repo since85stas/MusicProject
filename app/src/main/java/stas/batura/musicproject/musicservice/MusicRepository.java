@@ -2,6 +2,7 @@ package stas.batura.musicproject.musicservice;
 
 import android.app.Application;
 import android.net.Uri;
+import android.util.Log;
 
 import androidx.lifecycle.MutableLiveData;
 
@@ -20,46 +21,27 @@ import stas.batura.musicproject.utils.InjectorUtils;
 //https://simpleguics2pygame.readthedocs.io/en/latest/_static/links/snd_links.html
 public final class MusicRepository {
 
-    private static MusicRepository instance;
-
     private TracksDao repository;
-
-    public static MusicRepository getInstance(TracksDao repository) {
-        if (instance == null) {
-            instance = new MusicRepository(repository);
-            return instance;
-        } else {
-
-            return instance;
-        }
-    }
-
-    private MusicRepository(TracksDao repository ) {
-//        TracksDao tracksDao = TracksDatabase.Companion.getInstance(contex).getTracksDatabaseDao();
-        this.repository = repository;
-
-        getDbTracks();
-//        tracksDb = repository.getAllTracks();
-//        updateTracksLive(tracksDb);
-        System.out.println("end repos creat");
-    }
-
-    public void getDbTracks() {
-        tracksDb = repository.getAllTracksFromMainPlaylist();
-//        traksAll = repository.get/AllTracks();
-//        List<TrackKot> traksId = repository.getAllTracksFromPlaylist(4);
-        updateTracksLive(tracksDb);
-    }
 
     public MutableLiveData<List<Track>> tracks = new  MutableLiveData<>();
 
     public List<TrackKot> tracksDb;
 
-//    public List<TrackKot> traksAll;
-
-//    private final int maxIndex = tracks.getValue().size() - 1;
     private int maxIndex = 20;
+
     private int currentItemIndex = 0;
+
+    public MusicRepository(TracksDao repository ) {
+        this.repository = repository;
+
+        getDbTracks();
+        System.out.println("end repos creat");
+    }
+
+    public void getDbTracks() {
+        tracksDb = repository.getAllTracksFromMainPlaylist();
+        updateTracksLive(tracksDb);
+    }
 
     void updateTracksLive (List<TrackKot> trackKotList) {
 
@@ -69,7 +51,6 @@ public final class MusicRepository {
             tacksRep.add(track );
         }
 
-//        tracks.setValue(tacksRep);
         tracks.postValue(tacksRep);
         maxIndex = tacksRep.size()-1;
     }
@@ -108,8 +89,8 @@ public final class MusicRepository {
     }
 
     Track getCurrent() {
-            setIsPlaying();
-            return tracks.getValue().get(currentItemIndex);
+        setIsPlaying();
+        return tracks.getValue().get(currentItemIndex);
     }
 
     // получаем номер по uri
@@ -122,20 +103,10 @@ public final class MusicRepository {
         return 0;
     }
 
-//    public void addTrack () {
-//        try {
-//            List<Track> newList = new ArrayList<>(Arrays.asList(data));
-//            newList.add(new Track(0, "Triangle", "Jason Shaw", "album" ,R.drawable.image266680, Uri.parse("https://codeskulptor-demos.commondatastorage.googleapis.com/pang/paza-moduless.mp3"), (3 * 60 + 41) * 1000, false));
-//            tracks.setValue(newList);
-//        } catch (Exception e) {
-//            System.out.println(" E " + e);
-//        }
-//    }
-
     // TODO : разобраться с обновлением лайв дэйта
     private void setIsPlaying() {
-        for (Track tr :
-                tracks.getValue()) {
+        Log.d("musicReppos", "setIsPlaying: ");
+        for (Track tr : tracks.getValue()) {
             tr.isPlaying = false;
         }
         repository.setAllTrackIsNOTPlaying();
@@ -214,9 +185,8 @@ public final class MusicRepository {
                     duration.equals(track.duration) &&
                     title.equals(track.title) &&
                     artist.equals(track.artist) &&
-//                    uri.equals(track.uri) &&
-                    isPlaying == track.isPlaying
-                    ;
+                    uri.equals(track.uri) &&
+                    isPlaying == track.isPlaying;
         }
 
         @Override

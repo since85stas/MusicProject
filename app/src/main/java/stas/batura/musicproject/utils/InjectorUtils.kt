@@ -23,9 +23,10 @@ object InjectorUtils {
     var repository: TracksDao? = null
         @VisibleForTesting set
 
+    @Volatile
     var musicRepository: MusicRepository? = null
 
-    private fun provideDao (application: Context) : TracksDao {
+    private fun provideDao (application: Context): TracksDao {
         if (tracksDao == null) {
             tracksDao = TracksDatabase.getInstance(application).tracksDatabaseDao
         }
@@ -41,7 +42,7 @@ object InjectorUtils {
 
     fun provideMusicRep(application: Context): MusicRepository {
         if (musicRepository == null) {
-            musicRepository = MusicRepository.getInstance(provideRep(application))
+            musicRepository = MusicRepository(provideRep(application))
         }
         return musicRepository!!
     }

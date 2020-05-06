@@ -5,7 +5,9 @@ import android.content.Context;
 import android.net.Uri;
 import android.util.Log;
 
+import androidx.arch.core.executor.testing.InstantTaskExecutorRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
+import androidx.test.filters.MediumTest;
 import androidx.test.platform.app.InstrumentationRegistry;
 import org.hamcrest.CoreMatchers.*;
 
@@ -13,6 +15,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.TestRule;
 import org.junit.runner.RunWith;
 
 import java.io.File;
@@ -24,10 +27,14 @@ import stas.batura.musicproject.utils.InjectorUtils;
 
 import static org.junit.Assert.*;
 
+@MediumTest
 @RunWith(AndroidJUnit4.class)
 public class MusicRepositoryTest {
 
     private static final String TAG = "testMusRep";
+
+    @Rule
+    public TestRule rule = new InstantTaskExecutorRule();
 
 //    @Rule
 //    private  instantExecutorRule = new InstantTaskExecutorRule();
@@ -74,16 +81,15 @@ public class MusicRepositoryTest {
     @Test
     public void test_tracksDb_init_value() {
         List<TrackKot> tracks = musicRepository.tracksDb;
-
-//        assertThat(tracks.get(0).equals(trackKot1));
         assertEquals(tracks.get(0), trackKot0);
         assertEquals(tracks.get(2),(trackKot2));
-
     }
 
     @Test
     public void test_tracks_getters() {
-        assertEquals(musicRepository.getCurrent(),(new MusicRepository.Track(trackKot0)));
+        MusicRepository.Track track = musicRepository.getCurrent();
+        MusicRepository.Track trackQ = new MusicRepository.Track(trackKot0);
+        assertEquals(track,trackQ);
     }
 
     @Test
@@ -101,7 +107,7 @@ public class MusicRepositoryTest {
 
     @Test
     public void test_getPrevious_first() {
-        assertEquals (musicRepository.getPrevious(),(new MusicRepository.Track(trackKot1)));
+        assertEquals (musicRepository.getPrevious(),(new MusicRepository.Track(trackKot2)));
     }
 
     @Test

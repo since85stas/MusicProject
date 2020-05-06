@@ -72,7 +72,7 @@ class MusicService (): Service () {
     override fun onCreate() {
         super.onCreate()
 
-        musicRepository = MusicRepository.getInstance(InjectorUtils.provideRep(application))
+        musicRepository = MusicRepository(InjectorUtils.provideRep(application))
 
 
         println("Music service created")
