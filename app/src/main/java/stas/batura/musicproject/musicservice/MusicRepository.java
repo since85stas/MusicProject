@@ -34,11 +34,6 @@ public final class MusicRepository {
         }
     }
 
-//    public static MusicRepository recreateMusicRepository(Application contex) {
-//        instance = null;
-//        return getInstance(contex);
-//    }
-
     private MusicRepository(TracksDao repository ) {
 //        TracksDao tracksDao = TracksDatabase.Companion.getInstance(contex).getTracksDatabaseDao();
         this.repository = repository;
@@ -74,7 +69,7 @@ public final class MusicRepository {
             tacksRep.add(track );
         }
 
-        tracks.setValue(tacksRep);
+//        tracks.setValue(tacksRep);
         tracks.postValue(tacksRep);
         maxIndex = tacksRep.size()-1;
     }
@@ -216,10 +211,10 @@ public final class MusicRepository {
             Track track = (Track) o;
             return trackId == track.trackId &&
                     bitmapResId == track.bitmapResId &&
-                    duration == track.duration &&
+                    duration.equals(track.duration) &&
                     title.equals(track.title) &&
                     artist.equals(track.artist) &&
-                    uri.equals(track.uri) &&
+//                    uri.equals(track.uri) &&
                     isPlaying == track.isPlaying
                     ;
         }

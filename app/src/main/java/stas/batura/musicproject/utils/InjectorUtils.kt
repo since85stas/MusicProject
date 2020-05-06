@@ -25,21 +25,21 @@ object InjectorUtils {
 
     var musicRepository: MusicRepository? = null
 
-    private fun provideDao (application: Application) : TracksDao {
+    private fun provideDao (application: Context) : TracksDao {
         if (tracksDao == null) {
             tracksDao = TracksDatabase.getInstance(application).tracksDatabaseDao
         }
         return tracksDao!!
     }
 
-    fun provideRep (application: Application): TracksDao {
+    fun provideRep (application: Context): TracksDao {
         if (repository == null) {
             repository = Repository(provideDao(application))
         }
         return repository!!
     }
 
-    fun provideMusicRep(application: Application): MusicRepository {
+    fun provideMusicRep(application: Context): MusicRepository {
         if (musicRepository == null) {
             musicRepository = MusicRepository.getInstance(provideRep(application))
         }
@@ -59,7 +59,9 @@ object InjectorUtils {
     fun resetRepository() {
         synchronized(lock) {
             runBlocking {
-                tracksDao!!.deleteAllTracks()
+                if (tracksDao!=null) {
+                    tracksDao!!.deleteAllTracks()
+                }
             }
             // Clear all data to avoid test pollution.
 //            database?.apply {
