@@ -101,14 +101,41 @@ public class SongsManager {
 
     private void getTracksInSubs(File file) {
         if (file != null) {
-            for (File fileIn : file.listFiles(new FileExtensionFilter())) {
-                files.add(fileIn);
-            }
-            for (File fileDir: file.listFiles(new FileDirFilter())
-                 ) {
-                getTracksInSubs(fileDir);
+            if (file.isFile()) {
+                String ext = getFileExtension(file);
+                if (ext.equals(".mp3")) {
+                    files.add(file);
+                }
+            } else {
+                File[] listFiles = file.listFiles(new FileExtensionFilter());
+                if (listFiles != null) {
+                    for (File fileIn : listFiles) {
+                        files.add(fileIn);
+                    }
+                }
+                File[] dirFiles = file.listFiles(new FileExtensionFilter());
+                if (dirFiles != null) {
+                    for (File fileDir : dirFiles
+                    ) {
+                        getTracksInSubs(fileDir);
+                    }
+                }
             }
         }
+    }
+
+    private static String getFileExtension(File file) {
+        String extension = "";
+
+        try {
+            if (file != null && file.exists()) {
+                String name = file.getName();
+                extension = name.substring(name.lastIndexOf("."));
+            }
+        } catch (Exception e) {
+            extension = "";
+        }
+        return extension;
     }
 
 /**
