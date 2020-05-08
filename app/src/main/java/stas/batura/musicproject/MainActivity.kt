@@ -17,6 +17,7 @@ import androidx.navigation.Navigation.findNavController
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI.setupActionBarWithNavController
+import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
@@ -77,11 +78,14 @@ private val NUM_PAGES = 2
 
 
         setContentView(R.layout.activity_main)
-        val toolbar: Toolbar = findViewById(R.id.toolbar)
+//        val toolbar: Toolbar = findViewById(R.id.toolbar)
+//        toolbar.setBackgroundColor(resources.getColor(R.color.colorPrimaryDark))
+////        toolbar.navi
+//        toolbar.setNavigationIcon(R.drawable.ic_menu_send)
+//
+//        setSupportActionBar(toolbar)
+//        getSupportActionBar()!!.setDisplayHomeAsUpEnabled(true);
 
-        setSupportActionBar(toolbar)
-        getSupportActionBar()!!.setDisplayHomeAsUpEnabled(true);
-        toolbar.setNavigationIcon(R.drawable.ic_menu_send)
 
         // Instantiate a ViewPager2 and a PagerAdapter.
         viewPager = findViewById(R.id.pager);
@@ -92,7 +96,7 @@ private val NUM_PAGES = 2
         viewPager!!.orientation = ViewPager2.ORIENTATION_HORIZONTAL
         viewPager!!.setAdapter(pagerAdapter);
 
-        navContr = findNavController(this,R.id.nav_host_fragment)
+//        navContr = findNavController(this,R.id.nav_host_fragment)
 
         mainViewModel = ViewModelProviders
             .of(this, InjectorUtils.provideMainViewModel(this.application))
@@ -187,7 +191,7 @@ private val NUM_PAGES = 2
                 R.id.nav_home, R.id.nav_tools, R.id.nav_share, R.id.nav_add
             ), drawerLayout
         )
-        setupActionBarWithNavController(this, navContr)
+//        setupActionBarWithNavController(navContr, appBarConfiguration)
         navView.setupWithNavController(navContr)
 
 //        createSectionsInMenu(ma)

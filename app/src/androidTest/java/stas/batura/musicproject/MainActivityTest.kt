@@ -68,7 +68,7 @@ class MainActivityTest {
         val activityScenario = ActivityScenario.launch(MainActivity::class.java)
 
         onView(withId(R.id.play_button)).perform(click())
-        onView(withId(R.id.albumTitle)).check(matches(withText("Filosofem1")))
+        onView(withId(R.id.albumTitle)).check(matches(withText("Filosofem")))
         activityScenario.close()
     }
 

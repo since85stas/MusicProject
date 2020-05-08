@@ -13,22 +13,22 @@
         android:orientation="vertical"
         android:layout_gravity="center">
         <!-- Player Header -->
-        <LinearLayout
-            android:id="@+id/player_header_bg"
-            android:layout_width="fill_parent"
-            android:layout_height="60dp"
-            android:orientation="horizontal"
-            android:paddingLeft="5dp"
-            android:paddingRight="5dp">
+<!--        <LinearLayout-->
+<!--            android:id="@+id/player_header_bg"-->
+<!--            android:layout_width="fill_parent"-->
+<!--            android:layout_height="60dp"-->
+<!--            android:orientation="horizontal"-->
+<!--            android:paddingLeft="5dp"-->
+<!--            android:paddingRight="5dp">-->
 
-            <!-- Playlist button -->
-            <ImageButton
-                android:id="@+id/btnPlaylist"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@null"
-                android:src="@android:drawable/ic_menu_edit" />
-        </LinearLayout>
+<!--            &lt;!&ndash; Playlist button &ndash;&gt;-->
+<!--            <ImageButton-->
+<!--                android:id="@+id/btnPlaylist"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:background="@null"-->
+<!--                android:src="@android:drawable/ic_menu_edit" />-->
+<!--        </LinearLayout>-->
 
         <!-- Song Thumbnail Image -->
         <ImageView
