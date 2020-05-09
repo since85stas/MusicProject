@@ -61,4 +61,7 @@ abstract class TracksDao {
     @Query ("SELECT * FROM playlist_table ORDER BY playlist_id")
     abstract fun getAllPlaylists() : LiveData<List<Playlist>>
 
+    @Query ("UPDATE playlist_table SET name= :name WHERE playlist_id = :playlistId")
+    abstract fun updatePlaylistName(playlistId: Int, name: String)
+
 }

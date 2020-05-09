@@ -4,9 +4,15 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.Gravity
+import android.view.LayoutInflater
 import android.view.Menu
+import android.view.MenuItem
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.core.view.GravityCompat
+import androidx.core.view.MenuItemCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
@@ -78,10 +84,12 @@ private val NUM_PAGES = 2
 
 
         setContentView(R.layout.activity_main)
-//        val toolbar: Toolbar = findViewById(R.id.toolbar)
+        val toolbar: Toolbar = findViewById(R.id.toolbar)
 //        toolbar.setBackgroundColor(resources.getColor(R.color.colorPrimaryDark))
 ////        toolbar.navi
-//        toolbar.setNavigationIcon(R.drawable.ic_menu_send)
+        toolbar.setNavigationIcon(R.drawable.ic_menu_send)
+        setSupportActionBar(toolbar)
+
 //
 //        setSupportActionBar(toolbar)
 //        getSupportActionBar()!!.setDisplayHomeAsUpEnabled(true);
@@ -216,11 +224,18 @@ private val NUM_PAGES = 2
         var count : Int = 0
         var listId: MutableList<Int> = ArrayList()
 
+        val view = LayoutInflater.from(this).inflate(R.layout.nav_view_play_item, null)
+
+//        view.findViewById<TextView>()
+//        MenuItemCompat.setActionView(menu.getItem(0),1)
+
+
         // если уже присутствуют секции то их удаляем
         menu.removeGroup(SECT_GROUP_ID)
 
         for (playlist in playlists) {
-            menu.add(SECT_GROUP_ID, playlist.playlistId, 2, playlist.name + count  )
+            menu.add(SECT_GROUP_ID, playlist.playlistId, 2, playlist.name )
+
             count++
             listId.add(playlist.playlistId)
         }
@@ -249,6 +264,16 @@ private val NUM_PAGES = 2
 
     }
 
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId) {
+            android.R.id.home -> {
+                Log.d(TAG, "press")
+                drawer_layout.openDrawer(GravityCompat.START)
+                return true
+            }
+        }
+        return false
+    }
 
     /**
      * навигация в фрагмент с плейлистом

@@ -179,5 +179,8 @@ class Repository (private val dataSource : TracksDao) : TracksDao() {
         return dataSource.getAllPlaylists()
     }
 
+    override fun updatePlaylistName(playlistId: Int, name: String) {
 
+        ioScope.launch { dataSource.updatePlaylistName(playlistId, name) }
+    }
 }

@@ -85,10 +85,13 @@ abstract class TracksDatabase : RoomDatabase() {
             synchronized(this) {
                 val rdc: Callback = object : Callback() {
                     override fun onCreate(db: SupportSQLiteDatabase) {
+                        val playlist = Playlist("Playlist")
                         Executors.newSingleThreadScheduledExecutor()
-                            .execute(Runnable { INSTANCE!!.tracksDatabaseDao.setMainPlaylistId(MainData(0)) })
-                        Log.d("room","dab created")
+                            .execute(Runnable { INSTANCE!!.tracksDatabaseDao.insertPlaylist(playlist) })
 
+                        Executors.newSingleThreadScheduledExecutor()
+                            .execute(Runnable { INSTANCE!!.tracksDatabaseDao.setMainPlaylistId(MainData(1)) })
+                        Log.d("room","dab created")
                     }
 
                     override fun onOpen(db: SupportSQLiteDatabase) {

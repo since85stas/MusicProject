@@ -67,7 +67,13 @@ class PlaylistViewModel ( val repository: TracksDao,
         val songs = songsManager.playList
         repository.insertTracks(songs)
         musicRepository.getDbTracks()
+
+        updatePlaylistName(songsManager.playlistName)
 //        musicRepository = MusicRepository.recreateMusicRepository(application)
+    }
+
+    fun updatePlaylistName(name: String) {
+        repository.updatePlaylistName(mainDataLive.value!!.currentPlaylistId, name)
     }
 
     /**

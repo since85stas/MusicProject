@@ -37,6 +37,14 @@ public class SongsManager {
         MEDIA_PATH = "/mnt/sdcard/Music/red elvises/The Best of Kick-Ass";
     }
 
+    public String getPlaylistName() {
+        File home = new File(MEDIA_PATH);
+
+        String name = home.getName();
+
+        return name;
+    }
+
     /**
      * Function to read all mp3 files from sdcard
      * and store the details in ArrayList
