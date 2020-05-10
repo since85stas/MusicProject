@@ -1,22 +1,16 @@
 package stas.batura.musicproject.musicservice;
 
-import android.app.Application;
 import android.net.Uri;
 import android.util.Log;
 
 import androidx.lifecycle.MutableLiveData;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
-import stas.batura.musicproject.R;
-import stas.batura.musicproject.repository.Repository;
 import stas.batura.musicproject.repository.room.TrackKot;
 import stas.batura.musicproject.repository.room.TracksDao;
-import stas.batura.musicproject.repository.room.TracksDatabase;
-import stas.batura.musicproject.utils.InjectorUtils;
 
 //https://simpleguics2pygame.readthedocs.io/en/latest/_static/links/snd_links.html
 public final class MusicRepository {
@@ -121,20 +115,20 @@ public final class MusicRepository {
         public String title;
         private String artist;
         public String album;
-        private int bitmapResId;
+        private Uri bitmapUri;
         public Uri uri;
         public Long duration; // in ms
         public boolean isPlaying;
         public String bitrate;
         public int year;
 
-        Track(int id, String title, String artist,String album, int bitmapResId, Uri uri, Long duration, boolean is,
+        Track(int id, String title, String artist,String album, Uri bitmapResId, Uri uri, Long duration, boolean is,
               String bitrate, int year) {
             this.trackId = id;
             this.title = title;
             this.artist = artist;
             this.album = album;
-            this.bitmapResId = bitmapResId;
+            this.bitmapUri = bitmapResId;
             this.uri = uri;
             this.duration = duration;
             this.isPlaying = is;
@@ -147,7 +141,7 @@ public final class MusicRepository {
             this.title = trackKot.getTitle();
             this.artist = trackKot.getArtist();
             this.album = trackKot.getAlbum();
-            this.bitmapResId = trackKot.getBitmapResId();
+            this.bitmapUri = trackKot.getBitmapUri();
             this.uri = trackKot.getUri();
             this.duration = trackKot.getDuration();
             this.isPlaying = trackKot.isPlaying();
@@ -163,8 +157,8 @@ public final class MusicRepository {
             return artist;
         }
 
-        int getBitmapResId() {
-            return bitmapResId;
+        Uri getBitmapUri() {
+            return bitmapUri;
         }
 
         Uri getUri() {
@@ -181,7 +175,7 @@ public final class MusicRepository {
             if (o == null || getClass() != o.getClass()) return false;
             Track track = (Track) o;
             return trackId == track.trackId &&
-                    bitmapResId == track.bitmapResId &&
+                    bitmapUri == track.bitmapUri &&
                     duration.equals(track.duration) &&
                     title.equals(track.title) &&
                     artist.equals(track.artist) &&
@@ -191,7 +185,7 @@ public final class MusicRepository {
 
         @Override
         public int hashCode() {
-            return Objects.hash(trackId, title, artist, bitmapResId, uri, duration, isPlaying);
+            return Objects.hash(trackId, title, artist, bitmapUri, uri, duration, isPlaying);
         }
     }
 }

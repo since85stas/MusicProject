@@ -18,8 +18,8 @@ data class TrackKot (
     @ColumnInfo(name = "album")
     var album: String = "album",
 
-    @ColumnInfo(name = "bitmap_res_id")
-    var bitmapResId : Int = 0,
+    @ColumnInfo(name = "bitmap_uri")
+    var bitmapUri : Uri? = null,
 
     @ColumnInfo(name = "uri")
     var uri: Uri? = null,

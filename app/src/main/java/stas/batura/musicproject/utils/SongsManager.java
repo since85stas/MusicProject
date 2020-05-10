@@ -9,23 +9,21 @@ import androidx.annotation.VisibleForTesting;
 import java.io.File;
 import java.io.FileFilter;
 import java.io.FilenameFilter;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import java.lang.reflect.Field;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import stas.batura.musicproject.R;
 import stas.batura.musicproject.repository.room.TrackKot;
+
+
 
 public class SongsManager {
     // SDCard Path
     final String MEDIA_PATH;
     int playlistId;
     List<File> files;
+    List<File> imageFiles;
 
     // Constructor
     public SongsManager(String string, int playlistId) {
@@ -35,6 +33,20 @@ public class SongsManager {
 
     public SongsManager() {
         MEDIA_PATH = "/mnt/sdcard/Music/red elvises/The Best of Kick-Ass";
+    }
+
+    private static String getFileExtension(File file) {
+        String extension = "";
+
+        try {
+            if (file != null && file.exists()) {
+                String name = file.getName();
+                extension = name.substring(name.lastIndexOf("."));
+            }
+        } catch (Exception e) {
+            extension = "";
+        }
+        return extension;
     }
 
     public String getPlaylistName() {
@@ -54,6 +66,7 @@ public class SongsManager {
 
 //        File[] files = home.listFiles(new FileExtensionFilter());
         files = new ArrayList<>();
+        imageFiles = new ArrayList<>();
         getTracksInSubs(home);
 
         List<TrackKot> trackKot = new ArrayList<>();
@@ -81,11 +94,24 @@ public class SongsManager {
                     Log.d("songmanager", "getPlayList: " +e);
                 }
 
+                Uri imageUri = null;
+                //TODO: check finding matches
+                for (File imgFile: imageFiles) {
+                    try {
+                        File parent = file.getParentFile();
+                        if (imgFile.getParentFile().getPath().equals(parent.getPath())) {
+                            imageUri = Uri.fromFile(new File(getUriValue(imgFile.toString())));
+                        }
+                    } catch (NullPointerException e) {
+                        Log.d("SongsMan", e.toString());
+                    }
+                }
+
                 TrackKot rackKot = new TrackKot(playlistId,
                         title,
                         artist,
                         album,
-                        R.drawable.image266680,
+                        imageUri,
                         uri,
                         duration,
                         dataInfo.getBitrate(),
@@ -115,13 +141,19 @@ public class SongsManager {
                     files.add(file);
                 }
             } else {
-                File[] listFiles = file.listFiles(new FileExtensionFilter());
+                File[] listFiles = file.listFiles(new FileTracksFilter());
+                File[] listImages = file.listFiles(new FilePictureFilter());
                 if (listFiles != null) {
                     for (File fileIn : listFiles) {
                         files.add(fileIn);
                     }
                 }
-                File[] dirFiles = file.listFiles(new FileExtensionFilter());
+                if (listImages != null) {
+                    for (File im: listImages) {
+                        imageFiles.add(im);
+                    }
+                }
+                File[] dirFiles = file.listFiles(new FileDirFilter());
                 if (dirFiles != null) {
                     for (File fileDir : dirFiles
                     ) {
@@ -132,34 +164,30 @@ public class SongsManager {
         }
     }
 
-    private static String getFileExtension(File file) {
-        String extension = "";
-
-        try {
-            if (file != null && file.exists()) {
-                String name = file.getName();
-                extension = name.substring(name.lastIndexOf("."));
-            }
-        } catch (Exception e) {
-            extension = "";
-        }
-        return extension;
-    }
-
 /**
  * Class to filter files which are having .mp3 extension
  */
-static class FileExtensionFilter implements FilenameFilter {
+static class FileTracksFilter implements FilenameFilter {
     public boolean accept(File dir, String name) {
         return (name.endsWith(".mp3") || name.endsWith(".MP3"));
     }
 }
 
 static class FileDirFilter implements FileFilter {
-
     @Override
     public boolean accept(File pathname) {
         return pathname.isDirectory();
     }
+    }
+
+    static class FilePictureFilter implements FilenameFilter  {
+        public boolean accept(File dir, String name) {
+            return (name.endsWith(".png") || name.endsWith(".PNG") || name.endsWith(".jpeg")
+                    ||name.endsWith(".JPEG") || name.endsWith(".jpg") || name.endsWith(".JPG"));
+        }
+    }
+
 }
-}
+
+
+

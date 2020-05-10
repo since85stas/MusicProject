@@ -21,7 +21,6 @@ import com.google.android.exoplayer2.*
 import com.google.android.exoplayer2.extractor.DefaultExtractorsFactory
 import com.google.android.exoplayer2.extractor.ExtractorsFactory
 import com.google.android.exoplayer2.source.ExtractorMediaSource
-import com.google.android.exoplayer2.source.MediaSource
 import com.google.android.exoplayer2.source.TrackGroupArray
 import com.google.android.exoplayer2.trackselection.DefaultTrackSelector
 import com.google.android.exoplayer2.trackselection.TrackSelectionArray
@@ -378,7 +377,8 @@ class MusicService (): Service () {
         private fun updateMetadataFromTrack(track: MusicRepository.Track) {
             metadataBuilder.putBitmap(
                 MediaMetadataCompat.METADATA_KEY_ART,
-                BitmapFactory.decodeResource(resources, track.bitmapResId)
+                // TODO: remove hardcode
+                BitmapFactory.decodeResource(resources, R.drawable.image266680)
             )
             metadataBuilder.putString(MediaMetadataCompat.METADATA_KEY_TITLE, track.title)
             metadataBuilder.putString(MediaMetadataCompat.METADATA_KEY_ALBUM, track.artist)

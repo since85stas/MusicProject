@@ -1,5 +1,6 @@
 package stas.batura.musicproject
 
+import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
@@ -30,9 +31,14 @@ fun TextView.setTrackDurat (track : MusicRepository.Track) {
 @BindingAdapter("trackTitleBinding")
 fun TextView.setTrackTitle(track: TrackKot?) {
     if (track != null) {
-        text = track.title
+        if (track.isPlaying) {
+            text =
+                "                                              ${track.title}                                                 "
+        } else {
+            text = track.title
+        }
     } else {
-        text =  "title"
+        text =  "Title"
     }
 }
 
@@ -42,6 +48,15 @@ fun TextView.setAlbumTitle(track: TrackKot?) {
         text = track.album
     } else {
         text =  "album"
+    }
+}
+
+@BindingAdapter("trackImageBinfing")
+fun ImageView.setAlbumImage(track: TrackKot?) {
+    if (track != null && track.bitmapUri != null) {
+        setImageURI(track.bitmapUri)
+    } else {
+        setImageDrawable(resources.getDrawable(R.drawable.image208815))
     }
 }
 

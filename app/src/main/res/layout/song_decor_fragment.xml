@@ -36,7 +36,7 @@
             android:layout_height="0dp"
             android:layout_weight="1"
             android:layout_gravity="center"
-            android:src="@drawable/image208815" />
+            trackImageBinfing="@{mainViewModel.currentTrackPlaying}" />
 
         <!-- Song Title -->
         <TextView
