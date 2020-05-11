@@ -18,11 +18,14 @@ android {
         versionCode 1
         versionName "1.0"
 
-        minSdkVersion  19
+        minSdkVersion  21
         targetSdkVersion 29
         compileSdkVersion 29
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        renderscriptTargetApi 18
+        renderscriptSupportModeEnabled true
     }
 
     buildTypes {
@@ -103,4 +106,6 @@ dependencies {
     implementation "androidx.fragment:fragment-testing:$fragmentVersion"
 
     implementation 'com.github.bumptech.glide:glide:4.10.0'
+
+    implementation 'com.qhutch.elevationimageview:elevationimageview:1.7'
 }

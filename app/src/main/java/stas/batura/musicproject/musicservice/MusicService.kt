@@ -3,7 +3,9 @@ package stas.batura.musicproject.musicservice
 import android.annotation.SuppressLint
 import android.app.*
 import android.content.*
+import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.graphics.drawable.Drawable
 import android.media.AudioAttributes
 import android.media.AudioFocusRequest
 import android.media.AudioManager
@@ -17,6 +19,7 @@ import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
 import androidx.media.session.MediaButtonReceiver
+import com.bumptech.glide.Glide
 import com.google.android.exoplayer2.*
 import com.google.android.exoplayer2.extractor.DefaultExtractorsFactory
 import com.google.android.exoplayer2.extractor.ExtractorsFactory
@@ -375,11 +378,12 @@ class MusicService (): Service () {
 
         // обновляем данные о треке
         private fun updateMetadataFromTrack(track: MusicRepository.Track) {
+//            val image = Glide.with(this@MusicService).load(track.bitmapUri) as Bitmap
             metadataBuilder.putBitmap(
                 MediaMetadataCompat.METADATA_KEY_ART,
-                // TODO: remove hardcode
-                BitmapFactory.decodeResource(resources, R.drawable.image266680)
-            )
+                BitmapFactory.decodeFile(track.bitmapUri.path)
+                )
+
             metadataBuilder.putString(MediaMetadataCompat.METADATA_KEY_TITLE, track.title)
             metadataBuilder.putString(MediaMetadataCompat.METADATA_KEY_ALBUM, track.artist)
             metadataBuilder.putString(MediaMetadataCompat.METADATA_KEY_ARTIST, track.artist)

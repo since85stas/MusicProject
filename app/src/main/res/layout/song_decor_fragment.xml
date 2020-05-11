@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    >
 
     <data>
         <variable
@@ -7,36 +9,31 @@
             type="stas.batura.musicproject.MainAcivityViewModel" />
     </data>
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:layout_gravity="center">
         <!-- Player Header -->
-<!--        <LinearLayout-->
-<!--            android:id="@+id/player_header_bg"-->
-<!--            android:layout_width="fill_parent"-->
-<!--            android:layout_height="60dp"-->
-<!--            android:orientation="horizontal"-->
-<!--            android:paddingLeft="5dp"-->
-<!--            android:paddingRight="5dp">-->
-
-<!--            &lt;!&ndash; Playlist button &ndash;&gt;-->
-<!--            <ImageButton-->
-<!--                android:id="@+id/btnPlaylist"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:background="@null"-->
-<!--                android:src="@android:drawable/ic_menu_edit" />-->
-<!--        </LinearLayout>-->
 
         <!-- Song Thumbnail Image -->
         <ImageView
-            android:layout_width="match_parent"
+            android:id="@+id/albumImage"
+            trackImageBinfing="@{mainViewModel.currentTrackPlaying}"
+            android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_weight="1"
             android:layout_gravity="center"
-            trackImageBinfing="@{mainViewModel.currentTrackPlaying}" />
+            android:layout_marginTop="40dp"
+            android:layout_marginLeft="60dp"
+            android:layout_marginRight="60dp"
+            android:scaleType="centerCrop"
+            app:layout_constraintDimensionRatio="H,1:1"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:elevation="50dp"
+
+            />
 
         <!-- Song Title -->
         <TextView
@@ -45,11 +42,12 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="10dp"
-            android:paddingLeft="10dp"
             android:textSize="20sp"
             android:textStyle="bold"
             albumTitleBinding="@{mainViewModel.currentTrackPlaying}"
             android:gravity="center"
+            app:layout_constraintTop_toBottomOf="@+id/albumImage"
+            android:visibility="gone"
             />
 
         <!-- Song Title -->
@@ -59,7 +57,6 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="10dp"
-            android:paddingLeft="10dp"
             trackTitleBinding="@{mainViewModel.currentTrackPlaying}"
             android:textSize="16sp"
             android:gravity="center"
@@ -69,7 +66,9 @@
             android:scrollHorizontally="true"
             android:focusable="true"
             android:focusableInTouchMode="true"
+            app:layout_constraintTop_toBottomOf="@+id/albumTitle"
+            android:visibility="gone"
             />
 
-    </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

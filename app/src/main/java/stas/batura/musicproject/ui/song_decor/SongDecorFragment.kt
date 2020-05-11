@@ -57,7 +57,6 @@ class SongDecorFragment : Fragment() {
             }
         })
 
-
         super.onViewCreated(view, savedInstanceState)
     }
 }
