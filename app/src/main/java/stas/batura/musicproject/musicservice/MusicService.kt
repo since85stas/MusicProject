@@ -19,7 +19,6 @@ import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
 import androidx.media.session.MediaButtonReceiver
-import com.bumptech.glide.Glide
 import com.google.android.exoplayer2.*
 import com.google.android.exoplayer2.extractor.DefaultExtractorsFactory
 import com.google.android.exoplayer2.extractor.ExtractorsFactory
@@ -379,10 +378,17 @@ class MusicService (): Service () {
         // обновляем данные о треке
         private fun updateMetadataFromTrack(track: MusicRepository.Track) {
 //            val image = Glide.with(this@MusicService).load(track.bitmapUri) as Bitmap
-            metadataBuilder.putBitmap(
-                MediaMetadataCompat.METADATA_KEY_ART,
-                BitmapFactory.decodeFile(track.bitmapUri.path)
+            if (track.bitmapUri == null) {
+                metadataBuilder.putBitmap(
+                    MediaMetadataCompat.METADATA_KEY_ART,
+                    BitmapFactory.decodeResource(resources, R.drawable.image208815)
                 )
+            } else {
+                metadataBuilder.putBitmap(
+                    MediaMetadataCompat.METADATA_KEY_ART,
+                    BitmapFactory.decodeFile(track.bitmapUri.path)
+                )
+            }
 
             metadataBuilder.putString(MediaMetadataCompat.METADATA_KEY_TITLE, track.title)
             metadataBuilder.putString(MediaMetadataCompat.METADATA_KEY_ALBUM, track.artist)

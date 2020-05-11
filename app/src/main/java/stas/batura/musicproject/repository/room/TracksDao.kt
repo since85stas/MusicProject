@@ -64,4 +64,7 @@ abstract class TracksDao {
     @Query ("UPDATE playlist_table SET name= :name WHERE playlist_id = :playlistId")
     abstract fun updatePlaylistName(playlistId: Int, name: String)
 
+    @Query("SELECT name FROM playlist_table WHERE playlist_id IN ( SELECT current_playlist_id FROM main_table)")
+    abstract fun getCurrPlaylistName() : LiveData<String?>
+
 }

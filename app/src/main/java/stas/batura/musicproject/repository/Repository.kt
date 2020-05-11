@@ -183,4 +183,10 @@ class Repository (private val dataSource : TracksDao) : TracksDao() {
 
         ioScope.launch { dataSource.updatePlaylistName(playlistId, name) }
     }
+
+    override fun getCurrPlaylistName(): LiveData<String?> {
+        return dataSource.getCurrPlaylistName()
+    }
+
+
 }

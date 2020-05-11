@@ -46,12 +46,14 @@ data class TrackKot (
 class UriRoomConverter {
 
     @TypeConverter
-    fun fromUriToStr (uri: Uri) : String{
+    fun fromUriToStr (uri: Uri?) : String?{
+        if (uri==null) return null
         return uri.toString()
     }
 
     @TypeConverter
-    fun fromStrToUri (string: String) : Uri{
+    fun fromStrToUri (string: String?) : Uri?{
+        if (string==null) return null
         return Uri.parse(string)
     }
 

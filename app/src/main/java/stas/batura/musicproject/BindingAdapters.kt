@@ -60,6 +60,15 @@ fun ImageView.setAlbumImage(track: TrackKot?) {
     }
 }
 
+@BindingAdapter("playlistNameBinding")
+fun TextView.setPlaylistName(name: String?) {
+    if (name == null) {
+        text = "Playlist"
+    } else {
+        text = name
+    }
+}
+
 //@BindingAdapter ("onPlaylistItemClick")
 //fun LinearLayout.setOnPlayListner (linearLayout: LinearLayout,mainAcivityViewModel: MainAcivityViewModel, track: MusicRepository.Track) {
 //    print("test")

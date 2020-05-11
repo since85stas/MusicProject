@@ -27,6 +27,13 @@ class PlaylistViewModel ( val repository: TracksDao,
     val addButtonClicked : LiveData<Boolean>
     get () = _addButtonClicked
 
+    // смотрим за нажатием кнопуи выбора плейлиста
+    private var _playlistNameClicked : MutableLiveData<Boolean> = MutableLiveData(false)
+    val playlistNameClicked : LiveData<Boolean>
+        get () = _playlistNameClicked
+
+    val playlistName = repository.getCurrPlaylistName()
+
 //    val repository: Repository = Repository(tracksDao)
 
     val mainDataLive = repository.getMainPlaylistId(0L)
@@ -48,6 +55,11 @@ class PlaylistViewModel ( val repository: TracksDao,
      */
     fun addButtonClickedFinish() {
         _addButtonClicked.value = false
+    }
+
+    fun playlistNameClickedFun() {
+        _playlistNameClicked.value = true
+        _playlistNameClicked.value = false
     }
 
     /**

@@ -2,6 +2,7 @@ package stas.batura.musicproject.ui.playlist
 
 import android.os.Bundle
 import android.support.v4.media.session.PlaybackStateCompat
+import android.text.method.Touch.onTouchEvent
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.MotionEvent
@@ -24,6 +25,8 @@ import stas.batura.musicproject.MainAcivityViewModel
 import stas.batura.musicproject.R
 import stas.batura.musicproject.databinding.PlaylistFragmentBinding
 import stas.batura.musicproject.musicservice.MusicRepository
+import stas.batura.musicproject.ui.dialogs.PlaylistListDialog
+import stas.batura.musicproject.ui.dialogs.PlaylistNameDialog
 import stas.batura.musicproject.utils.InjectorUtils
 import stas.batura.musicproject.utils.SongsManager
 import java.io.File
@@ -50,11 +53,11 @@ class PlaylistFragment : Fragment (), DialogSelectionListener {
     ): View? {
 
         mainViewModel = ViewModelProviders
-            .of(this.activity!!, InjectorUtils.provideMainViewModel(this.activity!!.application))
+            .of(this.requireActivity(), InjectorUtils.provideMainViewModel(this.requireActivity().application))
             .get(MainAcivityViewModel::class.java)
 
         playlistViewModel = ViewModelProviders.of (this,
-            InjectorUtils.providePlaylistViewModel(activity!!.application)).get(PlaylistViewModel::class.java)
+            InjectorUtils.providePlaylistViewModel(requireActivity().application)).get(PlaylistViewModel::class.java)
 
         val bindings : PlaylistFragmentBinding =
             DataBindingUtil.inflate(inflater, R.layout.playlist_fragment ,container, false)
@@ -71,6 +74,12 @@ class PlaylistFragment : Fragment (), DialogSelectionListener {
      * после создания фрагмента
      */
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+
+        playlistViewModel.playlistNameClicked.observe(viewLifecycleOwner, Observer {
+            if (it) {
+                openPlaylistSelectDialog()
+            }
+        })
 
         playlistViewModel.songListViewModel.observe(viewLifecycleOwner, Observer {
             if (it != null) {
@@ -113,13 +122,13 @@ class PlaylistFragment : Fragment (), DialogSelectionListener {
             }
         })
 
-        playlist_recycle_view.apply {
-            layoutManager = LinearLayoutManager(activity!!.baseContext)
-        }
-        playlist_recycle_view.setOnTouchListener({v, event ->
-            onTouchEvent(event)
-            true
-        })
+//        playlist_recycle_view.apply {
+//            layoutManager = LinearLayoutManager(requireActivity().baseContext)
+//        }
+//        playlist_recycle_view.setOnTouchListener({v, event ->
+//            onTouchEvent(event)
+//            true
+//        })
 
         playlistViewModel.addButtonClicked.observe(viewLifecycleOwner, Observer {
             if (it) {
@@ -171,39 +180,12 @@ class PlaylistFragment : Fragment (), DialogSelectionListener {
     }
 
     /**
-     * проверяем слайд вправо и влево
+     * открываем диалог с выбором плейлистов
      */
-    private fun onTouchEvent(ev: MotionEvent?): Boolean {
-
-        val myAction: Int = MotionEventCompat.getActionMasked(ev)
-
-        return when (myAction) {
-            MotionEvent.ACTION_UP -> {
-                x2 = ev!!.x
-                val deltaX = x2 - x1
-                if (Math.abs(deltaX) > MIN_DISTANCE) {
-                    if (deltaX < 0) {
-                        findNavController().navigate(R.id.controlFragment)
-                    } else {
-                        Log.d("playlist", "mot: ")
-                    }
-                }
-                true
-            }
-
-            MotionEvent.ACTION_DOWN -> {
-                x1 = ev!!.getX()
-                true
-            }
-
-            MotionEvent.ACTION_MOVE -> {
-                false
-            }
-            MotionEvent.ACTION_CANCEL -> {
-                true
-            }
-            else -> false
-        }
+    fun openPlaylistSelectDialog() {
+        val dialog = PlaylistListDialog(mainViewModel.playlistListLive.value!!, mainViewModel)
+        val fragmentManage = requireActivity().supportFragmentManager
+        dialog.show(fragmentManage, "playlist")
     }
 
 

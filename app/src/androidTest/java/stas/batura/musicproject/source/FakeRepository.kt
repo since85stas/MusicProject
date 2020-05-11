@@ -109,4 +109,12 @@ class FakeRepositoryAndr(): TracksDao() {
     override fun getAllPlaylists(): LiveData<List<Playlist>> {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
+
+    override fun updatePlaylistName(playlistId: Int, name: String) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun getCurrPlaylistName(): LiveData<String> {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
 }
