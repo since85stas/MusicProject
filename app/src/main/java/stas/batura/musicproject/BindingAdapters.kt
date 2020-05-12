@@ -47,7 +47,7 @@ fun TextView.setAlbumTitle(track: TrackKot?) {
     if (track != null) {
         text = track.album
     } else {
-        text =  "album"
+        text =  "Album"
     }
 }
 

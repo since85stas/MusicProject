@@ -64,7 +64,8 @@ class MainAcivityViewModel (private val application: Application,
             playIsClicked = true
             _createServiceListner.value = true
         } else {
-            playClicked()
+//            playClicked()
+            changePlayState()
         }
 //        _createServiceListner.value = false
     }
@@ -113,6 +114,15 @@ class MainAcivityViewModel (private val application: Application,
         }
     }
 
+    fun changePlayState() {
+        if (mediaController.value != null) {
+            if (callbackChanges.value!!.state == PlaybackStateCompat.STATE_PLAYING) {
+                mediaController.value!!.transportControls.pause()
+            } else {
+                mediaController.value!!.transportControls.play()
+            }
+        }
+    }
 
     fun playClicked () {
         if (mediaController.value != null) {

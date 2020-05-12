@@ -16,13 +16,6 @@ class MediaDataInfo {
         if (filePath != null) {
             var metaRetriever: MediaMetadataRetriever = MediaMetadataRetriever()
             metaRetriever.setDataSource(filePath!!.absolutePath)
-
-            val hasPicture = metaRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_HAS_IMAGE)
-
-            val year = metaRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_YEAR)
-
-            val bit = metaRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_BITRATE)
-
             var duration: String =
                 metaRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION)
             var dur: Long = duration.toLong()
@@ -66,7 +59,8 @@ class MediaDataInfo {
         if (filePath != null) {
             var metaRetriever: MediaMetadataRetriever = MediaMetadataRetriever()
             metaRetriever.setDataSource(filePath!!.absolutePath)
-            return metaRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_ARTIST)
+            val artist = metaRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_ARTIST)
+            if (artist != null) return artist
         }
         return "artist"
     }
@@ -75,7 +69,8 @@ class MediaDataInfo {
         if (filePath != null) {
             var metaRetriever: MediaMetadataRetriever = MediaMetadataRetriever()
             metaRetriever.setDataSource(filePath!!.absolutePath)
-            return metaRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_ALBUM)
+            val album = metaRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_ALBUM)
+            if (album != null )return album
         }
         return "album"
     }
@@ -84,7 +79,8 @@ class MediaDataInfo {
         if (filePath != null) {
             var metaRetriever: MediaMetadataRetriever = MediaMetadataRetriever()
             metaRetriever.setDataSource(filePath!!.absolutePath)
-            return metaRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_TITLE)
+            val title = metaRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_TITLE)
+            if (title != null) return title
         }
         return "title"
     }

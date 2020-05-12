@@ -37,14 +37,17 @@ class TracksDaoTest {
     fun initDb() {
         val uri =
             Uri.fromFile(File("/mnt/sdcard/Music/red elvises/The Best of Kick-Ass"))
+
+        val uriBit =
+            Uri.fromFile(File("/mnt/sdcard/Music/red elvises/The Best of Kick-Ass"))
         trackKot0 = TrackKot(
-            0, "title1", "artist1", "album1", 0, uri, 1000, "bit", 1985
+            0, "title1", "artist1", "album1", uriBit, uri, 1000, "bit", 1985
         )
         trackKot1 = TrackKot(
-            0, "title2", "artist2", "album2", 0, uri, 1000, "bit", 1985
+            0, "title2", "artist2", "album2", uriBit, uri, 1000, "bit", 1985
         )
         trackKot2 = TrackKot(
-            0, "title3", "artist3", "album3", 0, uri, 1000, "bit", 1985
+            0, "title3", "artist3", "album3", uriBit, uri, 1000, "bit", 1985
         )
         // Using an in-memory database so that the information stored here disappears when the
         // process is killed.

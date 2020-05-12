@@ -38,7 +38,10 @@ class MainActivityTest {
         repository = InjectorUtils.provideRep(ApplicationProvider.getApplicationContext())
         val uri =
             Uri.fromFile(File("file:///storage/emulated/0/Download/08-Filosofem%201996/01-Dunkelheit.mp3"))
-        trackKot0 = TrackKot(1, "Dunkelheit", "Burzum", "Filosofem", 2131165346, uri, 425096, "192000", 1996)
+        val uriBit =
+            Uri.fromFile(File("/mnt/sdcard/Music/red elvises/The Best of Kick-Ass"))
+
+        trackKot0 = TrackKot(1, "Dunkelheit", "Burzum", "Filosofem", uriBit, uri, 425096, "192000", 1996)
 //        trackKot1 = TrackKot(1, "title2", "artist2", "album2", 0, uri, 1000, "bit", 1985)
 //        trackKot2 = TrackKot(1, "title3", "artist3", "album3", 0, uri, 1000, "bit", 1985)
 
@@ -57,8 +60,8 @@ class MainActivityTest {
     fun test_activity_decor_init() {
         val activityScenario = ActivityScenario.launch(MainActivity::class.java)
 
-        onView(withId(R.id.albumTitle)).check(matches(withText("album")))
-        onView(withId(R.id.songTitle)).check(matches(withText("title")))
+        onView(withId(R.id.albumTitle)).check(matches(withText("Album")))
+        onView(withId(R.id.songTitle)).check(matches(withText("Title")))
 
         activityScenario.close()
     }

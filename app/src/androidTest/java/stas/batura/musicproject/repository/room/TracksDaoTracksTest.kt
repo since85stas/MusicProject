@@ -30,14 +30,16 @@ class TracksDaoTracksTest {
     fun initDb() {
         val uri =
             Uri.fromFile(File("/mnt/sdcard/Music/red elvises/The Best of Kick-Ass"))
+        val uriBit =
+            Uri.fromFile(File("/mnt/sdcard/Music/red elvises/The Best of Kick-Ass"))
         trackKot0Play1 = TrackKot(
-            1, "title1", "artist1", "album1", 0, uri, 1000, "bit", 1985
+            1, "title1", "artist1", "album1", uriBit, uri, 1000, "bit", 1985
         )
         trackKot1Play1 = TrackKot(
-            1, "title2", "artist2", "album2", 0, uri, 1000, "bit", 1985
+            1, "title2", "artist2", "album2", uriBit, uri, 1000, "bit", 1985
         )
         trackKot1Play2 = TrackKot(
-            2, "title1", "artist1", "album1", 0, uri, 1000, "bit", 1985
+            2, "title1", "artist1", "album1", uriBit, uri, 1000, "bit", 1985
         )
 //        trackKot2Play2 = TrackKot(
 ////            2, "title2", "artist2", "album2", 0, uri, 1000, "bit", 1985

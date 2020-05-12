@@ -55,11 +55,13 @@ public class MusicRepositoryTest {
         Log.d(TAG, "setUp: ");
         FakeRepositoryAndr fakeRepository = new FakeRepositoryAndr();
         Uri uri = Uri.fromFile(new File("/mnt/sdcard/Music/red elvises/The Best of Kick-Ass"));
-        trackKot0 = new TrackKot(0,"title1","artist1","album1",0,uri,1000,"bit",1985
+        Uri uriBit =
+                Uri.fromFile(new File("/mnt/sdcard/Music/red elvises/The Best of Kick-Ass"));
+        trackKot0 = new TrackKot(0,"title1","artist1","album1",uriBit,uri,1000,"bit",1985
         );
-        trackKot1 = new TrackKot(0,"title2","artist2","album2",0,uri,1000,"bit",1985
+        trackKot1 = new TrackKot(0,"title2","artist2","album2",uriBit,uri,1000,"bit",1985
         );
-        trackKot2 = new TrackKot(0,"title3","artist3","album3",0,uri,1000,"bit",1985
+        trackKot2 = new TrackKot(0,"title3","artist3","album3",uriBit,uri,1000,"bit",1985
         );
         fakeRepository.insertTrack(trackKot0);
         fakeRepository.insertTrack(trackKot1);

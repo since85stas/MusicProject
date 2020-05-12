@@ -88,18 +88,25 @@
                 android:layout_height="wrap_content"
                 android:background="@null"/>
             <!-- Play Button -->
-            <ImageButton
-                android:id="@+id/pause_button"
-                android:src="@android:drawable/ic_media_pause"
+            <be.rijckaert.tim.animatedvector.FloatingMusicActionButton
+                android:id="@+id/play_pause_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@null"/>
-            <ImageButton
-                android:id="@+id/play_button"
-                android:src="@android:drawable/ic_media_play"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@null"/>
+                app:backgroundTint="@color/colorAccent"
+                app:mode="playToPause"
+                />
+<!--            <ImageButton-->
+<!--                android:id="@+id/pause_button"-->
+<!--                android:src="@android:drawable/ic_media_pause"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:background="@null"/>-->
+<!--            <ImageButton-->
+<!--                android:id="@+id/play_button"-->
+<!--                android:src="@android:drawable/ic_media_play"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:background="@null"/>-->
             <!-- Next Button -->
             <ImageButton
                 android:id="@+id/skip_to_next_button"
@@ -107,7 +114,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@null"/>
+
+
         </LinearLayout>
+
     </LinearLayout>
 
 

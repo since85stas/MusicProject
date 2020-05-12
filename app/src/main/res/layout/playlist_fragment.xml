@@ -35,12 +35,15 @@
                     android:onClick="@{() -> playlistViewModel.playlistNameClickedFun()}"
                     android:layout_gravity="center"
                     android:textSize="20sp"
+                    android:textStyle="bold"
                     android:layout_marginTop="12dp"
+                    android:maxLines="1"
                     />
 
             </LinearLayout>
 
             <androidx.recyclerview.widget.RecyclerView
+                android:layout_marginTop="12dp"
                 android:id="@+id/playlist_recycle_view"
                 android:layout_width="match_parent"
                 android:layout_height="300dp"
@@ -52,7 +55,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="300dp"
                 android:divider="#0f0"
-                android:dividerHeight="1dp" />
+                android:dividerHeight="1dp"
+                android:layout_marginTop="12dp"
+                />
 
             <LinearLayout
                 android:layout_width="match_parent"

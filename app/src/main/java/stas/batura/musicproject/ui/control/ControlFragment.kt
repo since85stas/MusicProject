@@ -2,6 +2,7 @@ package stas.batura.musicproject.ui.control
 
 import android.os.Bundle
 import android.support.v4.media.session.PlaybackStateCompat
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
@@ -12,6 +13,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
+import be.rijckaert.tim.animatedvector.FloatingMusicActionButton
 import kotlinx.android.synthetic.main.control_fragment_new.*
 import stas.batura.musicproject.MainAcivityViewModel
 import stas.batura.musicproject.R
@@ -20,9 +22,9 @@ import stas.batura.musicproject.utils.InjectorUtils
 
 class ControlFragment () : Fragment() {
 
-//    private var x1   = 0f
-//    private  var x2  = 0f
-//    val MIN_DISTANCE = 150
+    private val TAG = "controlfragment"
+
+    private var isPlayButtonClicked = false
 
     companion object {
         fun newInstance() = ControlFragment()
@@ -37,7 +39,7 @@ class ControlFragment () : Fragment() {
                               savedInstanceState: Bundle?): View {
 
            mainViewModel = ViewModelProviders
-            .of(this.activity!!, InjectorUtils.provideMainViewModel(this.activity!!.application))
+            .of(this.requireActivity(), InjectorUtils.provideMainViewModel(this.requireActivity().application))
             .get(MainAcivityViewModel::class.java)
 
         val view = inflater.inflate(R.layout.control_fragment_new, container, false)
@@ -50,15 +52,13 @@ class ControlFragment () : Fragment() {
      */
     override fun onActivityCreated(savedInstanceState: Bundle?) {
 
-        play_button.setOnClickListener {
-            if (mainViewModel.musicRepository.tracks.value!!.size > 0)
+        play_pause_button.setOnMusicFabClickListener( object : FloatingMusicActionButton.OnMusicFabClickListener {
+            override fun onClick(view: View) {
+                isPlayButtonClicked = true
                 mainViewModel.checkServiseCreation()
-//            mainViewModel.playClicked()
-        }
-        pause_button.setOnClickListener {
-            if (mainViewModel.musicRepository.tracks.value!!.size > 0)
-                mainViewModel.pauseyClicked()
-        }
+//                mainViewModel.changePlayState()
+            }
+        })
 //        stop_button.setOnClickListener {
 //            if (mainViewModel.musicRepository.tracks.value!!.size > 0)
 //                mainViewModel.stopClicked()
@@ -75,10 +75,17 @@ class ControlFragment () : Fragment() {
         // наблюдаем за нажатием кнопок
         mainViewModel.callbackChanges.observe(viewLifecycleOwner, Observer {
             if (it != null) {
-                val playing = it.state == PlaybackStateCompat.STATE_PLAYING
-                play_button.isEnabled = !playing
-                pause_button.isEnabled = playing
-//                stop_button.isEnabled = playing
+                if (it.state == PlaybackStateCompat.STATE_PLAYING) {
+                    Log.d(TAG, "play")
+                } else if (it.state == PlaybackStateCompat.STATE_PAUSED ) {
+                    Log.d(TAG, "pause")
+                } else if (it.state == PlaybackStateCompat.STATE_NONE) {
+                    Log.d(TAG, "none")
+                }
+                if ( !isPlayButtonClicked) {
+                    play_pause_button.playAnimation()
+                }
+                isPlayButtonClicked = false
             }
         })
 
