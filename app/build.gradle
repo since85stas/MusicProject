@@ -110,4 +110,20 @@ dependencies {
     implementation 'com.qhutch.elevationimageview:elevationimageview:1.7'
 
     implementation 'com.github.timrijckaert:FloatingMusicActionButton:v2.0.4'
+
+    // retrofit
+    implementation "com.squareup.retrofit2:retrofit:$version_retrofit"
+    implementation "com.squareup.retrofit2:converter-gson:$version_retrofit"
+//    implementation "com.squareup.retrofit2:adapter-rxjava2:2.4.0"
+    implementation 'com.google.code.gson:gson:2.8.5'
+    implementation "com.squareup.okhttp3:logging-interceptor:3.10.0"
+//    // Moshi
+    implementation "com.squareup.moshi:moshi:$version_moshi"
+    implementation "com.squareup.moshi:moshi-kotlin:$version_moshi"
+//
+//    // Retrofit with Moshi Converter
+    implementation "com.squareup.retrofit2:converter-moshi:$version_retrofit"
+//
+//    // Retrofit Coroutines Support
+    implementation "com.jakewharton.retrofit:retrofit2-kotlin-coroutines-adapter:$version_retrofit_coroutines_adapter"
 }

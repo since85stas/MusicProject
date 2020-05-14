@@ -16,6 +16,17 @@
         android:layout_gravity="center">
         <!-- Player Header -->
 
+<!--        <ImageView-->
+<!--            android:id="@+id/text_load_button"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            app:layout_constraintBottom_toTopOf="@id/albumImage"-->
+<!--            android:src="@drawable/ic_subtitles_black_24dp"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            android:layout_margin="12dp"-->
+<!--            />-->
+
         <!-- Song Thumbnail Image -->
         <ImageView
             android:id="@+id/albumImage"
