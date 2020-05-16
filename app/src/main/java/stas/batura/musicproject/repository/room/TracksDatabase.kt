@@ -33,7 +33,7 @@ import java.util.concurrent.Executors
  * This pattern is pretty much the same for any database,
  * so you can reuse it.
  */
-@Database(entities =[TrackKot::class, Playlist::class, MainData::class], version = 7, exportSchema = false)
+@Database(entities =[TrackKot::class, Playlist::class, MainData::class, Controls::class], version = 8, exportSchema = false)
 @TypeConverters(UriRoomConverter::class)
 abstract class TracksDatabase : RoomDatabase() {
 
@@ -91,6 +91,11 @@ abstract class TracksDatabase : RoomDatabase() {
 
                         Executors.newSingleThreadScheduledExecutor()
                             .execute(Runnable { INSTANCE!!.tracksDatabaseDao.setMainPlaylistId(MainData(1)) })
+
+                        val controls = Controls(REPEAT_OFF, SHUFFLE_OFF)
+                        Executors.newSingleThreadScheduledExecutor()
+                            .execute(Runnable { INSTANCE!!.tracksDatabaseDao.addControls(controls) })
+
                         Log.d("room","dab created")
                     }
 

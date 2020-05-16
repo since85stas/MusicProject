@@ -1,5 +1,6 @@
 package stas.batura.musicproject.ui.control
 
+import android.graphics.ColorFilter
 import android.os.Bundle
 import android.support.v4.media.session.PlaybackStateCompat
 import android.util.Log
@@ -17,6 +18,9 @@ import be.rijckaert.tim.animatedvector.FloatingMusicActionButton
 import kotlinx.android.synthetic.main.control_fragment_new.*
 import stas.batura.musicproject.MainAcivityViewModel
 import stas.batura.musicproject.R
+import stas.batura.musicproject.repository.room.REPEAT_OFF
+import stas.batura.musicproject.repository.room.SHUFFLE_OFF
+import stas.batura.musicproject.repository.room.SHUFFLE_ON
 import stas.batura.musicproject.utils.InjectorUtils
 
 
@@ -88,6 +92,31 @@ class ControlFragment () : Fragment() {
                 isPlayButtonClicked = false
             }
         })
+
+        mainViewModel.controlsLive.observe(viewLifecycleOwner, Observer {
+            Log.d(TAG, "contr")
+            if (it.repeatStatus == REPEAT_OFF) {
+
+            }
+            if (it.shuffleStaus == SHUFFLE_OFF) {
+                btnShuffle.setImageResource(R.drawable.ic_shuffle_gray_24dp)
+            } else if (it.shuffleStaus == SHUFFLE_ON) {
+                btnShuffle.setImageResource(R.drawable.ic_shuffle_black_24dp)
+            }
+        })
+
+        btnRepeat.setOnClickListener{
+
+        }
+
+        btnShuffle.setOnClickListener {
+            val curStat = mainViewModel.controlsLive.value!!.shuffleStaus
+            var newStatus = SHUFFLE_OFF
+            if (curStat == SHUFFLE_OFF) {
+                newStatus = SHUFFLE_ON
+            }
+            mainViewModel.repository.changerShuffleStatus(newStatus)
+        }
 
         super.onActivityCreated(savedInstanceState)
     }

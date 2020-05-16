@@ -67,4 +67,16 @@ abstract class TracksDao {
     @Query("SELECT name FROM playlist_table WHERE playlist_id IN ( SELECT current_playlist_id FROM main_table)")
     abstract fun getCurrPlaylistName() : LiveData<String?>
 
+    //----------------------------CONTROLS PART---------------------------------------------------------
+    @Insert
+    abstract fun addControls(controls: Controls)
+
+    @Query ("UPDATE control_table SET repeatStatus = :status")
+    abstract fun changerRepeateStatus(status:Int)
+
+    @Query ("UPDATE control_table SET shuffleStaus = :status")
+    abstract fun changerShuffleStatus(status:Int)
+
+    @Query("SELECT * FROM control_table")
+    abstract fun getControls(): LiveData<Controls>
 }

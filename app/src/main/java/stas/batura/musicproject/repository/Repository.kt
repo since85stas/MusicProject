@@ -3,10 +3,7 @@ package stas.batura.musicproject.repository
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.*
-import stas.batura.musicproject.repository.room.MainData
-import stas.batura.musicproject.repository.room.Playlist
-import stas.batura.musicproject.repository.room.TrackKot
-import stas.batura.musicproject.repository.room.TracksDao
+import stas.batura.musicproject.repository.room.*
 
 class Repository (private val dataSource : TracksDao) : TracksDao() {
 
@@ -188,5 +185,26 @@ class Repository (private val dataSource : TracksDao) : TracksDao() {
         return dataSource.getCurrPlaylistName()
     }
 
+    //----------------------------CONTROLs PART---------------------------------------------------------
+    override fun addControls(controls: Controls) {
+        ioScope.launch {
+            dataSource.addControls(controls)
+        }
+    }
 
+    override fun changerRepeateStatus(status: Int) {
+        ioScope.launch {
+            dataSource.changerRepeateStatus(status)
+        }
+    }
+
+    override fun getControls(): LiveData<Controls> {
+        return dataSource.getControls()
+    }
+
+    override fun changerShuffleStatus(status: Int) {
+        ioScope.launch {
+            dataSource.changerShuffleStatus(status)
+        }
+    }
 }

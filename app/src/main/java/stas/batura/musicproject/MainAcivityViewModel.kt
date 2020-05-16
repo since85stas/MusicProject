@@ -28,7 +28,7 @@ import java.io.File
 import java.lang.NullPointerException
 
 class MainAcivityViewModel (private val application: Application,
-                            private val repository: TracksDao,
+                            val repository: TracksDao,
                             val musicRepository: MusicRepository
                             ) : ViewModel(  ) {
 
@@ -49,6 +49,8 @@ class MainAcivityViewModel (private val application: Application,
     val playlistListLive:LiveData<List<Playlist>> = repository.getAllPlaylists()
 
     val currentTrackPlaying = repository.getPlayingTrack()
+
+    val controlsLive = repository.getControls()
 
     var playIsClicked: Boolean = false
 
@@ -214,6 +216,10 @@ class MainAcivityViewModel (private val application: Application,
 
     fun setAllTracksNotPlaying() {
         repository.setAllTrackIsNOTPlaying()
+    }
+
+    fun setRepeatStatus(staus: Int) {
+        repository.changerRepeateStatus(staus)
     }
 
     /**

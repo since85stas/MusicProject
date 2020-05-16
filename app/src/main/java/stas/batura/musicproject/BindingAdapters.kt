@@ -1,10 +1,13 @@
 package stas.batura.musicproject
 
+import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import stas.batura.musicproject.musicservice.MusicRepository
+import stas.batura.musicproject.repository.room.SHUFFLE_OFF
+import stas.batura.musicproject.repository.room.SHUFFLE_ON
 import stas.batura.musicproject.repository.room.TrackKot
 
 @BindingAdapter ("titleFormatted")
@@ -66,6 +69,15 @@ fun TextView.setPlaylistName(name: String?) {
         text = "Playlist"
     } else {
         text = name
+    }
+}
+
+@BindingAdapter("shuffleButtonBinding")
+fun ImageButton.setShuffleIcon(status: Int) {
+    if (status == SHUFFLE_OFF) {
+        setImageResource(R.drawable.ic_shuffle_gray_24dp)
+    } else if (status == SHUFFLE_ON) {
+        setImageResource(R.drawable.ic_shuffle_black_24dp)
     }
 }
 
