@@ -33,6 +33,7 @@ import com.google.android.exoplayer2.upstream.FileDataSource.FileDataSourceExcep
 import com.google.android.exoplayer2.upstream.cache.*
 import stas.batura.musicproject.MainActivity
 import stas.batura.musicproject.R
+import stas.batura.musicproject.repository.room.REPEAT_ONE
 import stas.batura.musicproject.utils.InjectorUtils
 import java.io.File
 
@@ -73,8 +74,8 @@ class MusicService (): Service () {
     override fun onCreate() {
         super.onCreate()
 
-        musicRepository = MusicRepository(InjectorUtils.provideRep(application))
-
+//        musicRepository = MusicRepository(InjectorUtils.provideRep(application))
+        musicRepository = InjectorUtils.provideMusicRep(application)
 
         println("Music service created")
 
@@ -367,12 +368,10 @@ class MusicService (): Service () {
 
         // подготавливаем трэк
         private fun prepareToPlay(uri: Uri) {
-            if (uri != currentUri) {
                 currentUri = uri
                 val mediaSource =
                     ExtractorMediaSource(uri, dataSourceFactory, extractorsFactory, null, null)
                 exoPlayer!!.prepare(mediaSource)
-            }
         }
 
         // обновляем данные о треке

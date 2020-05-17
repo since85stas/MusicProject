@@ -6,7 +6,6 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import stas.batura.musicproject.musicservice.MusicRepository
-import stas.batura.musicproject.repository.room.SHUFFLE_OFF
 import stas.batura.musicproject.repository.room.SHUFFLE_ON
 import stas.batura.musicproject.repository.room.TrackKot
 
@@ -72,14 +71,14 @@ fun TextView.setPlaylistName(name: String?) {
     }
 }
 
-@BindingAdapter("shuffleButtonBinding")
-fun ImageButton.setShuffleIcon(status: Int) {
-    if (status == SHUFFLE_OFF) {
-        setImageResource(R.drawable.ic_shuffle_gray_24dp)
-    } else if (status == SHUFFLE_ON) {
-        setImageResource(R.drawable.ic_shuffle_black_24dp)
-    }
-}
+//@BindingAdapter("shuffleButtonBinding")
+//fun ImageButton.setShuffleIcon(status: Int) {
+//    if (status == SHUFFLE_OFF) {
+//        setImageResource(R.drawable.ic_shuffle_gray_24dp)
+//    } else if (status == SHUFFLE_ON) {
+//        setImageResource(R.drawable.ic_shuffle_black_24dp)
+//    }
+//}
 
 //@BindingAdapter ("onPlaylistItemClick")
 //fun LinearLayout.setOnPlayListner (linearLayout: LinearLayout,mainAcivityViewModel: MainAcivityViewModel, track: MusicRepository.Track) {

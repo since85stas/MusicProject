@@ -192,9 +192,9 @@ class Repository (private val dataSource : TracksDao) : TracksDao() {
         }
     }
 
-    override fun changerRepeateStatus(status: Int) {
+    override fun changerPlayStatus(status: Int) {
         ioScope.launch {
-            dataSource.changerRepeateStatus(status)
+            dataSource.changerPlayStatus(status)
         }
     }
 
@@ -202,9 +202,5 @@ class Repository (private val dataSource : TracksDao) : TracksDao() {
         return dataSource.getControls()
     }
 
-    override fun changerShuffleStatus(status: Int) {
-        ioScope.launch {
-            dataSource.changerShuffleStatus(status)
-        }
-    }
+
 }

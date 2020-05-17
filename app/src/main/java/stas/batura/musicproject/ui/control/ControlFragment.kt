@@ -19,7 +19,8 @@ import kotlinx.android.synthetic.main.control_fragment_new.*
 import stas.batura.musicproject.MainAcivityViewModel
 import stas.batura.musicproject.R
 import stas.batura.musicproject.repository.room.REPEAT_OFF
-import stas.batura.musicproject.repository.room.SHUFFLE_OFF
+import stas.batura.musicproject.repository.room.REPEAT_ON
+import stas.batura.musicproject.repository.room.REPEAT_ONE
 import stas.batura.musicproject.repository.room.SHUFFLE_ON
 import stas.batura.musicproject.utils.InjectorUtils
 
@@ -95,27 +96,46 @@ class ControlFragment () : Fragment() {
 
         mainViewModel.controlsLive.observe(viewLifecycleOwner, Observer {
             Log.d(TAG, "contr")
-            if (it.repeatStatus == REPEAT_OFF) {
-
+            mainViewModel.musicRepository.updateContols(it)
+            btnRepeat.setImageResource(R.drawable.exo_controls_repeat_off)
+            if (it.playStatus == REPEAT_ONE) {
+                btnRepeat.setImageResource(R.drawable.ic_repeat_one_black_24dp)
+            } else if (it.playStatus == REPEAT_ON) {
+                btnRepeat.setImageResource(R.drawable.ic_repeat_black_24dp)
+            } else if (it.playStatus == REPEAT_OFF) {
+                btnRepeat.setImageResource(R.drawable.ic_repeat_gray_24dp)
             }
-            if (it.shuffleStaus == SHUFFLE_OFF) {
-                btnShuffle.setImageResource(R.drawable.ic_shuffle_gray_24dp)
-            } else if (it.shuffleStaus == SHUFFLE_ON) {
+            if (it.playStatus == SHUFFLE_ON) {
                 btnShuffle.setImageResource(R.drawable.ic_shuffle_black_24dp)
+            } else  {
+                btnShuffle.setImageResource(R.drawable.ic_shuffle_gray_24dp)
             }
         })
 
         btnRepeat.setOnClickListener{
-
+            val curStat = mainViewModel.controlsLive.value!!.playStatus
+            var newStatus = 0
+            if (curStat != SHUFFLE_ON) {
+                if (curStat == REPEAT_OFF) {
+                    newStatus = REPEAT_ON
+                } else if (curStat == REPEAT_ON) {
+                    newStatus = REPEAT_ONE
+                } else if (curStat == REPEAT_ONE) {
+                    newStatus = REPEAT_OFF
+                }
+            }
+            mainViewModel.repository.changerPlayStatus(newStatus)
         }
 
         btnShuffle.setOnClickListener {
-            val curStat = mainViewModel.controlsLive.value!!.shuffleStaus
-            var newStatus = SHUFFLE_OFF
-            if (curStat == SHUFFLE_OFF) {
+            val curStat = mainViewModel.controlsLive.value!!.playStatus
+            var newStatus = 0
+            if (curStat != SHUFFLE_ON) {
                 newStatus = SHUFFLE_ON
+            } else {
+                newStatus = REPEAT_OFF
             }
-            mainViewModel.repository.changerShuffleStatus(newStatus)
+            mainViewModel.repository.changerPlayStatus(newStatus)
         }
 
         super.onActivityCreated(savedInstanceState)

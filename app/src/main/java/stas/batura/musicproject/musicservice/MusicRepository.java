@@ -9,8 +9,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import stas.batura.musicproject.repository.room.Controls;
+import stas.batura.musicproject.repository.room.ControlsKt;
 import stas.batura.musicproject.repository.room.TrackKot;
 import stas.batura.musicproject.repository.room.TracksDao;
+
+import static stas.batura.musicproject.repository.room.ControlsKt.REPEAT_ON;
+import static stas.batura.musicproject.repository.room.ControlsKt.REPEAT_ONE;
+import static stas.batura.musicproject.repository.room.ControlsKt.SHUFFLE_ON;
 
 //https://simpleguics2pygame.readthedocs.io/en/latest/_static/links/snd_links.html
 public final class MusicRepository {
@@ -19,7 +25,7 @@ public final class MusicRepository {
 
     public MutableLiveData<List<Track>> tracks = new  MutableLiveData<>();
 
-    public List<TrackKot> tracksDb;
+    Controls controls;
 
     private int maxIndex = 20;
 
@@ -33,8 +39,12 @@ public final class MusicRepository {
     }
 
     public void getDbTracks() {
-        tracksDb = repository.getAllTracksFromMainPlaylist();
+        List<TrackKot> tracksDb = repository.getAllTracksFromMainPlaylist();
         updateTracksLive(tracksDb);
+    }
+
+    public void updateContols(Controls controls) {
+        this.controls = controls;
     }
 
     void updateTracksLive (List<TrackKot> trackKotList) {
@@ -50,18 +60,28 @@ public final class MusicRepository {
     }
 
     Track getNext() {
-        if (currentItemIndex == maxIndex)
-            currentItemIndex = 0;
-        else
-            currentItemIndex++;
+        if (controls.getPlayStatus() == SHUFFLE_ON) {
+            currentItemIndex = (int)(Math.random()*tracks.getValue().size());
+        } else if (controls.getPlayStatus() == REPEAT_ONE) {
+            Log.d("music service", "getNext: one");
+        } else {
+            if (currentItemIndex == maxIndex)
+                currentItemIndex = 0;
+            else
+                currentItemIndex++;
+        }
         return getCurrent();
     }
 
     Track getPrevious() {
-        if (currentItemIndex == 0)
-            currentItemIndex = maxIndex;
-        else
-            currentItemIndex--;
+        if (controls.getPlayStatus() == SHUFFLE_ON) {
+            currentItemIndex = (int)(Math.random()*tracks.getValue().size());
+        } else {
+            if (currentItemIndex == maxIndex)
+                currentItemIndex = 0;
+            else
+                currentItemIndex--;
+        }
         return getCurrent();
     }
 

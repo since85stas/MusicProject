@@ -107,7 +107,7 @@ private val NUM_PAGES = 2
 //        navContr = findNavController(this,R.id.nav_host_fragment)
 
         mainViewModel = ViewModelProviders
-            .of(this, InjectorUtils.provideMainViewModel(this.application))
+            .of(this, InjectorUtils.provideMainViewModel(application))
             .get(MainAcivityViewModel::class.java)
 
         mainViewModel.onActivityCreated()

@@ -4,10 +4,8 @@ import android.app.Application
 import android.content.ComponentName
 import android.content.ServiceConnection
 import android.net.Uri
-import android.os.Environment
 import android.os.IBinder
 import android.os.RemoteException
-import android.support.v4.media.MediaMetadataCompat
 import android.support.v4.media.session.MediaControllerCompat
 import android.support.v4.media.session.PlaybackStateCompat
 import android.util.Log
@@ -18,13 +16,11 @@ import androidx.lifecycle.ViewModelProvider
 import com.google.android.exoplayer2.ExoPlayer
 import stas.batura.musicproject.musicservice.MusicRepository
 import stas.batura.musicproject.musicservice.MusicService
-import stas.batura.musicproject.repository.Repository
 import stas.batura.musicproject.repository.room.MainData
 import stas.batura.musicproject.repository.room.Playlist
 import stas.batura.musicproject.repository.room.TrackKot
 import stas.batura.musicproject.repository.room.TracksDao
 import stas.batura.musicproject.utils.SongsManager
-import java.io.File
 import java.lang.NullPointerException
 
 class MainAcivityViewModel (private val application: Application,
@@ -219,7 +215,7 @@ class MainAcivityViewModel (private val application: Application,
     }
 
     fun setRepeatStatus(staus: Int) {
-        repository.changerRepeateStatus(staus)
+        repository.changerPlayStatus(staus)
     }
 
     /**

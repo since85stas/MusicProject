@@ -71,11 +71,11 @@ abstract class TracksDao {
     @Insert
     abstract fun addControls(controls: Controls)
 
-    @Query ("UPDATE control_table SET repeatStatus = :status")
-    abstract fun changerRepeateStatus(status:Int)
+    @Query ("UPDATE control_table SET playStatus = :status")
+    abstract fun changerPlayStatus(status:Int)
 
-    @Query ("UPDATE control_table SET shuffleStaus = :status")
-    abstract fun changerShuffleStatus(status:Int)
+//    @Query ("UPDATE control_table SET shuffleStaus = :status")
+//    abstract fun changerShuffleStatus(status:Int)
 
     @Query("SELECT * FROM control_table")
     abstract fun getControls(): LiveData<Controls>

@@ -92,7 +92,7 @@ abstract class TracksDatabase : RoomDatabase() {
                         Executors.newSingleThreadScheduledExecutor()
                             .execute(Runnable { INSTANCE!!.tracksDatabaseDao.setMainPlaylistId(MainData(1)) })
 
-                        val controls = Controls(REPEAT_OFF, SHUFFLE_OFF)
+                        val controls = Controls(REPEAT_OFF)
                         Executors.newSingleThreadScheduledExecutor()
                             .execute(Runnable { INSTANCE!!.tracksDatabaseDao.addControls(controls) })
 
