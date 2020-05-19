@@ -3,6 +3,7 @@ package stas.batura.musicproject
 import android.app.Application
 import android.content.ComponentName
 import android.content.ServiceConnection
+import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.IBinder
 import android.os.RemoteException
@@ -14,14 +15,22 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.exoplayer2.ExoPlayer
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
 import stas.batura.musicproject.musicservice.MusicRepository
 import stas.batura.musicproject.musicservice.MusicService
 import stas.batura.musicproject.repository.room.MainData
 import stas.batura.musicproject.repository.room.Playlist
 import stas.batura.musicproject.repository.room.TrackKot
 import stas.batura.musicproject.repository.room.TracksDao
+import stas.batura.musicproject.utils.InjectorUtils
 import stas.batura.musicproject.utils.SongsManager
+import java.lang.Exception
 import java.lang.NullPointerException
+
+enum class NetApiStatus { LOADING, ERROR, DONE }
 
 class MainAcivityViewModel (private val application: Application,
                             val repository: TracksDao,
@@ -40,6 +49,10 @@ class MainAcivityViewModel (private val application: Application,
     val createServiceListner : LiveData<Boolean>
         get() = _createServiceListner
 
+    private val _netStatus: MutableLiveData<NetApiStatus> = MutableLiveData()
+    val netStatus: LiveData<NetApiStatus>
+        get() = _netStatus
+
     val mainDataLive = repository.getMainPlaylistId(0L)
 
     val playlistListLive:LiveData<List<Playlist>> = repository.getAllPlaylists()
@@ -49,6 +62,12 @@ class MainAcivityViewModel (private val application: Application,
     val controlsLive = repository.getControls()
 
     var playIsClicked: Boolean = false
+
+    // Create a Coroutine scope using a job to be able to cancel when needed
+    private var viewModelJob = Job()
+
+    // the Coroutine runs using the Main (UI) dispatcher
+    private val coroutineScope = CoroutineScope(viewModelJob + Dispatchers.Main)
 
     init {
         println("init main view model")
@@ -221,6 +240,25 @@ class MainAcivityViewModel (private val application: Application,
 
     fun setRepeatStatus(staus: Int) {
         repository.changerPlayStatus(staus)
+    }
+
+    fun getTrackText() {
+        coroutineScope.launch {
+            val resultDeffered = InjectorUtils.provideRetrofit().getSimpleCat()
+            try {
+                _netStatus.value = NetApiStatus.LOADING
+                val bytes = resultDeffered.await().bytes()
+//                _imageBit.value = BitmapFactory.decodeByteArray(bytes, 0, bytes.size)
+                _netStatus.value = NetApiStatus.DONE
+
+            } catch (e: Exception) {
+                Log.d("eee", e.toString())
+                _netStatus.value = NetApiStatus.ERROR
+            } finally {
+                Log.d("eee", "finally")
+//                _buttonCliked.value = false
+            }
+        }
     }
 
     /**

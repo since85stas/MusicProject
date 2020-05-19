@@ -4,8 +4,10 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.room.*
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
+import okhttp3.ResponseBody
 
 @Dao
 abstract class TracksDao {
@@ -82,4 +84,7 @@ abstract class TracksDao {
 
     @Query("SELECT * FROM control_table")
     abstract fun getControls(): LiveData<Controls>
+
+    //--------------------------retrofit part-----------------------------------------------------------
+//    abstract fun getTrackText(): Deferred<ResponseBody>
 }

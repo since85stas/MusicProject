@@ -19,11 +19,13 @@ import retrofit2.http.Url
 
 object RetrofitClient {
 
-    val BASE_URL = "https://cataas.com/"
+//    val BASE_URL = "http://api.chartlyrics.com/apiv1.asmx/SearchLyric?artist=string&song=string"
+    val BASE_URL = "http://api.chartlyrics.com/apiv1.asmx/"
 
-    private fun provideRetrofit(): Retrofit {
-        return Retrofit.Builder().baseUrl("https://cataas.com/").build()
-    }
+//    private fun provideRetrofit(): Retrofit {
+//        val string = ""
+//        return Retrofit.Builder().baseUrl(BASE_URL).build()
+//    }
 
     /**
      * Build the Moshi object that Retrofit will be using, making sure to add the Kotlin adapter for
@@ -50,8 +52,10 @@ object RetrofitClient {
     }
 
     interface API_COUR {
-        @GET ("cat")
-        fun getSimpleCat(): Deferred<ResponseBody>
+        @GET ("SearchLyric?artist=michael%20jackson&song=bad")
+        fun getSimpleCat(
+
+        ): Deferred<ResponseBody>
 
         @GET ("cat/says/{sentence}")
         fun getSayingCat(@Path ("sentence") value: String) : Deferred<ResponseBody>

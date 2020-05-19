@@ -1,11 +1,17 @@
 package stas.batura.musicproject.repository
 
+import android.graphics.BitmapFactory
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.*
+import okhttp3.ResponseBody
+import stas.batura.musicproject.repository.net.RetrofitClient
 import stas.batura.musicproject.repository.room.*
+import java.lang.Exception
 
-class Repository (private val dataSource : TracksDao) : TracksDao() {
+class Repository (private val dataSource : TracksDao
+                  ) : TracksDao() {
 
     /**
      * viewModelJob allows us to cancel all coroutines started by this ViewModel.
@@ -208,5 +214,8 @@ class Repository (private val dataSource : TracksDao) : TracksDao() {
         return dataSource.getControls()
     }
 
-
+    //---------------------------RETROFIT PART--------------------------------------------------------
+//    override fun getTrackText(): Deferred<ResponseBody> {
+//        return netSource.getSimpleCat()
+//    }
 }

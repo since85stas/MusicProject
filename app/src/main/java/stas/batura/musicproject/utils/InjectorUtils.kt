@@ -9,6 +9,7 @@ import kotlinx.coroutines.runBlocking
 import stas.batura.musicproject.MainAcivityViewModel
 import stas.batura.musicproject.musicservice.MusicRepository
 import stas.batura.musicproject.repository.Repository
+import stas.batura.musicproject.repository.net.RetrofitClient
 import stas.batura.musicproject.repository.room.TracksDao
 import stas.batura.musicproject.repository.room.TracksDatabase
 import stas.batura.musicproject.ui.playlist.PlaylistViewModel
@@ -25,6 +26,8 @@ object InjectorUtils {
 
     @Volatile
     var musicRepository: MusicRepository? = null
+
+    var retrofit: RetrofitClient.API_COUR? = null
 
     private fun provideDao (application: Context): TracksDao {
         if (tracksDao == null) {
@@ -53,6 +56,13 @@ object InjectorUtils {
 
     fun providePlaylistViewModel (application: Application) : PlaylistViewModel.Factory {
         return PlaylistViewModel.Factory(provideRep(application), provideMusicRep(application))
+    }
+
+    fun provideRetrofit(): RetrofitClient.API_COUR {
+        if (retrofit == null) {
+            retrofit = RetrofitClient.netApi.retrofitServise
+        }
+        return retrofit!!
     }
 
 
