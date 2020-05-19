@@ -200,6 +200,11 @@ class MainAcivityViewModel (private val application: Application,
         }
     }
 
+    fun deleteTrackFromPl(id: Int) {
+        repository.deleteTrack(id)
+        musicRepository.getDbTracks()
+    }
+
     fun onActivityDestroyed() {
         setAllTracksNotPlaying()
         _createServiceListner.value = false

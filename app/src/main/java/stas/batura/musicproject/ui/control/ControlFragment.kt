@@ -102,7 +102,7 @@ class ControlFragment () : Fragment() {
                 btnRepeat.setImageResource(R.drawable.ic_repeat_one_black_24dp)
             } else if (it.playStatus == REPEAT_ON) {
                 btnRepeat.setImageResource(R.drawable.ic_repeat_black_24dp)
-            } else if (it.playStatus == REPEAT_OFF) {
+            } else if (it.playStatus == REPEAT_OFF || it.playStatus == SHUFFLE_ON) {
                 btnRepeat.setImageResource(R.drawable.ic_repeat_gray_24dp)
             }
             if (it.playStatus == SHUFFLE_ON) {

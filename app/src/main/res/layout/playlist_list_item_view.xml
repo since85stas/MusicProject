@@ -26,6 +26,7 @@
             android:layout_height="wrap_content"
             playlistNameBinding="@{playlist.name}"
             android:onClick="@{() -> viewHolder.onItemClecked()}"
+            android:maxLines="1"
              />
 
     </LinearLayout>

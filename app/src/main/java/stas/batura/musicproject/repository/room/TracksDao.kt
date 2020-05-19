@@ -55,6 +55,9 @@ abstract class TracksDao {
     @Query ("DELETE FROM tracks_table WHERE track_playlist_id IN ( SELECT current_playlist_id FROM main_table)")
     abstract fun deleteTracksInMainPlayList()
 
+    @Query ("DELETE FROM tracks_table WHERE id = :id")
+    abstract fun deleteTrack(id: Int)
+
     @Insert
     abstract fun insertPlaylist(playlist: Playlist): Long
 

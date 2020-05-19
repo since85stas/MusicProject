@@ -90,7 +90,7 @@ class PlaylistFragment : Fragment (), DialogSelectionListener {
                 val builder: AlbumsDataInfo = AlbumsDataInfo(it)
                 val albums = builder.getAlbumsData()
                 print("albums")
-                val expandAdapter = PlaylistExpandJava(albums)
+                val expandAdapter = PlaylistExpandJava(albums, mainViewModel)
                 simpleExpandableListView.setAdapter(expandAdapter)
                 for (i in 0 until expandAdapter.groupCount) {
                     simpleExpandableListView.expandGroup(i)

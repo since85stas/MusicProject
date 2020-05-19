@@ -128,6 +128,12 @@ class Repository (private val dataSource : TracksDao) : TracksDao() {
         }
     }
 
+    override fun deleteTrack(id: Int) {
+        ioScope.launch {
+            dataSource.deleteTrack(id)
+        }
+    }
+
     /**
      * отмечаем играющий трек
      */

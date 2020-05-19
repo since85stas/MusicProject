@@ -120,8 +120,10 @@ public final class MusicRepository {
     // TODO : разобраться с обновлением лайв дэйта
     private void setIsPlaying() {
         Log.d("musicReppos", "setIsPlaying: ");
-        for (Track tr : tracks.getValue()) {
-            tr.isPlaying = false;
+        if (tracks.getValue() != null && tracks.getValue().size() > 0) {
+            for (Track tr : tracks.getValue()) {
+                tr.isPlaying = false;
+            }
         }
         repository.setAllTrackIsNOTPlaying();
         repository.setTrackIsPlaying(tracks.getValue().get(currentItemIndex).trackId);

@@ -15,7 +15,7 @@ public class Track {
 
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id")
-    private long _ID;
+    public long _ID;
 
     @ColumnInfo (name = "track_playlist_id")
     public int trackId;
