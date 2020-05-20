@@ -6,11 +6,14 @@ import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterF
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import kotlinx.coroutines.Deferred
+import okhttp3.OkHttpClient
 import okhttp3.ResponseBody
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Call
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
+import retrofit2.converter.simplexml.SimpleXmlConverterFactory
 import retrofit2.create
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -26,6 +29,10 @@ object RetrofitClient {
 //        val string = ""
 //        return Retrofit.Builder().baseUrl(BASE_URL).build()
 //    }
+    private val loggingInterceptor = HttpLoggingInterceptor()
+    .setLevel(HttpLoggingInterceptor.Level.BODY)
+
+    private val httpClient = OkHttpClient.Builder()
 
     /**
      * Build the Moshi object that Retrofit will be using, making sure to add the Kotlin adapter for
@@ -45,20 +52,30 @@ object RetrofitClient {
         .baseUrl(BASE_URL)
         .build()
 
+    /**
+     * Use the Retrofit builder to build a retrofit object using a Xml converter
+     * object.
+     */
+    private val retrofitXmlCour = Retrofit.Builder()
+        .addConverterFactory(SimpleXmlConverterFactory.create())
+        .addCallAdapterFactory(CoroutineCallAdapterFactory())
+        .client(httpClient.addInterceptor(loggingInterceptor).build())
+        .baseUrl(BASE_URL)
+        .build()
+
     object netApi {
         val retrofitServise : API_COUR by lazy {
-            retrofit.create(API_COUR::class.java)
+            retrofitXmlCour.create(API_COUR::class.java)
         }
     }
 
     interface API_COUR {
         @GET ("SearchLyric?artist=michael%20jackson&song=bad")
         fun getSimpleCat(
-
-        ): Deferred<ResponseBody>
+        ): Deferred<SearchResponse>
 
         @GET ("cat/says/{sentence}")
-        fun getSayingCat(@Path ("sentence") value: String) : Deferred<ResponseBody>
+        fun getSayingCat(@Path ("sentence") value: String) : Deferred<SearchResponse>
     }
 
 }

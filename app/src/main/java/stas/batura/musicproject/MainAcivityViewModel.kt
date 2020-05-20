@@ -247,7 +247,7 @@ class MainAcivityViewModel (private val application: Application,
             val resultDeffered = InjectorUtils.provideRetrofit().getSimpleCat()
             try {
                 _netStatus.value = NetApiStatus.LOADING
-                val bytes = resultDeffered.await().bytes()
+                val bytes = resultDeffered.await()
 //                _imageBit.value = BitmapFactory.decodeByteArray(bytes, 0, bytes.size)
                 _netStatus.value = NetApiStatus.DONE
 
