@@ -1,5 +1,6 @@
 package stas.batura.musicproject
 
+import android.view.View
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.LinearLayout
@@ -68,6 +69,62 @@ fun TextView.setPlaylistName(name: String?) {
         text = "Playlist"
     } else {
         text = name
+    }
+}
+
+/**
+ * This binding adapter displays the [ImageApiStatus] of the network request in an image view.  When
+ * the request is loading, it displays a loading_animation.  If the request has an error, it
+ * displays a broken image to reflect the connection error.  When the request is finished, it
+ * hides the image view.
+ */
+@BindingAdapter("imageStatus")
+fun bindStatus(statusImageView: ImageView, status: NetApiStatus?) {
+    when (status) {
+        NetApiStatus.LOADING -> {
+            statusImageView.visibility = View.VISIBLE
+            statusImageView.setImageResource(R.drawable.loading_animation)
+        }
+        NetApiStatus.ERROR -> {
+            statusImageView.visibility = View.VISIBLE
+            statusImageView.setImageResource(R.drawable.ic_connection_error)
+        }
+        NetApiStatus.DONE -> {
+            statusImageView.visibility = View.GONE
+        }
+    }
+}
+
+/**
+ * This binding adapter displays the [ImageApiStatus] of the network request in an image view.  When
+ * the request is loading, it displays a loading_animation.  If the request has an error, it
+ * displays a broken image to reflect the connection error.  When the request is finished, it
+ * hides the image view.
+ */
+@BindingAdapter("textStatus")
+fun TextView.bindTextStatus( status: NetApiStatus?) {
+    when (status) {
+        NetApiStatus.LOADING -> {
+            visibility = View.GONE
+        }
+        NetApiStatus.ERROR -> {
+            visibility = View.GONE
+        }
+        NetApiStatus.DONE -> {
+//            if (mainAcivityViewModel.songText != null) {
+//                setText(mainAcivityViewModel.songText)
+//            }
+            visibility = View.VISIBLE
+        }
+    }
+}
+
+@BindingAdapter("textBody")
+fun TextView.bindTextBody( texts: String?) {
+    if (texts != null) {
+        text = texts
+    } else {
+        text = "No text"
     }
 }
 

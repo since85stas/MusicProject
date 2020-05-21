@@ -33,7 +33,7 @@ import java.util.concurrent.Executors
  * This pattern is pretty much the same for any database,
  * so you can reuse it.
  */
-@Database(entities =[TrackKot::class, Playlist::class, MainData::class, Controls::class], version = 8, exportSchema = false)
+@Database(entities =[TrackKot::class, Playlist::class, MainData::class, Controls::class], version = 9, exportSchema = false)
 @TypeConverters(UriRoomConverter::class)
 abstract class TracksDatabase : RoomDatabase() {
 
@@ -99,8 +99,14 @@ abstract class TracksDatabase : RoomDatabase() {
                         Log.d("room","dab created")
                     }
 
+                    override fun onDestructiveMigration(db: SupportSQLiteDatabase) {
+                        Log.d("Db","destr")
+                        super.onDestructiveMigration(db)
+                    }
+
                     override fun onOpen(db: SupportSQLiteDatabase) {
                         // do something every time database is open
+                        Log.d("Db","op")
                     }
                 }
                 // Copy the current value of INSTANCE to a local variable so Kotlin can smart cast.

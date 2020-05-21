@@ -26,6 +26,8 @@ class TextDialog (  private val mainModel: MainAcivityViewModel) : DialogFragmen
 
         bindings.mainModel = mainModel
 
+        bindings.lifecycleOwner = viewLifecycleOwner
+
         return bindings.root
     }
 

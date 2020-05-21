@@ -8,8 +8,8 @@
     </data>
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="400dp"
+        android:layout_height="400dp"
         android:orientation="vertical">
 
         <ScrollView
@@ -18,8 +18,10 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_gravity="center"
+                >
 
                 <TextView
                     android:id="@+id/text_dialog_title"
@@ -31,7 +33,17 @@
                     android:id="@+id/text_dialog_body"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="text" />
+                    android:text="body"
+                    textStatus="@{mainModel.netStatus}"
+                    textBody="@{mainModel.songText}"
+                    />
+
+                <ImageView
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    imageStatus="@{mainModel.netStatus}"
+                    android:layout_gravity="center"
+                    />
 
             </LinearLayout>
         </ScrollView>

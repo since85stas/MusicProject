@@ -95,20 +95,22 @@ class ControlFragment () : Fragment() {
         })
 
         mainViewModel.controlsLive.observe(viewLifecycleOwner, Observer {
-            Log.d(TAG, "contr")
-            mainViewModel.musicRepository.updateContols(it)
-            btnRepeat.setImageResource(R.drawable.exo_controls_repeat_off)
-            if (it.playStatus == REPEAT_ONE) {
-                btnRepeat.setImageResource(R.drawable.ic_repeat_one_black_24dp)
-            } else if (it.playStatus == REPEAT_ON) {
-                btnRepeat.setImageResource(R.drawable.ic_repeat_black_24dp)
-            } else if (it.playStatus == REPEAT_OFF || it.playStatus == SHUFFLE_ON) {
-                btnRepeat.setImageResource(R.drawable.ic_repeat_gray_24dp)
-            }
-            if (it.playStatus == SHUFFLE_ON) {
-                btnShuffle.setImageResource(R.drawable.ic_shuffle_black_24dp)
-            } else  {
-                btnShuffle.setImageResource(R.drawable.ic_shuffle_gray_24dp)
+            if (it != null) {
+                Log.d(TAG, "contr")
+                mainViewModel.musicRepository.updateContols(it)
+                btnRepeat.setImageResource(R.drawable.exo_controls_repeat_off)
+                if (it.playStatus == REPEAT_ONE) {
+                    btnRepeat.setImageResource(R.drawable.ic_repeat_one_black_24dp)
+                } else if (it.playStatus == REPEAT_ON) {
+                    btnRepeat.setImageResource(R.drawable.ic_repeat_black_24dp)
+                } else if (it.playStatus == REPEAT_OFF || it.playStatus == SHUFFLE_ON) {
+                    btnRepeat.setImageResource(R.drawable.ic_repeat_gray_24dp)
+                }
+                if (it.playStatus == SHUFFLE_ON) {
+                    btnShuffle.setImageResource(R.drawable.ic_shuffle_black_24dp)
+                } else {
+                    btnShuffle.setImageResource(R.drawable.ic_shuffle_gray_24dp)
+                }
             }
         })
 

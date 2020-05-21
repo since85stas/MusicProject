@@ -17,6 +17,7 @@ import retrofit2.converter.simplexml.SimpleXmlConverterFactory
 import retrofit2.create
 import retrofit2.http.GET
 import retrofit2.http.Path
+import retrofit2.http.Query
 import retrofit2.http.Url
 
 
@@ -70,9 +71,9 @@ object RetrofitClient {
     }
 
     interface API_COUR {
-        @GET ("SearchLyric?artist=michael%20jackson&song=bad")
-        fun getSimpleCat(
-        ): Deferred<SearchResponse>
+        @GET ("SearchLyricDirect")
+        fun getSongText( @Query("song") song: String, @Query("artist") artist: String ):
+                Deferred<SearchResponse>
 
         @GET ("cat/says/{sentence}")
         fun getSayingCat(@Path ("sentence") value: String) : Deferred<SearchResponse>

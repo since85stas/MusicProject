@@ -3,7 +3,6 @@ package stas.batura.musicproject
 import android.app.Application
 import android.content.ComponentName
 import android.content.ServiceConnection
-import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.IBinder
 import android.os.RemoteException
@@ -53,6 +52,12 @@ class MainAcivityViewModel (private val application: Application,
     val netStatus: LiveData<NetApiStatus>
         get() = _netStatus
 
+    var songText: String? = null
+
+    private var _openTextListner : MutableLiveData<Boolean> = MutableLiveData(false)
+    val openTextListner : LiveData<Boolean>
+        get() = _openTextListner
+
     val mainDataLive = repository.getMainPlaylistId(0L)
 
     val playlistListLive:LiveData<List<Playlist>> = repository.getAllPlaylists()
@@ -77,7 +82,9 @@ class MainAcivityViewModel (private val application: Application,
      * запускает создание сервиса
      */
     fun checkServiseCreation() {
-        if (!_createServiceListner.value!!) {
+        if ( musicRepository.tracks.value == null || musicRepository.tracks.value!!.size == 0) {
+            Log.d("mainView", "empty music rep")
+        } else if (!_createServiceListner.value!! ) {
             playIsClicked = true
             _createServiceListner.value = true
         } else {
@@ -244,11 +251,11 @@ class MainAcivityViewModel (private val application: Application,
 
     fun getTrackText() {
         coroutineScope.launch {
-            val resultDeffered = InjectorUtils.provideRetrofit().getSimpleCat()
+            val resultDeffered = InjectorUtils.provideRetrofit().getSongText("Bad", "michael jackson")
             try {
                 _netStatus.value = NetApiStatus.LOADING
-                val bytes = resultDeffered.await()
-//                _imageBit.value = BitmapFactory.decodeByteArray(bytes, 0, bytes.size)
+                val bytes = resultDeffered.await().lyrics
+                songText = bytes
                 _netStatus.value = NetApiStatus.DONE
 
             } catch (e: Exception) {
@@ -259,7 +266,13 @@ class MainAcivityViewModel (private val application: Application,
 //                _buttonCliked.value = false
             }
         }
+        _openTextListner.value = true
     }
+
+    fun openTextDialogFinish() {
+        _openTextListner.value = false
+    }
+
 
     /**
      * фабрика для создания модели

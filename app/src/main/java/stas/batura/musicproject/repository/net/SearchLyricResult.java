@@ -4,21 +4,29 @@ import org.simpleframework.xml.Element;
 import org.simpleframework.xml.Root;
 
 @Root(name = "SearchLyricResult", strict = false)
-public class SearchLyricResult {
+    public class SearchLyricResult {
 
-    @Element int TrackId ;
+        @Element (name = "TrackId")
+        int TrackId ;
 
-    @Element String LyricChecksum;
+        @Element  (required = false)
+        String LyricChecksum;
 
-    @Element int LyricId;
+        @Element  (required = false)
+        int LyricId;
 
-    @Element String SongUrl;
+        @Element  (required = false)
+        String SongUrl;
 
-    @Element String ArtistUrl;
+        @Element  (required = false)
+        String ArtistUrl;
 
-    @Element String Artist;
+        @Element  (required = false)
+        String Artist;
 
-    @Element String Song;
+        @Element  (required = false)
+        String Song;
 
-    @Element int SongRank;
+        @Element  (required = false)
+        int SongRank;
 }

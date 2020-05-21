@@ -40,6 +40,7 @@ import stas.batura.musicproject.musicservice.MusicService
 import stas.batura.musicproject.repository.room.Playlist
 import stas.batura.musicproject.ui.control.ControlFragment
 import stas.batura.musicproject.ui.dialogs.PlaylistNameDialog
+import stas.batura.musicproject.ui.dialogs.TextDialog
 import stas.batura.musicproject.ui.playlist.PlaylistFragment
 import stas.batura.musicproject.ui.song_decor.SongDecorFragment
 import stas.batura.musicproject.utils.InjectorUtils
@@ -150,6 +151,12 @@ private val NUM_PAGES = 2
                 exoplayer_control.player = it
             } else {
 
+            }
+        })
+
+        mainViewModel.openTextListner.observe(this, Observer {
+            if (it) {
+                openTrackTextDialog()
             }
         })
         createBasicNavView()
@@ -305,6 +312,13 @@ private val NUM_PAGES = 2
     override fun onSelectedFilePaths(files: Array<out String>?) {
         print("test select")
         mainViewModel.addTracksToPlaylist(files!![0])
+    }
+
+    fun openTrackTextDialog() {
+        val dialog: TextDialog = TextDialog(mainViewModel)
+        val fragmentManager = supportFragmentManager
+        dialog.show(fragmentManager, "text")
+        mainViewModel.openTextDialogFinish()
     }
 
     /**
