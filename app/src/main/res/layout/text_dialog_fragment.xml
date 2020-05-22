@@ -8,13 +8,14 @@
     </data>
 
     <LinearLayout
-        android:layout_width="400dp"
-        android:layout_height="400dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
         android:orientation="vertical">
 
         <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -27,20 +28,23 @@
                     android:id="@+id/text_dialog_title"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="tittle" />
+                    android:text="tittle"
+                    android:gravity="center"
+                    />
 
                 <TextView
                     android:id="@+id/text_dialog_body"
-                    android:layout_width="match_parent"
+                    android:layout_width="300dp"
                     android:layout_height="wrap_content"
                     android:text="body"
                     textStatus="@{mainModel.netStatus}"
                     textBody="@{mainModel.songText}"
+                    android:layout_gravity="center"
                     />
 
                 <ImageView
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
+                    android:layout_width="200dp"
+                    android:layout_height="200dp"
                     imageStatus="@{mainModel.netStatus}"
                     android:layout_gravity="center"
                     />

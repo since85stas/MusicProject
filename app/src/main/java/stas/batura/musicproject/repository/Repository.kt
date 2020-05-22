@@ -197,6 +197,12 @@ class Repository (private val dataSource : TracksDao
         return dataSource.getCurrPlaylistName()
     }
 
+    override fun deletePlaylist() {
+        ioScope.launch {
+            dataSource.deletePlaylist()
+        }
+    }
+
     //----------------------------CONTROLs PART---------------------------------------------------------
     override fun addControls(controls: Controls) {
         ioScope.launch {

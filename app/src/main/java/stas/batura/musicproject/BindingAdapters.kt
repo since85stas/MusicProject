@@ -59,7 +59,7 @@ fun ImageView.setAlbumImage(track: TrackKot?) {
     if (track != null && track.bitmapUri != null) {
         setImageURI(track.bitmapUri)
     } else {
-        setImageDrawable(resources.getDrawable(R.drawable.image208815))
+        setImageDrawable(resources.getDrawable(R.drawable.note_image))
     }
 }
 

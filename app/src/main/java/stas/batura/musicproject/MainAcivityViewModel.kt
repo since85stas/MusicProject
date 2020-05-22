@@ -52,7 +52,7 @@ class MainAcivityViewModel (private val application: Application,
     val netStatus: LiveData<NetApiStatus>
         get() = _netStatus
 
-    var songText: String? = null
+    var songText: MutableLiveData<String> = MutableLiveData()
 
     private var _openTextListner : MutableLiveData<Boolean> = MutableLiveData(false)
     val openTextListner : LiveData<Boolean>
@@ -250,23 +250,34 @@ class MainAcivityViewModel (private val application: Application,
     }
 
     fun getTrackText() {
-        coroutineScope.launch {
-            val resultDeffered = InjectorUtils.provideRetrofit().getSongText("Bad", "michael jackson")
-            try {
-                _netStatus.value = NetApiStatus.LOADING
-                val bytes = resultDeffered.await().lyrics
-                songText = bytes
-                _netStatus.value = NetApiStatus.DONE
+//        if (currentTrackPlaying.value != null) {
+            if (true) {
+            coroutineScope.launch {
+                val resultDeffered = InjectorUtils.provideRetrofit().getSongText(
+                    currentTrackPlaying.value!!.title,
+                    currentTrackPlaying.value!!.artist
+                )
+//                val resultDeffered = InjectorUtils.provideRetrofit().getSongText(
+//                    "Bad",
+//                    "michael jackson"
+//                )
+                try {
+                    _netStatus.value = NetApiStatus.LOADING
+                    val bytes = resultDeffered.await().lyrics
+                    songText.value = bytes
+                    _netStatus.value = NetApiStatus.DONE
 
-            } catch (e: Exception) {
-                Log.d("eee", e.toString())
-                _netStatus.value = NetApiStatus.ERROR
-            } finally {
-                Log.d("eee", "finally")
+                } catch (e: Exception) {
+                    Log.d("eee", e.toString())
+                    _netStatus.value = NetApiStatus.ERROR
+                } finally {
+                    Log.d("eee", "finally")
 //                _buttonCliked.value = false
+                }
             }
+            _openTextListner.value = true
         }
-        _openTextListner.value = true
+
     }
 
     fun openTextDialogFinish() {

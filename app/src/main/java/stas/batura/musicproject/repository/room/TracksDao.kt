@@ -72,6 +72,9 @@ abstract class TracksDao {
     @Query("SELECT name FROM playlist_table WHERE playlist_id IN ( SELECT current_playlist_id FROM main_table)")
     abstract fun getCurrPlaylistName() : LiveData<String?>
 
+    @Query("DELETE FROM playlist_table WHERE playlist_id IN ( SELECT current_playlist_id FROM main_table)")
+    abstract fun deletePlaylist()
+
     //----------------------------CONTROLS PART---------------------------------------------------------
     @Insert
     abstract fun addControls(controls: Controls)

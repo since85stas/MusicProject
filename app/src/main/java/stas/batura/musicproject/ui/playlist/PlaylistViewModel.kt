@@ -72,6 +72,13 @@ class PlaylistViewModel ( val repository: TracksDao,
     }
 
     /**
+     * удаляет плейлист
+     */
+    fun deletePlaylist() {
+        repository.deleteTracksInMainPlayList()
+    }
+
+    /**
      * поллучаем путь папки, создаем список треков и сохраняем в БД
      */
     fun addTracksToPlaylist(pathStr : String) {
