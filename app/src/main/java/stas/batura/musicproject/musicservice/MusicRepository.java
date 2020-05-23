@@ -31,6 +31,8 @@ public final class MusicRepository {
 
     private int currentItemIndex = 0;
 
+    List<TrackKot> tracksDb;
+
     public MusicRepository(TracksDao repository ) {
         this.repository = repository;
 
@@ -39,7 +41,7 @@ public final class MusicRepository {
     }
 
     public void getDbTracks() {
-        List<TrackKot> tracksDb = repository.getAllTracksFromMainPlaylist();
+        tracksDb = repository.getAllTracksFromMainPlaylist();
         updateTracksLive(tracksDb);
     }
 

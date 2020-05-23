@@ -33,7 +33,7 @@ import java.util.concurrent.Executors
  * This pattern is pretty much the same for any database,
  * so you can reuse it.
  */
-@Database(entities =[TrackKot::class, Playlist::class, MainData::class, Controls::class], version = 9, exportSchema = false)
+@Database(entities =[TrackKot::class, Playlist::class, MainData::class, Controls::class], version = 10, exportSchema = false)
 @TypeConverters(UriRoomConverter::class)
 abstract class TracksDatabase : RoomDatabase() {
 

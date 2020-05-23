@@ -70,7 +70,7 @@ class MainActivityTest {
     fun test_activity_play_clicked_decor() {
         val activityScenario = ActivityScenario.launch(MainActivity::class.java)
 
-        onView(withId(R.id.play_button)).perform(click())
+        onView(withId(R.id.play_pause_button)).perform(click())
         onView(withId(R.id.albumTitle)).check(matches(withText("Filosofem")))
         activityScenario.close()
     }

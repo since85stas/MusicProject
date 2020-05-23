@@ -250,17 +250,12 @@ class MainAcivityViewModel (private val application: Application,
     }
 
     fun getTrackText() {
-//        if (currentTrackPlaying.value != null) {
-            if (true) {
+        if (currentTrackPlaying.value != null) {
             coroutineScope.launch {
                 val resultDeffered = InjectorUtils.provideRetrofit().getSongText(
                     currentTrackPlaying.value!!.title,
                     currentTrackPlaying.value!!.artist
                 )
-//                val resultDeffered = InjectorUtils.provideRetrofit().getSongText(
-//                    "Bad",
-//                    "michael jackson"
-//                )
                 try {
                     _netStatus.value = NetApiStatus.LOADING
                     val bytes = resultDeffered.await().lyrics

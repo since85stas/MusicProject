@@ -54,6 +54,15 @@ fun TextView.setAlbumTitle(track: TrackKot?) {
     }
 }
 
+@BindingAdapter("artistTitleBinding")
+fun TextView.setartistTitle(track: TrackKot?) {
+    if (track != null) {
+        text = track.artist
+    } else {
+        text =  "Artist"
+    }
+}
+
 @BindingAdapter("trackImageBinfing")
 fun ImageView.setAlbumImage(track: TrackKot?) {
     if (track != null && track.bitmapUri != null) {

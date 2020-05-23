@@ -68,7 +68,7 @@
             android:layout_marginTop="12dp"
             android:layout_weight="1"
             android:divider="#0f0"
-            android:dividerHeight="1dp" />
+            android:dividerHeight="0dp" />
 
     </LinearLayout>
 </layout>

@@ -9,9 +9,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="parent"
-        android:layout_marginLeft="24dp"
-        android:textSize="16sp"
-        android:maxLines="1"
+        style="@style/ExpandParentStyle"
         />
 
     <TextView
@@ -19,9 +17,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="1985"
-        android:layout_marginLeft="24dp"
-        android:textSize="16sp"
-        android:maxLines="1"
+        style="@style/ExpandParentStyle"
         />
 
 </LinearLayout>

@@ -19,7 +19,8 @@
             android:layout_height="wrap_content"
             android:layout_margin="12dp"
             android:layout_width="wrap_content"
-            android:textSize="14sp" />
+            style="@style/ExpandChildBaseStyle"
+            />
 
         <TextView
             android:id="@+id/track_child_title"
@@ -27,8 +28,7 @@
             android:layout_margin="12dp"
             android:layout_weight="1"
             android:layout_width="0dp"
-            android:textSize="14sp"
-            android:maxLines="1"
+            style="@style/ExpandChildBaseStyle"
             />
 
         <TextView
@@ -36,8 +36,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="12dp"
-            android:textSize="16sp"
-            android:maxLines="1"
+            style="@style/ExpandChildBaseStyle"
             />
 
         <ImageView

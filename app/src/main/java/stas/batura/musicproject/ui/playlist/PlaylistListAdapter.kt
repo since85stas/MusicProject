@@ -6,7 +6,6 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import stas.batura.musicproject.MainAcivityViewModel
-import stas.batura.musicproject.databinding.PlaylistChildItemViewBinding
 import stas.batura.musicproject.databinding.PlaylistListItemViewBinding
 import stas.batura.musicproject.musicservice.MusicRepository
 import stas.batura.musicproject.repository.room.Playlist

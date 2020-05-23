@@ -2,10 +2,7 @@ package stas.batura.musicproject.data.source
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import stas.batura.musicproject.repository.room.MainData
-import stas.batura.musicproject.repository.room.Playlist
-import stas.batura.musicproject.repository.room.TrackKot
-import stas.batura.musicproject.repository.room.TracksDao
+import stas.batura.musicproject.repository.room.*
 
 class FakeRepositoryAndr(): TracksDao() {
 
@@ -115,6 +112,26 @@ class FakeRepositoryAndr(): TracksDao() {
     }
 
     override fun getCurrPlaylistName(): LiveData<String?> {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun deleteTrack(id: Int) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun deletePlaylist() {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun addControls(controls: Controls) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun changerPlayStatus(status: Int) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun getControls(): LiveData<Controls> {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 }

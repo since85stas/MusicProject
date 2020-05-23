@@ -131,12 +131,14 @@ class PlaylistFragment : Fragment (), DialogSelectionListener {
 //            true
 //        })
 
+        // наблюдаем за добавлением
         playlistViewModel.addButtonClicked.observe(viewLifecycleOwner, Observer {
             if (it) {
                 openFileSelectDialog()
             }
         })
 
+        // наблюдаем за сменой основных параметров
         playlistViewModel.mainDataLive.observe(viewLifecycleOwner, Observer {
             if (it != null) {
                 Log.d("playlist", "pla")
@@ -144,6 +146,7 @@ class PlaylistFragment : Fragment (), DialogSelectionListener {
             }
         })
 
+        // наблюдаем за кнопкой удаления плейлиста
         playlistViewModel.deleteButtClicked.observe(viewLifecycleOwner, Observer {
             if (it) {
                 openConfirmDeleteDialog()
@@ -195,6 +198,9 @@ class PlaylistFragment : Fragment (), DialogSelectionListener {
         dialog.show(fragmentManage, "playlist")
     }
 
+    /**
+     * создает диалог с подтверждением действия
+     */
     fun openConfirmDeleteDialog() {
         val delDialog = DeleteAlertDialog()
         val fragmentManager = requireActivity().supportFragmentManager
@@ -202,6 +208,9 @@ class PlaylistFragment : Fragment (), DialogSelectionListener {
         delDialog.show(fragmentManager, "del playlist")
     }
 
+    /**
+     * подтверждаем удаление
+     */
     fun deletePlaylistOk() {
         playlistViewModel.deletePlaylist()
     }
