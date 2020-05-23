@@ -13,75 +13,62 @@
 
     </data>
 
-    <ScrollView
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        >
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="horizontal">
 
-            <LinearLayout
-                android:layout_width="match_parent"
+            <TextView
+                android:id="@+id/playlist_name"
+                playlistNameBinding="@{playlistViewModel.playlistName}"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal" >
-                <TextView
-                    android:id="@+id/playlist_name"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    playlistNameBinding="@{playlistViewModel.playlistName}"
-                    android:onClick="@{() -> playlistViewModel.playlistNameClickedFun()}"
-                    android:layout_gravity="center"
-                    android:textSize="20sp"
-                    android:textStyle="bold"
-                    android:layout_marginTop="12dp"
-                    android:maxLines="1"
-                    />
-
-                <ImageView
-                    android:id="@+id/add_files_butt"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="12dp"
-                    android:layout_marginRight="24dp"
-                    android:src="@drawable/ic_add_black_24dp"
-                    android:onClick="@{() -> playlistViewModel.addButtonClicked()}"
-                    android:text="add" />
-
-                <ImageView
-                    android:id="@+id/delete_playlist_button"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="12dp"
-                    android:layout_marginRight="24dp"
-                    android:src="@drawable/ic_delete_forever_black_24dp"
-                    android:onClick="@{() -> playlistViewModel.deleteButtonclicked()}"
-                    android:text="delete" />
-
-            </LinearLayout>
-
-            <androidx.recyclerview.widget.RecyclerView
+                android:layout_gravity="center"
                 android:layout_marginTop="12dp"
-                android:id="@+id/playlist_recycle_view"
-                android:layout_width="match_parent"
-                android:layout_height="300dp"
-                android:visibility="gone"
-                />
+                android:layout_weight="1"
+                android:maxLines="1"
+                android:onClick="@{() -> playlistViewModel.playlistNameClickedFun()}"
+                android:textSize="20sp"
+                android:textStyle="bold" />
 
-            <ExpandableListView
-                android:id="@+id/simpleExpandableListView"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:divider="#0f0"
-                android:dividerHeight="1dp"
+            <ImageView
+                android:id="@+id/add_files_butt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:layout_marginTop="12dp"
-                />
+                android:layout_marginRight="24dp"
+                android:onClick="@{() -> playlistViewModel.addButtonClicked()}"
+                android:src="@drawable/ic_add_black_24dp"
+                android:text="add" />
+
+            <ImageView
+                android:id="@+id/delete_playlist_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="12dp"
+                android:layout_marginRight="24dp"
+                android:onClick="@{() -> playlistViewModel.deletePlaylistClicked()}"
+                android:src="@drawable/ic_delete_forever_black_24dp"
+                android:text="delete" />
 
         </LinearLayout>
-    </ScrollView>
+
+        <ExpandableListView
+            android:id="@+id/simpleExpandableListView"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="12dp"
+            android:layout_weight="1"
+            android:divider="#0f0"
+            android:dividerHeight="1dp" />
+
+    </LinearLayout>
 </layout>

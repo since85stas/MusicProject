@@ -1,6 +1,7 @@
 package stas.batura.musicproject.ui.playlist
 
 import android.app.Application
+import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -10,6 +11,7 @@ import stas.batura.musicproject.musicservice.MusicRepository
 import stas.batura.musicproject.repository.Repository
 import stas.batura.musicproject.repository.room.TracksDao
 import stas.batura.musicproject.utils.SongsManager
+import java.time.Duration
 
 class PlaylistViewModel ( val repository: TracksDao,
                           val musicRepository: MusicRepository) : ViewModel () {
@@ -31,6 +33,11 @@ class PlaylistViewModel ( val repository: TracksDao,
     private var _playlistNameClicked : MutableLiveData<Boolean> = MutableLiveData(false)
     val playlistNameClicked : LiveData<Boolean>
         get () = _playlistNameClicked
+
+    // смотрим за нажатием кнопуи выбора плейлиста
+    private var _deleteButtClicked : MutableLiveData<Boolean> = MutableLiveData(false)
+    val deleteButtClicked : LiveData<Boolean>
+        get () = _deleteButtClicked
 
     val playlistName = repository.getCurrPlaylistName()
 
@@ -71,11 +78,23 @@ class PlaylistViewModel ( val repository: TracksDao,
         musicRepository.getDbTracks()
     }
 
+    fun deletePlaylistClicked() {
+        if (mainDataLive.value!!.currentPlaylistId != 0) {
+            _deleteButtClicked.value = true
+        } else {
+//            Toast.makeText(,"This is your base playlist", Toast.LENGTH_LONG).
+        }
+    }
+
     /**
      * удаляет плейлист
      */
     fun deletePlaylist() {
         repository.deleteTracksInMainPlayList()
+        repository.deletePlaylist()
+
+        repository.updateMainPlayilistId(0)
+        musicRepository.getDbTracks()
     }
 
     /**

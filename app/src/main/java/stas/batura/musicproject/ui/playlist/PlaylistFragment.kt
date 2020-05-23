@@ -25,6 +25,7 @@ import stas.batura.musicproject.MainAcivityViewModel
 import stas.batura.musicproject.R
 import stas.batura.musicproject.databinding.PlaylistFragmentBinding
 import stas.batura.musicproject.musicservice.MusicRepository
+import stas.batura.musicproject.ui.dialogs.DeleteAlertDialog
 import stas.batura.musicproject.ui.dialogs.PlaylistListDialog
 import stas.batura.musicproject.ui.dialogs.PlaylistNameDialog
 import stas.batura.musicproject.utils.InjectorUtils
@@ -143,6 +144,12 @@ class PlaylistFragment : Fragment (), DialogSelectionListener {
             }
         })
 
+        playlistViewModel.deleteButtClicked.observe(viewLifecycleOwner, Observer {
+            if (it) {
+                openConfirmDeleteDialog()
+            }
+        })
+
 //        playlistViewModel.musicRepository.tracksDb.observe(viewLifecycleOwner, Observer {
 //            if (it != null) {
 //                print(" tt")
@@ -188,6 +195,15 @@ class PlaylistFragment : Fragment (), DialogSelectionListener {
         dialog.show(fragmentManage, "playlist")
     }
 
+    fun openConfirmDeleteDialog() {
+        val delDialog = DeleteAlertDialog()
+        val fragmentManager = requireActivity().supportFragmentManager
+        delDialog.setTargetFragment(this, 1111)
+        delDialog.show(fragmentManager, "del playlist")
+    }
 
+    fun deletePlaylistOk() {
+        playlistViewModel.deletePlaylist()
+    }
 
 }
