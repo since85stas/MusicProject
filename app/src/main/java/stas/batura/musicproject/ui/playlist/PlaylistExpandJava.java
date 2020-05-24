@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.List;
@@ -102,6 +103,10 @@ public class PlaylistExpandJava extends BaseExpandableListAdapter {
             convertView = inflater.inflate(R.layout.playlist_child_expand, null);
         }
         TextView textView = convertView.findViewById(R.id.track_child_title);
+        TextView textView1 = convertView.findViewById(R.id.child_test_id);
+        TextView textView2 = convertView.findViewById(R.id.track_child_duration);
+        ImageView textView3 = convertView.findViewById(R.id.track_child_options);
+        LinearLayout layChi = convertView.findViewById(R.id.child_item_view);
         textView.setText(albums.get(groupPosition).getAlbumTracks().get(childPosition).title);
 
 //            TextView textViewg = convertView.findViewById(R.id.group_test_id);
@@ -112,8 +117,16 @@ public class PlaylistExpandJava extends BaseExpandableListAdapter {
 
         if (albums.get(groupPosition).getAlbumTracks().get(childPosition).isPlaying) {
             textView.setBackgroundColor(parent.getContext().getResources().getColor(R.color.colorAccent));
+            textView1.setBackgroundColor(parent.getContext().getResources().getColor(R.color.colorAccent));
+            textView2.setBackgroundColor(parent.getContext().getResources().getColor(R.color.colorAccent));
+            textView3.setBackgroundColor(parent.getContext().getResources().getColor(R.color.colorAccent));
+            layChi.setBackgroundColor(parent.getContext().getResources().getColor(R.color.colorAccent));
         } else {
             textView.setBackgroundColor(parent.getContext().getResources().getColor(R.color.design_default_color_background));
+            textView1.setBackgroundColor(parent.getContext().getResources().getColor(R.color.design_default_color_background));
+            textView2.setBackgroundColor(parent.getContext().getResources().getColor(R.color.design_default_color_background));
+            textView3.setBackgroundColor(parent.getContext().getResources().getColor(R.color.design_default_color_background));
+            layChi.setBackgroundColor(parent.getContext().getResources().getColor(R.color.design_default_color_background));
         }
 
         TextView durTextView = convertView.findViewById(R.id.track_child_duration);

@@ -1,8 +1,6 @@
 package stas.batura.musicproject.ui.playlist
 
 import stas.batura.musicproject.musicservice.MusicRepository
-import stas.batura.musicproject.repository.room.Track
-import stas.batura.musicproject.repository.room.TrackKot
 
 class AlbumsDataInfo {
 
@@ -24,6 +22,18 @@ class AlbumsDataInfo {
             albumNames.get(track.album)!!.addTrack(track)
         }
         return albumNames.values.toList()
+    }
+
+    fun getSongsNum(): Int {
+        return tracks.size
+    }
+
+    fun getFullDuration(): Long {
+        var dur = 0L
+        for (tr in tracks) {
+            dur += tr.duration
+        }
+        return dur
     }
 
     class AlbumsViewHolder {

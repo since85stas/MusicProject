@@ -23,6 +23,9 @@ import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
 import com.bumptech.glide.Glide
 import com.developer.filepicker.controller.DialogSelectionListener
+import com.developer.filepicker.model.DialogConfigs
+import com.developer.filepicker.model.DialogProperties
+import com.developer.filepicker.view.FilePickerDialog
 import com.google.android.material.navigation.NavigationView
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.control_fragment_new.*
@@ -31,12 +34,15 @@ import kotlinx.android.synthetic.main.nav_header_main.view.*
 import kotlinx.android.synthetic.main.pager_activity.*
 import stas.batura.musicproject.musicservice.MusicService
 import stas.batura.musicproject.repository.room.Playlist
+import stas.batura.musicproject.ui.dialogs.DeleteAlertDialog
+import stas.batura.musicproject.ui.dialogs.PlaylistListDialog
 import stas.batura.musicproject.ui.dialogs.PlaylistNameDialog
 import stas.batura.musicproject.ui.dialogs.TextDialog
 import stas.batura.musicproject.ui.playlist.PlaylistFragment
 import stas.batura.musicproject.ui.song_decor.SongDecorFragment
 import stas.batura.musicproject.utils.CircleTransform
 import stas.batura.musicproject.utils.InjectorUtils
+import java.io.File
 
 
 class MainActivity : AppCompatActivity(), DialogSelectionListener {
@@ -147,6 +153,15 @@ private val NUM_PAGES = 2
                 openTrackTextDialog()
             }
         })
+
+        mainViewModel.currentPlaylistName.observe(this, Observer {
+            val toolbar: Toolbar = findViewById(R.id.toolbar)
+            if (it != null) {
+                toolbar.title = it
+            } else {
+                toolbar.title = "No playlist"
+            }
+        })
         createBasicNavView()
     }
 
@@ -217,7 +232,7 @@ private val NUM_PAGES = 2
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.
-//        menuInflater.inflate(R.menu.main, menu)
+        menuInflater.inflate(R.menu.main, menu)
         return true
     }
 
@@ -281,6 +296,16 @@ private val NUM_PAGES = 2
                 drawer_layout.openDrawer(GravityCompat.START)
                 return true
             }
+
+            R.id.action_add -> {
+                openFileSelectDialog()
+                return true
+            }
+
+            R.id.action_delete -> {
+                openConfirmDeleteDialog()
+                return true
+            }
         }
         return false
     }
@@ -322,6 +347,61 @@ private val NUM_PAGES = 2
         val fragmentManager = supportFragmentManager
         dialog.show(fragmentManager, "text")
         mainViewModel.openTextDialogFinish()
+    }
+
+    /**
+     * после выборв директории
+     */
+//    override fun onSelectedFilePaths(files: Array<out String>?) {
+//        print("test select")
+//        playlistViewModel.addTracksToPlaylist(files!![0])
+//    }
+
+    /**
+     * создаем диалог для выбора директории
+     */
+    private fun openFileSelectDialog() {
+        pager.currentItem = 1
+
+        // test
+        val properties = DialogProperties()
+        properties.selection_mode = DialogConfigs.MULTI_MODE;
+        properties.selection_type = DialogConfigs.FILE_AND_DIR_SELECT;
+        properties.root = File(DialogConfigs.DEFAULT_DIR);
+        properties.error_dir = File(DialogConfigs.DEFAULT_DIR);
+        properties.offset = File(DialogConfigs.DEFAULT_DIR);
+        properties.extensions = null;
+        properties.show_hidden_files = false;
+        val dialog = FilePickerDialog(this, properties)
+        dialog.setTitle("Select a File")
+        dialog.setDialogSelectionListener (this)
+        dialog.show()
+    }
+
+    /**
+     * открываем диалог с выбором плейлистов
+     */
+    fun openPlaylistSelectDialog() {
+        val dialog = PlaylistListDialog(mainViewModel.playlistListLive.value!!, mainViewModel)
+        val fragmentManage = supportFragmentManager
+        dialog.show(fragmentManage, "playlist")
+    }
+
+    /**
+     * создает диалог с подтверждением действия
+     */
+    fun openConfirmDeleteDialog() {
+        val delDialog = DeleteAlertDialog()
+        val fragmentManager = supportFragmentManager
+//        delDialog.setTargetFragment(this, 1111)
+        delDialog.show(fragmentManager, "del playlist")
+    }
+
+    /**
+     * подтверждаем удаление
+     */
+    fun deletePlaylistOk() {
+        mainViewModel.deletePlaylist()
     }
 
     /**

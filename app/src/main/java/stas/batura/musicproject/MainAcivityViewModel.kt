@@ -66,6 +66,8 @@ class MainAcivityViewModel (private val application: Application,
 
     val controlsLive = repository.getControls()
 
+    val currentPlaylistName = repository.getCurrPlaylistName()
+
     var playIsClicked: Boolean = false
 
     // Create a Coroutine scope using a job to be able to cancel when needed
@@ -212,19 +214,6 @@ class MainAcivityViewModel (private val application: Application,
         musicRepository.getDbTracks()
     }
 
-    /**
-     * поллучаем путь папки, создаем список треков и сохраняем в БД
-     */
-    fun addTracksToPlaylist(pathStr : String) {
-        try {
-            val songsManager = SongsManager(pathStr, mainDataLive.value!!.currentPlaylistId);
-            val songs = songsManager.playList
-            repository.insertTracks(songs)
-            musicRepository.getDbTracks()
-        } catch (e: NullPointerException) {
-            Log.d("mainviewm", e.toString())
-        }
-    }
 
     fun deleteTrackFromPl(id: Int) {
         repository.deleteTrack(id)
@@ -277,6 +266,37 @@ class MainAcivityViewModel (private val application: Application,
 
     fun openTextDialogFinish() {
         _openTextListner.value = false
+    }
+
+    /**
+     * удаляет плейлист
+     */
+    fun deletePlaylist() {
+        repository.deleteTracksInMainPlayList()
+        repository.deletePlaylist()
+
+        repository.updateMainPlayilistId(0)
+        musicRepository.getDbTracks()
+    }
+
+    /**
+     * поллучаем путь папки, создаем список треков и сохраняем в БД
+     */
+    fun addTracksToPlaylist(pathStr : String) {
+        val songsManager = SongsManager(pathStr, mainDataLive.value!!.currentPlaylistId);
+        val songs = songsManager.playList
+        repository.insertTracks(songs)
+        musicRepository.getDbTracks()
+
+        updatePlaylistName(songsManager.playlistName)
+//        musicRepository = MusicRepository.recreateMusicRepository(application)
+    }
+
+    /**
+     * обновляет имя текущего плейлиста в БД
+     */
+    fun updatePlaylistName(name: String) {
+        repository.updatePlaylistName(mainDataLive.value!!.currentPlaylistId, name)
     }
 
 

@@ -27,6 +27,7 @@
             playlistNameBinding="@{playlist.name}"
             android:onClick="@{() -> viewHolder.onItemClecked()}"
             android:maxLines="1"
+            android:layout_gravity="right"
              />
 
     </LinearLayout>

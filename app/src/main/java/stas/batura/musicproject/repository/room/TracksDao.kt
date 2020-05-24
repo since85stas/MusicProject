@@ -89,5 +89,4 @@ abstract class TracksDao {
     abstract fun getControls(): LiveData<Controls>
 
     //--------------------------retrofit part-----------------------------------------------------------
-//    abstract fun getTrackText(): Deferred<ResponseBody>
 }
