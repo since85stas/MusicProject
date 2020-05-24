@@ -268,6 +268,11 @@ private val NUM_PAGES = 2
 //        // устанавливаем слушатель на нажатие клавиш
         nav_view.setNavigationItemSelectedListener( (NavigationView.OnNavigationItemSelectedListener {
             when (it.itemId) {
+                R.id.find_text -> {
+                    openTrackTextDialog()
+                    true
+                }
+
                 R.id.nav_add -> {
                     Log.d("main", "Home")
                     drawer_layout.closeDrawers()

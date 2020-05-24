@@ -50,9 +50,13 @@ class SongDecorFragment : Fragment() {
         mainViewModel.callbackChanges.observe(viewLifecycleOwner, Observer {
             if (it != null ) {
                 if (it.state == PlaybackStateCompat.STATE_PLAYING) {
-                    songTitle.isSelected = true
+                    songTitleMove.isSelected = true
+                    songTitleStat.visibility = View.GONE
+                    songTitleMove.visibility = View.VISIBLE
                 } else {
-                    songTitle.isSelected = false
+                    songTitleMove.isSelected = false
+                    songTitleStat.visibility = View.VISIBLE
+                    songTitleMove.visibility = View.GONE
                 }
             }
         })

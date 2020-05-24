@@ -13,10 +13,10 @@
         />
 
     <ImageButton
-        android:id="@+id/nav_view_del_butt"
+        android:id="@+id/nav_view_text_b"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/ic_menu_share"
+        android:src="@drawable/ic_subtitles_black_24dp"
         />
 
 

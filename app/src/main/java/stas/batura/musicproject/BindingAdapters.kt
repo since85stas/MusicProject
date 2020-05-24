@@ -32,15 +32,34 @@ fun TextView.setTrackDurat (track : MusicRepository.Track) {
 }
 
 @BindingAdapter("trackTitleBinding")
-fun TextView.setTrackTitle(track: TrackKot?) {
+fun TextView.setTrackTitleMove(track: TrackKot?) {
     if (track != null) {
         if (track.isPlaying) {
+            visibility = View.VISIBLE
             text =
                 "                                              ${track.title}                                                 "
         } else {
+            visibility = View.GONE
             text = track.title
         }
     } else {
+        visibility = View.GONE
+        text =  "Title"
+    }
+}
+
+@BindingAdapter("trackTitleBindingConst")
+fun TextView.setTrackTitleConst(track: TrackKot?) {
+    if (track != null) {
+        if (track.isPlaying) {
+            visibility = View.GONE
+            text = track.title
+        } else {
+            visibility = View.VISIBLE
+            text = track.title
+        }
+    } else {
+        visibility = View.VISIBLE
         text =  "Title"
     }
 }

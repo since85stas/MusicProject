@@ -14,14 +14,12 @@ import org.junit.After
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
-import stas.batura.musicproject.repository.Repository
 import stas.batura.musicproject.repository.room.MainData
 import stas.batura.musicproject.repository.room.Playlist
 import stas.batura.musicproject.repository.room.TrackKot
 import stas.batura.musicproject.repository.room.TracksDao
 import stas.batura.musicproject.utils.InjectorUtils
 import java.io.File
-import javax.inject.Inject
 
 @RunWith(AndroidJUnit4::class)
 @LargeTest
@@ -61,7 +59,7 @@ class MainActivityTest {
         val activityScenario = ActivityScenario.launch(MainActivity::class.java)
 
         onView(withId(R.id.albumTitle)).check(matches(withText("Album")))
-        onView(withId(R.id.songTitle)).check(matches(withText("Title")))
+        onView(withId(R.id.songTitleMove)).check(matches(withText("Title")))
 
         activityScenario.close()
     }
