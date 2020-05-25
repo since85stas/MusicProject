@@ -11,6 +11,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import kotlinx.android.synthetic.main.song_decor_fragment.*
 import stas.batura.musicproject.MainAcivityViewModel
+import stas.batura.musicproject.MainActivity
 import stas.batura.musicproject.R
 import stas.batura.musicproject.databinding.SongDecorFragmentBinding
 import stas.batura.musicproject.utils.InjectorUtils

@@ -27,6 +27,7 @@ import com.developer.filepicker.model.DialogConfigs
 import com.developer.filepicker.model.DialogProperties
 import com.developer.filepicker.view.FilePickerDialog
 import com.google.android.material.navigation.NavigationView
+import com.google.firebase.analytics.FirebaseAnalytics
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.control_fragment_new.*
 import kotlinx.android.synthetic.main.nav_header_main.*
@@ -47,6 +48,8 @@ import java.io.File
 
 class MainActivity : AppCompatActivity(), DialogSelectionListener {
 
+    lateinit var  mFirebaseAnalytics: FirebaseAnalytics
+
     val SECT_GROUP_ID : Int = 4476
 
     private lateinit var navContr : NavController
@@ -61,7 +64,7 @@ class MainActivity : AppCompatActivity(), DialogSelectionListener {
 //    private lateinit var navContr : NavController
 
 //    private lateinit var dataSource : TracksDao
-private val NUM_PAGES = 2
+    private val NUM_PAGES = 2
 
     /**
      * The pager widget, which handles animation and allows swiping horizontally to access previous
@@ -80,12 +83,13 @@ private val NUM_PAGES = 2
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this)
 
         setContentView(R.layout.activity_main)
         val toolbar: Toolbar = findViewById(R.id.toolbar)
 //        toolbar.setBackgroundColor(resources.getColor(R.color.colorPrimaryDark))
 ////        toolbar.navi
-        toolbar.setNavigationIcon(R.drawable.ic_menu_send)
+        toolbar.setNavigationIcon(R.drawable.ic_menu_black_24dp)
         toolbar.setBackgroundColor(resources.getColor(R.color.contrBackColor))
         toolbar.title = ""
         setSupportActionBar(toolbar)
@@ -160,6 +164,17 @@ private val NUM_PAGES = 2
                 toolbar.title = it
             } else {
                 toolbar.title = "No playlist"
+            }
+        })
+
+        mainViewModel.currentTrackPlaying.observe(this, Observer {
+            if (it != null) {
+                val param: Bundle = Bundle()
+                param.putString("SONG",it.title)
+                param.putString("ARTIST", it.artist)
+
+                mFirebaseAnalytics.logEvent("Play", param)
+                print("play")
             }
         })
         createBasicNavView()
@@ -269,7 +284,7 @@ private val NUM_PAGES = 2
         nav_view.setNavigationItemSelectedListener( (NavigationView.OnNavigationItemSelectedListener {
             when (it.itemId) {
                 R.id.find_text -> {
-                    openTrackTextDialog()
+                    mainViewModel.getTrackText()
                     true
                 }
 
@@ -422,9 +437,7 @@ private val NUM_PAGES = 2
             return arrayList.get(position)
         }
 
-
-
-        public fun addFragment(fragment: Fragment?) {
+        fun addFragment(fragment: Fragment?) {
             arrayList.add(fragment!!)
         }
 

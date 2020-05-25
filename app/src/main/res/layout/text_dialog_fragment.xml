@@ -7,50 +7,40 @@
             type="stas.batura.musicproject.MainAcivityViewModel" />
     </data>
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:orientation="vertical">
+        android:fillViewport="true"
+        >
 
-        <ScrollView
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="vertical">
 
-            <LinearLayout
+            <TextView
+                android:id="@+id/text_dialog_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_gravity="center"
-                >
+                android:gravity="center"
+                android:text="tittle" />
 
-                <TextView
-                    android:id="@+id/text_dialog_title"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="tittle"
-                    android:gravity="center"
-                    />
+            <TextView
+                android:id="@+id/text_dialog_body"
+                textBody="@{mainModel.songText}"
+                textStatus="@{mainModel.netStatus}"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="body" />
 
-                <TextView
-                    android:id="@+id/text_dialog_body"
-                    android:layout_width="300dp"
-                    android:layout_height="wrap_content"
-                    android:text="body"
-                    textStatus="@{mainModel.netStatus}"
-                    textBody="@{mainModel.songText}"
-                    android:layout_gravity="center"
-                    />
+            <ImageView
+                imageStatus="@{mainModel.netStatus}"
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:layout_gravity="center" />
 
-                <ImageView
-                    android:layout_width="200dp"
-                    android:layout_height="200dp"
-                    imageStatus="@{mainModel.netStatus}"
-                    android:layout_gravity="center"
-                    />
+        </LinearLayout>
+    </ScrollView>
 
-            </LinearLayout>
-        </ScrollView>
-
-    </LinearLayout>
 </layout>

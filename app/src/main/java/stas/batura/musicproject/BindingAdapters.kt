@@ -152,7 +152,7 @@ fun TextView.bindTextBody( texts: String?) {
     if (texts != null) {
         text = texts
     } else {
-        text = "No text"
+        text = "Sorry, we can't find text"
     }
 }
 
