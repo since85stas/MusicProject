@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "709609838780",
+    "firebase_url": "https://audioplayer-e6c66.firebaseio.com",
+    "project_id": "audioplayer-e6c66",
+    "storage_bucket": "audioplayer-e6c66.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:709609838780:android:0208a859e77d4733bad8b9",
+        "android_client_info": {
+          "package_name": "stas.batura.musicproject"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "709609838780-8cm38k6dimgbu0va89et0cgbbuhuau5c.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC5GicUbi3YM0rPs-X9Vs67JIigUYTubo8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "709609838780-8cm38k6dimgbu0va89et0cgbbuhuau5c.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

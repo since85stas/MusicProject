@@ -70,6 +70,8 @@ class MainAcivityViewModel (private val application: Application,
 
     var playIsClicked: Boolean = false
 
+    var serviseIsCreated = false
+
     // Create a Coroutine scope using a job to be able to cancel when needed
     private var viewModelJob = Job()
 
@@ -123,6 +125,7 @@ class MainAcivityViewModel (private val application: Application,
 
                         mediaController.value!!.registerCallback(callback!!)
                         callback!!.onPlaybackStateChanged(mediaController.value!!.playbackState)
+                        serviseIsCreated = true
                     } catch (e: RemoteException) {
                         mediaController.value = null
                     }
@@ -135,6 +138,8 @@ class MainAcivityViewModel (private val application: Application,
                         mediaController.value = null
                     }
                     _createServiceListner.value = false
+
+//                    serviseIsCreated = false
                 }
             }
         }
@@ -226,7 +231,7 @@ class MainAcivityViewModel (private val application: Application,
     }
 
     fun onActivityCreated() {
-        repository.setAllTrackIsNOTPlaying()
+//        repository.setAllTrackIsNOTPlaying()
 //        checkServiseCreation()
     }
 

@@ -14,6 +14,7 @@ import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
@@ -105,8 +106,11 @@ class MainActivity : AppCompatActivity(), DialogSelectionListener {
 
 //        navContr = findNavController(this,R.id.nav_host_fragment)
 
-        mainViewModel = ViewModelProviders
-            .of(this, InjectorUtils.provideMainViewModel(application))
+//        mainViewModel = ViewModelProviders
+//            .of(this, InjectorUtils.provideMainViewModel(application))
+//            .get(MainAcivityViewModel::class.java)
+
+        mainViewModel = ViewModelProvider(this, InjectorUtils.provideMainViewModel(application))
             .get(MainAcivityViewModel::class.java)
 
         mainViewModel.onActivityCreated()
@@ -178,6 +182,10 @@ class MainActivity : AppCompatActivity(), DialogSelectionListener {
             }
         })
         createBasicNavView()
+
+        if (mainViewModel.serviseIsCreated) {
+            bindCurrentService()
+        }
     }
 
     /**
@@ -188,10 +196,15 @@ class MainActivity : AppCompatActivity(), DialogSelectionListener {
         mainViewModel.initMusicService(false)
 
         // привязываем сервис к активити
+        bindCurrentService()
+
+    }
+
+    private fun bindCurrentService() {
+        // привязываем сервис к активити
         bindService(Intent(applicationContext!!, MusicService::class.java),
             mainViewModel.serviceConnection.value!!,
             Context.BIND_AUTO_CREATE)
-
     }
 
     override fun onPause() {

@@ -12,6 +12,7 @@ import android.view.ViewGroup
 import androidx.core.view.MotionEventCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import be.rijckaert.tim.animatedvector.FloatingMusicActionButton
@@ -43,8 +44,12 @@ class ControlFragment () : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View {
 
-           mainViewModel = ViewModelProviders
-            .of(this.requireActivity(), InjectorUtils.provideMainViewModel(this.requireActivity().application))
+//           mainViewModel = ViewModelProviders
+//            .of(this.requireActivity(), InjectorUtils.provideMainViewModel(this.requireActivity().application))
+//            .get(MainAcivityViewModel::class.java)
+
+        mainViewModel = ViewModelProvider(requireActivity(),
+            InjectorUtils.provideMainViewModel(requireActivity().application))
             .get(MainAcivityViewModel::class.java)
 
         val view = inflater.inflate(R.layout.control_fragment_new, container, false)

@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import kotlinx.android.synthetic.main.song_decor_fragment.*
 import stas.batura.musicproject.MainAcivityViewModel
@@ -26,8 +27,11 @@ class SongDecorFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
-        mainViewModel = ViewModelProviders
-            .of(this.activity!!, InjectorUtils.provideMainViewModel(this.activity!!.application))
+//        mainViewModel = ViewModelProviders
+//            .of(requireActivity(), InjectorUtils.provideMainViewModel(requireActivity().application))
+//            .get(MainAcivityViewModel::class.java)
+        mainViewModel = ViewModelProvider(requireActivity(),
+            InjectorUtils.provideMainViewModel(requireActivity().application))
             .get(MainAcivityViewModel::class.java)
 
         val bindings : SongDecorFragmentBinding = DataBindingUtil.inflate(inflater,
