@@ -110,7 +110,8 @@ class MainActivity : AppCompatActivity(), DialogSelectionListener {
 //            .of(this, InjectorUtils.provideMainViewModel(application))
 //            .get(MainAcivityViewModel::class.java)
 
-        mainViewModel = ViewModelProvider(this, InjectorUtils.provideMainViewModel(application))
+        mainViewModel = ViewModelProvider((application as MusicApplication).modelStore,
+            InjectorUtils.provideMainViewModel(application))
             .get(MainAcivityViewModel::class.java)
 
         mainViewModel.onActivityCreated()

@@ -23,6 +23,7 @@ import com.developer.filepicker.model.DialogProperties
 import com.developer.filepicker.view.FilePickerDialog
 import kotlinx.android.synthetic.main.playlist_fragment.*
 import stas.batura.musicproject.MainAcivityViewModel
+import stas.batura.musicproject.MusicApplication
 import stas.batura.musicproject.R
 import stas.batura.musicproject.databinding.PlaylistFragmentBinding
 import stas.batura.musicproject.musicservice.MusicRepository
@@ -57,8 +58,8 @@ class PlaylistFragment : Fragment (), DialogSelectionListener {
 //        mainViewModel = ViewModelProviders
 //            .of(this.requireActivity(), InjectorUtils.provideMainViewModel(this.requireActivity().application))
 //            .get(MainAcivityViewModel::class.java)
-
-        mainViewModel = ViewModelProvider(requireActivity(),
+        val musicAppl = requireActivity().application as MusicApplication
+        mainViewModel = ViewModelProvider(musicAppl.modelStore,
             InjectorUtils.provideMainViewModel(requireActivity().application))
             .get(MainAcivityViewModel::class.java)
 

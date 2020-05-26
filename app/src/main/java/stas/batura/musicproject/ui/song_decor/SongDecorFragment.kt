@@ -13,6 +13,7 @@ import androidx.lifecycle.ViewModelProviders
 import kotlinx.android.synthetic.main.song_decor_fragment.*
 import stas.batura.musicproject.MainAcivityViewModel
 import stas.batura.musicproject.MainActivity
+import stas.batura.musicproject.MusicApplication
 import stas.batura.musicproject.R
 import stas.batura.musicproject.databinding.SongDecorFragmentBinding
 import stas.batura.musicproject.utils.InjectorUtils
@@ -30,7 +31,8 @@ class SongDecorFragment : Fragment() {
 //        mainViewModel = ViewModelProviders
 //            .of(requireActivity(), InjectorUtils.provideMainViewModel(requireActivity().application))
 //            .get(MainAcivityViewModel::class.java)
-        mainViewModel = ViewModelProvider(requireActivity(),
+        val musicAppl = requireActivity().application as MusicApplication
+        mainViewModel = ViewModelProvider(musicAppl.modelStore,
             InjectorUtils.provideMainViewModel(requireActivity().application))
             .get(MainAcivityViewModel::class.java)
 

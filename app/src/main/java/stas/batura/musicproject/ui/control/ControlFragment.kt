@@ -18,6 +18,7 @@ import androidx.navigation.fragment.findNavController
 import be.rijckaert.tim.animatedvector.FloatingMusicActionButton
 import kotlinx.android.synthetic.main.control_fragment_new.*
 import stas.batura.musicproject.MainAcivityViewModel
+import stas.batura.musicproject.MusicApplication
 import stas.batura.musicproject.R
 import stas.batura.musicproject.repository.room.REPEAT_OFF
 import stas.batura.musicproject.repository.room.REPEAT_ON
@@ -47,8 +48,8 @@ class ControlFragment () : Fragment() {
 //           mainViewModel = ViewModelProviders
 //            .of(this.requireActivity(), InjectorUtils.provideMainViewModel(this.requireActivity().application))
 //            .get(MainAcivityViewModel::class.java)
-
-        mainViewModel = ViewModelProvider(requireActivity(),
+        val musicAppl = requireActivity().application as MusicApplication
+        mainViewModel = ViewModelProvider(musicAppl.modelStore,
             InjectorUtils.provideMainViewModel(requireActivity().application))
             .get(MainAcivityViewModel::class.java)
 
