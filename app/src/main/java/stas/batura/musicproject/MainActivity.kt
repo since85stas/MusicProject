@@ -116,6 +116,14 @@ class MainActivity : AppCompatActivity(), DialogSelectionListener {
 
         mainViewModel.onActivityCreated()
 
+        createBasicNavView()
+
+//        if (mainViewModel.serviseIsCreated) {
+//            bindCurrentService()
+//        }
+    }
+
+    private fun addObservers() {
         mainViewModel.createServiceListner.observe(this, Observer {
             if (it) {
                 createMusicService()
@@ -182,11 +190,18 @@ class MainActivity : AppCompatActivity(), DialogSelectionListener {
                 print("play")
             }
         })
-        createBasicNavView()
+    }
 
-        if (mainViewModel.serviseIsCreated) {
-            bindCurrentService()
-        }
+    private fun removeObservers() {
+        mainViewModel.createServiceListner.removeObservers(this)
+        mainViewModel.serviceConnection.removeObservers(this)
+        mainViewModel.mediaController.removeObservers(this)
+        mainViewModel.playlistListLive.removeObservers(this)
+        mainViewModel.mainDataLive.removeObservers(this)
+        mainViewModel.exoPlayer.removeObservers(this)
+        mainViewModel.openTextListner.removeObservers(this)
+        mainViewModel.currentPlaylistName.removeObservers(this)
+        mainViewModel.currentTrackPlaying.removeObservers(this)
     }
 
     /**
@@ -208,18 +223,36 @@ class MainActivity : AppCompatActivity(), DialogSelectionListener {
             Context.BIND_AUTO_CREATE)
     }
 
+    override fun onResume() {
+        super.onResume()
+    }
+
+    override fun onStart() {
+        addObservers()
+        super.onStart()
+    }
+
     override fun onPause() {
         println("main activity pause")
+//        removeObservers()
         super.onPause()
     }
 
     override fun onStop() {
+        removeObservers()
         println("main activity stop")
         super.onStop()
     }
 
     override fun onDestroy() {
+        if (mainViewModel.mediaController.value != null) {
+            mainViewModel.mediaController.value!!.transportControls.stop()
+        }
+        if ((mainViewModel.serviceConnection.value != null)) {
+            unbindService(mainViewModel.serviceConnection.value!!)
+        }
         mainViewModel.onActivityDestroyed()
+
         super.onDestroy()
     }
 

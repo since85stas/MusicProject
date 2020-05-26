@@ -83,6 +83,38 @@ class ControlFragment () : Fragment() {
             mainViewModel.nextClicked()
         }
 
+
+
+        btnRepeat.setOnClickListener{
+            val curStat = mainViewModel.controlsLive.value!!.playStatus
+            var newStatus = 0
+            if (curStat != SHUFFLE_ON) {
+                if (curStat == REPEAT_OFF) {
+                    newStatus = REPEAT_ON
+                } else if (curStat == REPEAT_ON) {
+                    newStatus = REPEAT_ONE
+                } else if (curStat == REPEAT_ONE) {
+                    newStatus = REPEAT_OFF
+                }
+            }
+            mainViewModel.repository.changerPlayStatus(newStatus)
+        }
+
+        btnShuffle.setOnClickListener {
+            val curStat = mainViewModel.controlsLive.value!!.playStatus
+            var newStatus = 0
+            if (curStat != SHUFFLE_ON) {
+                newStatus = SHUFFLE_ON
+            } else {
+                newStatus = REPEAT_OFF
+            }
+            mainViewModel.repository.changerPlayStatus(newStatus)
+        }
+
+        super.onActivityCreated(savedInstanceState)
+    }
+
+    private fun addObservers() {
         // наблюдаем за нажатием кнопок
         mainViewModel.callbackChanges.observe(viewLifecycleOwner, Observer {
             if (it != null) {
@@ -119,35 +151,21 @@ class ControlFragment () : Fragment() {
                 }
             }
         })
-
-        btnRepeat.setOnClickListener{
-            val curStat = mainViewModel.controlsLive.value!!.playStatus
-            var newStatus = 0
-            if (curStat != SHUFFLE_ON) {
-                if (curStat == REPEAT_OFF) {
-                    newStatus = REPEAT_ON
-                } else if (curStat == REPEAT_ON) {
-                    newStatus = REPEAT_ONE
-                } else if (curStat == REPEAT_ONE) {
-                    newStatus = REPEAT_OFF
-                }
-            }
-            mainViewModel.repository.changerPlayStatus(newStatus)
-        }
-
-        btnShuffle.setOnClickListener {
-            val curStat = mainViewModel.controlsLive.value!!.playStatus
-            var newStatus = 0
-            if (curStat != SHUFFLE_ON) {
-                newStatus = SHUFFLE_ON
-            } else {
-                newStatus = REPEAT_OFF
-            }
-            mainViewModel.repository.changerPlayStatus(newStatus)
-        }
-
-        super.onActivityCreated(savedInstanceState)
     }
 
+    private fun removeObservers() {
+        mainViewModel.callbackChanges.removeObservers(viewLifecycleOwner)
+        mainViewModel.controlsLive.removeObservers(viewLifecycleOwner)
+    }
+
+    override fun onStart() {
+        addObservers()
+        super.onStart()
+    }
+
+    override fun onStop() {
+        removeObservers()
+        super.onStop()
+    }
 
 }

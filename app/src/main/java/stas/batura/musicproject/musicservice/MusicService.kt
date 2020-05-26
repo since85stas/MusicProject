@@ -45,6 +45,8 @@ class MusicService (): Service () {
     // билдер для данных
     private val metadataBuilder  = MediaMetadataCompat.Builder()
 
+    lateinit var cache: Cache
+
     // плэйбэк
     private val stateBuilder: PlaybackStateCompat.Builder =
         PlaybackStateCompat.Builder().setActions(
@@ -179,7 +181,7 @@ class MusicService (): Service () {
         val factory =
             DataSource.Factory { fileDataSource }
 
-        val cache: Cache =
+         cache =
             SimpleCache(
                 File(this.cacheDir.absolutePath + "/exoplayer"),
                 LeastRecentlyUsedCacheEvictor(1024 * 1024 * 100)
@@ -553,5 +555,7 @@ class MusicService (): Service () {
         super.onDestroy()
         mediaSession!!.release()
         exoPlayer!!.release()
+        cache.release()
+//        cache = null
     }
 }

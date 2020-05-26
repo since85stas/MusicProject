@@ -47,7 +47,25 @@ class SongDecorFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+    }
 
+    override fun onResume() {
+
+        super.onResume()
+    }
+
+    override fun onStart() {
+        addObservers()
+        super.onStart()
+    }
+
+    override fun onStop() {
+        removeObservers()
+        super.onStop()
+    }
+
+    private fun addObservers() {
         mainViewModel.currentTrackPlaying.observe(viewLifecycleOwner, Observer {
             if (it != null) {
                 print("play")
@@ -67,7 +85,10 @@ class SongDecorFragment : Fragment() {
                 }
             }
         })
+    }
 
-        super.onViewCreated(view, savedInstanceState)
+    private fun removeObservers() {
+        mainViewModel.currentTrackPlaying.removeObservers(viewLifecycleOwner)
+        mainViewModel.callbackChanges.removeObservers(viewLifecycleOwner)
     }
 }

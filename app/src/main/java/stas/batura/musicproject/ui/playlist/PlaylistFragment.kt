@@ -82,6 +82,18 @@ class PlaylistFragment : Fragment (), DialogSelectionListener {
      */
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
+
+
+//        playlistViewModel.musicRepository.tracksDb.observe(viewLifecycleOwner, Observer {
+//            if (it != null) {
+//                print(" tt")
+//            }
+//        })
+
+        super.onViewCreated(view, savedInstanceState)
+    }
+
+    private fun addObservers() {
         playlistViewModel.playlistNameClicked.observe(viewLifecycleOwner, Observer {
             if (it) {
                 openPlaylistSelectDialog()
@@ -103,7 +115,7 @@ class PlaylistFragment : Fragment (), DialogSelectionListener {
                     simpleExpandableListView.expandGroup(i)
                 }
                 simpleExpandableListView.setSelectedChild(
-                        expandAdapter.selAlbId, expandAdapter.selTrackId, true)
+                    expandAdapter.selAlbId, expandAdapter.selTrackId, true)
 
                 simpleExpandableListView.setOnChildClickListener(object : ExpandableListView.OnChildClickListener {
                     override fun onChildClick(
@@ -158,14 +170,24 @@ class PlaylistFragment : Fragment (), DialogSelectionListener {
                 openConfirmDeleteDialog()
             }
         })
+    }
 
-//        playlistViewModel.musicRepository.tracksDb.observe(viewLifecycleOwner, Observer {
-//            if (it != null) {
-//                print(" tt")
-//            }
-//        })
+    private fun removeObservers() {
+        playlistViewModel.playlistNameClicked.removeObservers(viewLifecycleOwner)
+        playlistViewModel.songListViewModel.removeObservers(viewLifecycleOwner)
+        playlistViewModel.addButtonClicked.removeObservers(viewLifecycleOwner)
+        playlistViewModel.mainDataLive.removeObservers(viewLifecycleOwner)
+        playlistViewModel.deleteButtClicked.removeObservers(viewLifecycleOwner)
+    }
 
-        super.onViewCreated(view, savedInstanceState)
+    override fun onStart() {
+        addObservers()
+        super.onStart()
+    }
+
+    override fun onStop() {
+        removeObservers()
+        super.onStop()
     }
 
     /**
