@@ -107,13 +107,13 @@ public class PlaylistExpandJava extends BaseExpandableListAdapter {
         TextView textView2 = convertView.findViewById(R.id.track_child_duration);
         ImageView textView3 = convertView.findViewById(R.id.track_child_options);
         LinearLayout layChi = convertView.findViewById(R.id.child_item_view);
-        textView.setText(albums.get(groupPosition).getAlbumTracks().get(childPosition).title);
+        textView.setText(albums.get(groupPosition).getAlbumTracks().get(childPosition).artist + " - " +
+                albums.get(groupPosition).getAlbumTracks().get(childPosition).title);
 
 //            TextView textViewg = convertView.findViewById(R.id.group_test_id);
 //            textViewg.setText("" + groupPosition);
 
-        TextView textViewc = convertView.findViewById(R.id.child_test_id);
-        textViewc.setText("" + childPosition + ". ");
+        textView1.setText("" + (childPosition+1) + ". ");
 
         if (albums.get(groupPosition).getAlbumTracks().get(childPosition).isPlaying) {
             textView.setBackgroundColor(parent.getContext().getResources().getColor(R.color.colorAccent));

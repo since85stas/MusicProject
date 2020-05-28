@@ -110,7 +110,6 @@ class MainAcivityViewModel (private val application: Application,
                 }
             }
 
-
             // соединение с сервисом
             serviceConnection.value = object : ServiceConnection {
                 override fun onServiceConnected(name: ComponentName, service: IBinder) {
@@ -243,6 +242,9 @@ class MainAcivityViewModel (private val application: Application,
         repository.changerPlayStatus(staus)
     }
 
+    /**
+     * получаем текст песни и загружаем его
+     */
     fun getTrackText() {
         if (currentTrackPlaying.value != null) {
             coroutineScope.launch {

@@ -137,7 +137,7 @@ public final class MusicRepository {
     public static class Track {
         public int trackId;
         public String title;
-        private String artist;
+        public String artist;
         public String album;
         private Uri bitmapUri;
         public Uri uri;
