@@ -156,7 +156,6 @@ class MainAcivityViewModel (private val application: Application,
 
     fun playClicked () {
         if (mediaController.value != null) {
-
             mediaController.value!!.transportControls.play()
         }
     }
@@ -165,13 +164,13 @@ class MainAcivityViewModel (private val application: Application,
         if (mediaController.value != null) mediaController.value!!.transportControls.pause()
     }
 
-    fun stopClicked () {
-        if (mediaController.value != null) {
-            mediaController.value!!.transportControls.stop()
-            repository.setAllTrackIsNOTPlaying()
-            musicRepository.getDbTracks()
-        }
-    }
+//    fun stopClicked () {
+//        if (mediaController.value != null) {
+//            mediaController.value!!.transportControls.stop()
+//            repository.setAllTrackIsNOTPlaying()
+//            musicRepository.getDbTracks()
+//        }
+//    }
 
     fun nextClicked () {
         if (mediaController.value != null) mediaController.value!!.transportControls.skipToNext()

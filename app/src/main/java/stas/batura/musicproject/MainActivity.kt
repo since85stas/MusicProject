@@ -123,6 +123,9 @@ class MainActivity : AppCompatActivity(), DialogSelectionListener {
 //        }
     }
 
+    /**
+     * добавляем слушатели для модели
+     */
     private fun addObservers() {
         mainViewModel.createServiceListner.observe(this, Observer {
             if (it) {
@@ -192,6 +195,9 @@ class MainActivity : AppCompatActivity(), DialogSelectionListener {
         })
     }
 
+    /**
+     * убераем слушание если активити не видно
+     */
     private fun removeObservers() {
         mainViewModel.createServiceListner.removeObservers(this)
         mainViewModel.serviceConnection.removeObservers(this)
@@ -244,6 +250,9 @@ class MainActivity : AppCompatActivity(), DialogSelectionListener {
         super.onStop()
     }
 
+    /**
+     * после закрытия активити выключаем сервис, и убираем связывание
+     */
     override fun onDestroy() {
         if (mainViewModel.mediaController.value != null) {
             mainViewModel.mediaController.value!!.transportControls.stop()

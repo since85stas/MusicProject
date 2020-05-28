@@ -238,24 +238,26 @@ class MusicService (): Service () {
                         MusicService::class.java
                     )
                 )
-                val track: MusicRepository.Track = musicRepository.getCurrent()
-                updateMetadataFromTrack(track)
-                prepareToPlay(track.uri)
-                if (!isAudioFocusRequested) {
-                    isAudioFocusRequested = true
-                    var audioFocusResult: Int
-                    audioFocusResult = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                        audioManager!!.requestAudioFocus(audioFocusRequest!!)
-                    } else {
-                        audioManager!!.requestAudioFocus(
-                            audioFocusChangeListener,
-                            AudioManager.STREAM_MUSIC,
-                            AudioManager.AUDIOFOCUS_GAIN
-                        )
+                if (!mediaSession!!.isActive) {
+                    val track: MusicRepository.Track = musicRepository.getCurrent()
+                    updateMetadataFromTrack(track)
+                    prepareToPlay(track.uri)
+                    if (!isAudioFocusRequested) {
+                        isAudioFocusRequested = true
+                        var audioFocusResult: Int
+                        audioFocusResult = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                            audioManager!!.requestAudioFocus(audioFocusRequest!!)
+                        } else {
+                            audioManager!!.requestAudioFocus(
+                                audioFocusChangeListener,
+                                AudioManager.STREAM_MUSIC,
+                                AudioManager.AUDIOFOCUS_GAIN
+                            )
+                        }
+                        if (audioFocusResult != AudioManager.AUDIOFOCUS_REQUEST_GRANTED) return
                     }
-                    if (audioFocusResult != AudioManager.AUDIOFOCUS_REQUEST_GRANTED) return
+                    mediaSession!!.isActive = true // Сразу после получения фокуса
                 }
-                mediaSession!!.isActive = true // Сразу после получения фокуса
                 registerReceiver(
                     becomingNoisyReceiver,
                     IntentFilter(AudioManager.ACTION_AUDIO_BECOMING_NOISY)

@@ -83,6 +83,7 @@
                 app:backgroundTint="@color/colorAccent"
                 app:mode="playToPause"
                 android:layout_margin="12dp"
+                android:clickable="false"
                 />
             <!-- Next Button -->
             <ImageButton

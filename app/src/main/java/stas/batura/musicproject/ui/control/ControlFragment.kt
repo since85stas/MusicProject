@@ -45,9 +45,6 @@ class ControlFragment () : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View {
 
-//           mainViewModel = ViewModelProviders
-//            .of(this.requireActivity(), InjectorUtils.provideMainViewModel(this.requireActivity().application))
-//            .get(MainAcivityViewModel::class.java)
         val musicAppl = requireActivity().application as MusicApplication
         mainViewModel = ViewModelProvider(musicAppl.modelStore,
             InjectorUtils.provideMainViewModel(requireActivity().application))
@@ -83,8 +80,6 @@ class ControlFragment () : Fragment() {
             mainViewModel.nextClicked()
         }
 
-
-
         btnRepeat.setOnClickListener{
             val curStat = mainViewModel.controlsLive.value!!.playStatus
             var newStatus = 0
@@ -119,16 +114,36 @@ class ControlFragment () : Fragment() {
         mainViewModel.callbackChanges.observe(viewLifecycleOwner, Observer {
             if (it != null) {
                 if (it.state == PlaybackStateCompat.STATE_PLAYING) {
-                    Log.d(TAG, "play")
+
+                    when(play_pause_button.currentMode) {
+                        FloatingMusicActionButton.Mode.PAUSE_TO_PLAY -> {
+                            Log.d(TAG, "playP")
+                        }
+                        FloatingMusicActionButton.Mode.PLAY_TO_PAUSE -> {
+                            Log.d(TAG, "pauseP")
+                        }
+                    }
+//                    play_pause_button.changeMode(FloatingMusicActionButton.Mode.PAUSE_TO_PLAY)
                 } else if (it.state == PlaybackStateCompat.STATE_PAUSED ) {
+                    when(play_pause_button.currentMode) {
+                        FloatingMusicActionButton.Mode.PAUSE_TO_PLAY -> {
+                            Log.d(TAG, "playP")
+                        }
+                        FloatingMusicActionButton.Mode.PLAY_TO_PAUSE -> {
+                            Log.d(TAG, "pauseP")
+                        }
+                    }
                     Log.d(TAG, "pause")
+//                    play_pause_button.changeMode(FloatingMusicActionButton.Mode.PLAY_TO_PAUSE)
                 } else if (it.state == PlaybackStateCompat.STATE_NONE) {
                     Log.d(TAG, "none")
+//                    play_pause_button.changeMode(FloatingMusicActionButton.Mode.PLAY_TO_PAUSE)
                 }
-                if ( !isPlayButtonClicked) {
-                    play_pause_button.playAnimation()
-                }
-                isPlayButtonClicked = false
+//                if ( !isPlayButtonClicked) {
+//                    play_pause_button.playAnimation()
+//                    play_pause_button.
+//                }
+//                isPlayButtonClicked = false
             }
         })
 

@@ -55,9 +55,6 @@ class PlaylistFragment : Fragment (), DialogSelectionListener {
         savedInstanceState: Bundle?
     ): View? {
 
-//        mainViewModel = ViewModelProviders
-//            .of(this.requireActivity(), InjectorUtils.provideMainViewModel(this.requireActivity().application))
-//            .get(MainAcivityViewModel::class.java)
         val musicAppl = requireActivity().application as MusicApplication
         mainViewModel = ViewModelProvider(musicAppl.modelStore,
             InjectorUtils.provideMainViewModel(requireActivity().application))
