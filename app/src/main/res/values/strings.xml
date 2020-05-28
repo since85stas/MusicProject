@@ -21,4 +21,8 @@
     <!-- Pause Icon -->
     <string name="pause_icon_upper_path_data">M 32 40 L 32 56  L 96 56 L 96 40 Z</string>
     <string name="pause_icon_bottom_path_data">M 32 88 L 32 72 L 96 72 L 96 88 Z</string>
+    <string name="yesStr">Yes</string>
+    <string name="delete_pllst_str">Playlist deletion</string>
+    <string name="del_plst_body">Do you really want to delete playlist?</string>
+    <string name="canc_str">Cancel</string>
 </resources>

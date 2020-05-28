@@ -33,7 +33,6 @@ data class TrackKot (
     @ColumnInfo(name = "year")
     var year: Int = 0
 
-
 ) {
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id")

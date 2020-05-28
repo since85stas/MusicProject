@@ -37,7 +37,7 @@ fun TextView.setTrackTitleMove(track: TrackKot?) {
         if (track.isPlaying) {
             visibility = View.VISIBLE
             text =
-                "                                              ${track.title}                                                 "
+                "                                        ${track.title}                                                 "
         } else {
             visibility = View.GONE
             text = track.title

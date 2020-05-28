@@ -121,6 +121,10 @@ class ControlFragment () : Fragment() {
                         }
                         FloatingMusicActionButton.Mode.PLAY_TO_PAUSE -> {
                             Log.d(TAG, "pauseP")
+                            if ( !isPlayButtonClicked) {
+                                play_pause_button.playAnimation()
+                                isPlayButtonClicked = false
+                            }
                         }
                     }
 //                    play_pause_button.changeMode(FloatingMusicActionButton.Mode.PAUSE_TO_PLAY)

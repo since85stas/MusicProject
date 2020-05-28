@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:showIn="navigation_view">
 
-    <group android:id="@+id/mainGroup"  android:checkableBehavior="single">
+    <group android:id="@+id/mainGroup"  android:checkableBehavior="none">
         <item
             android:id="@+id/nav_home"
             android:icon="@drawable/ic_menu_camera"
@@ -15,7 +15,7 @@
             android:title="find track lyrics"/>
     </group>
 
-    <item android:title="Communicate">
+    <item android:title="Action">
         <menu>
             <item
                 android:id="@+id/nav_add"
