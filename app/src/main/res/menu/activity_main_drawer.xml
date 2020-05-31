@@ -7,20 +7,20 @@
         <item
             android:id="@+id/nav_home"
             android:icon="@drawable/ic_menu_camera"
-            android:title="home" />
+            android:title="@string/home" />
 
         <item
             android:id="@+id/find_text"
             android:icon="@drawable/ic_subtitles_black_24dp"
-            android:title="find track lyrics"/>
+            android:title="@string/find_track_lyrics"/>
     </group>
 
-    <item android:title="Action">
+    <item android:title="@string/action">
         <menu>
             <item
                 android:id="@+id/nav_add"
                 android:icon="@drawable/ic_add_circle_outline_black_24dp"
-                android:title="add playlist" />
+                android:title="@string/add_playlist" />
 
         </menu>
     </item>

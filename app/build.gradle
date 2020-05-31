@@ -82,8 +82,6 @@ dependencies {
     implementation 'com.github.TutorialsAndroid:FilePicker:v8.0.19'
 
     // dagger
-    implementation "com.google.dagger:dagger:$dagger_version"
-    kapt "com.google.dagger:dagger-compiler:$dagger_version"
 
     // Dependencies for local unit tests
     testImplementation "junit:junit:$junitVersion"
@@ -104,11 +102,9 @@ dependencies {
 
     androidTestImplementation "com.linkedin.dexmaker:dexmaker-mockito:$dexMakerVersion"
 
-    implementation "androidx.fragment:fragment-testing:$fragmentVersion"
+    androidTestImplementation "androidx.fragment:fragment-testing:$fragmentVersion"
 
     implementation 'com.github.bumptech.glide:glide:4.10.0'
-
-    implementation 'com.qhutch.elevationimageview:elevationimageview:1.7'
 
     implementation 'com.github.timrijckaert:FloatingMusicActionButton:v2.0.4'
 

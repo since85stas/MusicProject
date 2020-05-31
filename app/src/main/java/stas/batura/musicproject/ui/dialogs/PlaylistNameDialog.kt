@@ -30,7 +30,7 @@ class PlaylistNameDialog:DialogFragment() {
         button_no.setOnClickListener {
             dialog!!.cancel()
         }
-        dialog!!.setTitle("Title")
+        dialog!!.setTitle(requireActivity().baseContext.getString(R.string.title))
         super.onViewCreated(view, savedInstanceState)
     }
 

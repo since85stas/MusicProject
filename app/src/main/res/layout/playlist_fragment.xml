@@ -48,7 +48,7 @@
                 android:layout_marginRight="24dp"
                 android:onClick="@{() -> playlistViewModel.addButtonClicked()}"
                 android:src="@drawable/ic_add_black_24dp"
-                android:text="add"
+                android:text="@string/add"
                 android:visibility="gone"
                 />
 

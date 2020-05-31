@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">AudioExample</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="notification_channel_name">Player controls</string>
+
+    <string name="play">Play</string>
+    <string name="pause">Pause</string>
+    <string name="stop">Stop</string>
+
+    <string name="previous">Previous</string>
+    <string name="next">Next</string>
+
+    <!-- playlist name dialog  -->
+    <string name="message_text">Новый плейлист</string>
+    <string name="yes">Да</string>
+    <string name="no">Нет</string>
+
+    <!-- Play Icon -->
+    <string name="yesStr">Да</string>
+    <string name="delete_pllst_str">Удаление плейлиста</string>
+    <string name="del_plst_body">Вы точно хотите удалить плейлист?</string>
+    <string name="canc_str">Отмена</string>
+    <string name="text_not_found">Извините, текс песни не найден</string>
+    <string name="track">Трек</string>
+    <string name="playlist">Плейлист</string>
+    <string name="artist">Исполнитель</string>
+    <string name="album">Альбом</string>
+    <string name="title">Название</string>
+    <string name="select_playlist">Выберите плейлист</string>
+    <string name="add">Добавить</string>
+    <string name="enter_playlist_name">Введите имю плейлиста</string>
+    <string name="new_playlist">Новый плейлист</string>
+    <string name="home">Домой</string>
+    <string name="find_track_lyrics">Поиск текста песни</string>
+    <string name="add_playlist">Добавить новый плейлист</string>
+    <string name="action">Действия</string>
+</resources>

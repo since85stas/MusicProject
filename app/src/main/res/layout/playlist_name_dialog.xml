@@ -8,14 +8,14 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_margin="20dp"
-        android:text="enter laylist name"
+        android:text="@string/enter_playlist_name"
         android:textAppearance="?android:attr/textAppearanceLarge">
     </TextView>
     <EditText
         android:id="@+id/playlist_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="New playlist"
+        android:text="@string/new_playlist"
         android:layout_gravity="center"
         android:layout_margin="12dp"
         />

@@ -15,7 +15,7 @@ class DeleteAlertDialog : DialogFragment () {
             val builder = AlertDialog.Builder(it)
             builder.setTitle(getString(R.string.delete_pllst_str))
                 .setMessage(getString(R.string.del_plst_body))
-                .setIcon(R.drawable.image396168)
+                .setIcon(R.drawable.cat_my)
                 .setPositiveButton(getString(R.string.yesStr)) {
                         dialog, id ->  (activity as MainActivity).deletePlaylistOk()
                 }

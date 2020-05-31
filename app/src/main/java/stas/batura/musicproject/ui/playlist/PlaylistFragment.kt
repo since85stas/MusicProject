@@ -60,7 +60,7 @@ class PlaylistFragment : Fragment (), DialogSelectionListener {
             InjectorUtils.provideMainViewModel(requireActivity().application))
             .get(MainAcivityViewModel::class.java)
 
-        playlistViewModel = ViewModelProviders.of (this,
+        playlistViewModel = ViewModelProvider(this,
             InjectorUtils.providePlaylistViewModel(requireActivity().application)).get(PlaylistViewModel::class.java)
 
         val bindings : PlaylistFragmentBinding =
@@ -105,7 +105,6 @@ class PlaylistFragment : Fragment (), DialogSelectionListener {
 
                 val builder: AlbumsDataInfo = AlbumsDataInfo(it)
                 val albums = builder.getAlbumsData()
-                print("albums")
                 val expandAdapter = PlaylistExpandJava(albums, mainViewModel)
                 simpleExpandableListView.setAdapter(expandAdapter)
                 for (i in 0 until expandAdapter.groupCount) {

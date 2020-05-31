@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+        <string name="app_name">AudioExample</string>
+        <string name="title_activity_main">MainActivity</string>
+        <string name="notification_channel_name">Player controls</string>
+
+        <string name="play">Play</string>
+        <string name="pause">Pause</string>
+        <string name="stop">Stop</string>
+
+        <string name="previous">Previous</string>
+        <string name="next">Next</string>
+
+        <!-- playlist name dialog  -->
+        <string name="message_text">Neue Wiedergabeliste</string>
+        <string name="yes">Ja</string>
+        <string name="no">Nein</string>
+
+        <!-- Play Icon -->
+        <string name="yesStr">Ja</string>
+        <string name="delete_pllst_str">Wiedergabeliste löschen</string>
+        <string name="del_plst_body">Möchten Sie die Wiedergabeliste wirklich löschen?</string>
+        <string name="canc_str">Stornieren</string>
+        <string name="text_not_found">Entschuldigung, wir können keinen Text finden</string>
+        <string name="track">Spur</string>
+        <string name="playlist">Wiedergabeliste</string>
+        <string name="artist">Künstler</string>
+        <string name="album">Album</string>
+        <string name="title">Titel</string>
+        <string name="select_playlist">Wählen Sie Wiedergabeliste</string>
+        <string name="add">Hinzufügen</string>
+        <string name="enter_playlist_name">Geben Sie den Namen der Wiedergabeliste ein</string>
+        <string name="new_playlist">Neue Playlist</string>
+        <string name="home">Zuhause</string>
+        <string name="find_track_lyrics">Finde Titeltexte</string>
+        <string name="add_playlist">Neue Wiedergabeliste hinzufügen</string>
+        <string name="action">Aktion</string>
+</resources>

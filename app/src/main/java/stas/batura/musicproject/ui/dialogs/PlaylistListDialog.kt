@@ -40,7 +40,7 @@ class PlaylistListDialog(val playlists: List<Playlist>, val mainAcivityViewModel
 //            dialog!!.cancel()
 //        }
 
-        dialog!!.setTitle("Select Playlist")
+        dialog!!.setTitle(getString(R.string.select_playlist))
 
 
         super.onViewCreated(view, savedInstanceState)
@@ -54,5 +54,5 @@ class PlaylistListDialog(val playlists: List<Playlist>, val mainAcivityViewModel
 
 
 interface onClickLstn {
-    public fun onItemClicked()
+    fun onItemClicked()
 }

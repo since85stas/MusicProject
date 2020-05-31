@@ -163,8 +163,6 @@ class MainActivity : AppCompatActivity(), DialogSelectionListener {
         mainViewModel.exoPlayer.observe(this, Observer {
             if (it != null) {
                 exoplayer_control.player = it
-            } else {
-
             }
         })
 
@@ -339,6 +337,11 @@ class MainActivity : AppCompatActivity(), DialogSelectionListener {
 //        // устанавливаем слушатель на нажатие клавиш
         nav_view.setNavigationItemSelectedListener( (NavigationView.OnNavigationItemSelectedListener {
             when (it.itemId) {
+                R.id.nav_home -> {
+                    drawer_layout.closeDrawers()
+                    true
+                }
+
                 R.id.find_text -> {
                     mainViewModel.getTrackText()
                     true
@@ -441,13 +444,13 @@ class MainActivity : AppCompatActivity(), DialogSelectionListener {
 
         // test
         val properties = DialogProperties()
-        properties.selection_mode = DialogConfigs.MULTI_MODE;
-        properties.selection_type = DialogConfigs.FILE_AND_DIR_SELECT;
-        properties.root = File(DialogConfigs.DEFAULT_DIR);
-        properties.error_dir = File(DialogConfigs.DEFAULT_DIR);
-        properties.offset = File(DialogConfigs.DEFAULT_DIR);
-        properties.extensions = null;
-        properties.show_hidden_files = false;
+        properties.selection_mode = DialogConfigs.MULTI_MODE
+        properties.selection_type = DialogConfigs.FILE_AND_DIR_SELECT
+        properties.root = File(DialogConfigs.DEFAULT_DIR)
+        properties.error_dir = File(DialogConfigs.DEFAULT_DIR)
+        properties.offset = File(DialogConfigs.DEFAULT_DIR)
+        properties.extensions = null
+        properties.show_hidden_files = false
         val dialog = FilePickerDialog(this, properties)
         dialog.setTitle("Select a File")
         dialog.setDialogSelectionListener (this)

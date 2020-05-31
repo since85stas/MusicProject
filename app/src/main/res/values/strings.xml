@@ -16,13 +16,8 @@
     <string name="no">No</string>
 
     <!-- Play Icon -->
-    <string name="play_icon_upper_path_data">M 44 32 L 44 64 L 100 64 L 100 64 Z</string>
-    <string name="play_icon_bottom_path_data">M 44 96 L 44 64 L 100 64 L 100 64 Z</string>
-    <!-- Pause Icon -->
-    <string name="pause_icon_upper_path_data">M 32 40 L 32 56  L 96 56 L 96 40 Z</string>
-    <string name="pause_icon_bottom_path_data">M 32 88 L 32 72 L 96 72 L 96 88 Z</string>
     <string name="yesStr">Yes</string>
-    <string name="delete_pllst_str">Playlist deletion</string>
+    <string name="delete_pllst_str">Delete playlist</string>
     <string name="del_plst_body">Do you really want to delete playlist?</string>
     <string name="canc_str">Cancel</string>
     <string name="text_not_found">Sorry, we can\'t find text</string>
@@ -31,4 +26,12 @@
     <string name="artist">Artist</string>
     <string name="album">Album</string>
     <string name="title">Title</string>
+    <string name="select_playlist">Select Playlist</string>
+    <string name="add">add</string>
+    <string name="enter_playlist_name">Enter playlist name</string>
+    <string name="new_playlist">New playlist</string>
+    <string name="home">Home</string>
+    <string name="find_track_lyrics">Find track lyrics</string>
+    <string name="add_playlist">Add new playlist</string>
+    <string name="action">Action</string>
 </resources>

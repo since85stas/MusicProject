@@ -384,7 +384,7 @@ class MusicService (): Service () {
             if (track.bitmapUri == null) {
                 metadataBuilder.putBitmap(
                     MediaMetadataCompat.METADATA_KEY_ART,
-                    BitmapFactory.decodeResource(resources, R.drawable.image208815)
+                    BitmapFactory.decodeResource(resources, R.drawable.cat_my)
                 )
             } else {
                 metadataBuilder.putBitmap(
