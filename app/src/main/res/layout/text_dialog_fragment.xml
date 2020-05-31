@@ -16,21 +16,24 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:layout_margin="12dp"
+            >
 
             <TextView
                 android:id="@+id/text_dialog_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="title" />
+                android:text="title"
+                android:visibility="gone"
+                />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
                 android:text="Song"
+                titleBody="@{mainModel.songTitle}"
+                style="@style/ExpandParentStyle"
                 />
 
             <TextView
@@ -39,9 +42,10 @@
                 textStatus="@{mainModel.netStatus}"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
                 android:textSize="12sp"
-                android:text="body" />
+                android:text="body"
+                android:scrollbars="vertical"
+                />
 
             <ImageView
                 imageStatus="@{mainModel.netStatus}"

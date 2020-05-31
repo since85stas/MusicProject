@@ -36,14 +36,14 @@ fun TextView.setTrackTitleMove(track: TrackKot?) {
         if (track.isPlaying) {
             visibility = View.VISIBLE
             text =
-                "                                       ${track.title}                                                 "
+                "                                         ${track.title}                                                 "
         } else {
             visibility = View.GONE
             text = track.title
         }
     } else {
         visibility = View.GONE
-        text =  "Title"
+        text =  context.getString(R.string.title)
     }
 }
 
@@ -59,7 +59,7 @@ fun TextView.setTrackTitleConst(track: TrackKot?) {
         }
     } else {
         visibility = View.VISIBLE
-        text =  "Title"
+        text =  context.getString(R.string.title)
     }
 }
 
@@ -68,7 +68,7 @@ fun TextView.setAlbumTitle(track: TrackKot?) {
     if (track != null) {
         text = track.album
     } else {
-        text =  "Album"
+        text =  context.getString(R.string.album)
     }
 }
 
@@ -77,7 +77,7 @@ fun TextView.setartistTitle(track: TrackKot?) {
     if (track != null) {
         text = track.artist
     } else {
-        text =  "Artist"
+        text =  context.getString(R.string.artist)
     }
 }
 
@@ -93,7 +93,7 @@ fun ImageView.setAlbumImage(track: TrackKot?) {
 @BindingAdapter("playlistNameBinding")
 fun TextView.setPlaylistName(name: String?) {
     if (name == null) {
-        text = "Playlist"
+        text = context.getString(R.string.playlist)
     } else {
         text = name
     }
@@ -151,7 +151,16 @@ fun TextView.bindTextBody( texts: String?) {
     if (texts != null) {
         text = texts
     } else {
-        text = "Sorry, we can't find text"
+        text = context.getString(R.string.text_not_found)
+    }
+}
+
+@BindingAdapter("titleBody")
+fun TextView.bindTitleBody( texts: String?) {
+    if (texts != null) {
+        text = texts
+    } else {
+        text = context.getString(R.string.track)
     }
 }
 

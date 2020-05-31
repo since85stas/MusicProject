@@ -52,7 +52,8 @@ class MainAcivityViewModel (private val application: Application,
     val netStatus: LiveData<NetApiStatus>
         get() = _netStatus
 
-    var songText: MutableLiveData<String> = MutableLiveData()
+    var songText: MutableLiveData<String?> = MutableLiveData(null)
+    var songTitle: MutableLiveData<String?> = MutableLiveData(null)
 
     private var _openTextListner : MutableLiveData<Boolean> = MutableLiveData(false)
     val openTextListner : LiveData<Boolean>
@@ -246,29 +247,37 @@ class MainAcivityViewModel (private val application: Application,
      */
     fun getTrackText() {
         if (currentTrackPlaying.value != null) {
-            coroutineScope.launch {
-                val resultDeffered = InjectorUtils.provideRetrofit().getSongText(
-                    currentTrackPlaying.value!!.title + currentTrackPlaying.value!!.artist
-                )
-                try {
-                    _netStatus.value = NetApiStatus.LOADING
-                    val bytes = resultDeffered.await()
+            if (true) {
+                coroutineScope.launch {
+                    val resultDeffered = InjectorUtils.provideRetrofit().getSongText(
+                        currentTrackPlaying.value!!.title + currentTrackPlaying.value!!.artist
+                    )
+                    try {
+                        _netStatus.value = NetApiStatus.LOADING
+                        val bytes = resultDeffered.await()
+                        if (bytes.content?.size != 0) {
+                            songText.value = bytes.content?.get(0)!!.lyrics
+                            songTitle.value = bytes.content?.get(0)!!.title
+                        }
+                        _netStatus.value = NetApiStatus.DONE
 
-                    songText.value = bytes.content?.get(0)!!.lyrics
-
-                    _netStatus.value = NetApiStatus.DONE
-
-                } catch (e: Exception) {
-                    Log.d("eee", e.toString())
-                    _netStatus.value = NetApiStatus.ERROR
-                } finally {
-                    Log.d("eee", "finally")
+                    } catch (e: Exception) {
+                        Log.d("eee", e.toString())
+                        _netStatus.value = NetApiStatus.ERROR
+                    } finally {
+                        Log.d("eee", "finally")
 //                _buttonCliked.value = false
+                    }
                 }
+                _openTextListner.value = true
             }
-            _openTextListner.value = true
         }
 
+    }
+
+    private fun dropTextCache() {
+        songText.value = null
+        songTitle.value = null
     }
 
     fun openTextDialogFinish() {
