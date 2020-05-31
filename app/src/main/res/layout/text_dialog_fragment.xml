@@ -8,7 +8,7 @@
     </data>
 
     <ScrollView
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fillViewport="true"
         >
@@ -24,7 +24,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="tittle" />
+                android:text="title" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="Song"
+                />
 
             <TextView
                 android:id="@+id/text_dialog_body"
@@ -32,6 +39,8 @@
                 textStatus="@{mainModel.netStatus}"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:textSize="12sp"
                 android:text="body" />
 
             <ImageView

@@ -1,30 +1,29 @@
 package stas.batura.musicproject.repository.net
 
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
+import com.google.gson.annotations.SerializedName
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import kotlinx.coroutines.Deferred
+import okhttp3.Interceptor
 import okhttp3.OkHttpClient
-import okhttp3.ResponseBody
+import okhttp3.Request
 import okhttp3.logging.HttpLoggingInterceptor
-import retrofit2.Call
-import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.converter.simplexml.SimpleXmlConverterFactory
-import retrofit2.create
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
-import retrofit2.http.Url
 
 
 object RetrofitClient {
 
-//    val BASE_URL = "http://api.chartlyrics.com/apiv1.asmx/SearchLyric?artist=string&song=string"
-    val BASE_URL = "http://api.chartlyrics.com/apiv1.asmx/"
+//    var logging = HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
+
+
+    val BASE_URL = "https://canarado-lyrics.p.rapidapi.com/lyrics/"
+//    val BASE_URL = "http://api.chartlyrics.com/apiv1.asmx/"
 
 //    private fun provideRetrofit(): Retrofit {
 //        val string = ""
@@ -34,6 +33,8 @@ object RetrofitClient {
     .setLevel(HttpLoggingInterceptor.Level.BODY)
 
     private val httpClient = OkHttpClient.Builder()
+
+
 
     /**
      * Build the Moshi object that Retrofit will be using, making sure to add the Kotlin adapter for
@@ -49,6 +50,16 @@ object RetrofitClient {
      */
     private val retrofit = Retrofit.Builder()
         .addConverterFactory(MoshiConverterFactory.create(moshi))
+        .client(httpClient.addInterceptor(object : Interceptor {
+            override fun intercept(chain: Interceptor.Chain): okhttp3.Response {
+                val request: Request =
+                    chain.request().newBuilder()
+                        .addHeader("x-rapidapi-host", "canarado-lyrics.p.rapidapi.com")
+                        .addHeader("x-rapidapi-key", "9016123d29mshfd7b7fa9b0d89eap17019fjsnfb4983ac17fa")
+                        .build()
+                return chain.proceed(request)
+            }
+        }).addInterceptor(loggingInterceptor).build())
         .addCallAdapterFactory(CoroutineCallAdapterFactory())
         .baseUrl(BASE_URL)
         .build()
@@ -66,17 +77,53 @@ object RetrofitClient {
 
     object netApi {
         val retrofitServise : API_COUR by lazy {
-            retrofitXmlCour.create(API_COUR::class.java)
+            retrofit.create(API_COUR::class.java)
         }
     }
 
     interface API_COUR {
-        @GET ("SearchLyricDirect")
-        fun getSongText( @Query("song") song: String, @Query("artist") artist: String ):
-                Deferred<SearchResponse>
+        @GET ("/lyrics/{title}")
+        fun getSongText(@Path("title") title: String):
+                Deferred<FullResponse>
 
         @GET ("cat/says/{sentence}")
         fun getSayingCat(@Path ("sentence") value: String) : Deferred<SearchResponse>
+
+
     }
+
+}
+
+class FullResponse {
+
+    @SerializedName("status")
+    var status: StatusResponse? = null
+
+    @SerializedName("content")
+    var content: List<Content>? = null
+}
+
+class StatusResponse {
+
+    @SerializedName("code")
+    var code: Int? = null
+
+    @SerializedName("message")
+    var message: String? = null
+
+    @SerializedName("failed")
+    var failed: Boolean? = false
+}
+
+class Content {
+
+    @SerializedName("title")
+    var title: String? = null
+
+    @SerializedName("artist")
+    var artist: String? = null
+
+    @SerializedName("lyrics")
+    var lyrics: String? = null
 
 }

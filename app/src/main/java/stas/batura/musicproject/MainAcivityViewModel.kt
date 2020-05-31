@@ -248,13 +248,14 @@ class MainAcivityViewModel (private val application: Application,
         if (currentTrackPlaying.value != null) {
             coroutineScope.launch {
                 val resultDeffered = InjectorUtils.provideRetrofit().getSongText(
-                    currentTrackPlaying.value!!.title,
-                    currentTrackPlaying.value!!.artist
+                    currentTrackPlaying.value!!.title + currentTrackPlaying.value!!.artist
                 )
                 try {
                     _netStatus.value = NetApiStatus.LOADING
-                    val bytes = resultDeffered.await().lyrics
-                    songText.value = bytes
+                    val bytes = resultDeffered.await()
+
+                    songText.value = bytes.content?.get(0)!!.lyrics
+
                     _netStatus.value = NetApiStatus.DONE
 
                 } catch (e: Exception) {
