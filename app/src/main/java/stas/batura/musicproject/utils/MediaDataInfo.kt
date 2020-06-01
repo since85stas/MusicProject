@@ -7,19 +7,18 @@ import java.io.File
 class MediaDataInfo {
 
     private var filePath: File? = null;
+    var metaRetriever: MediaMetadataRetriever = MediaMetadataRetriever()
 
     constructor( file: File) {
         filePath = file
+        metaRetriever.setDataSource(filePath!!.absolutePath)
     }
 
     fun getDuration(): Long {
         if (filePath != null) {
-            var metaRetriever: MediaMetadataRetriever = MediaMetadataRetriever()
-            metaRetriever.setDataSource(filePath!!.absolutePath)
             var duration: String =
                 metaRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION)
             var dur: Long = duration.toLong()
-            metaRetriever.release()
             return dur;
         }
         return 0L
@@ -27,12 +26,7 @@ class MediaDataInfo {
 
     fun getYear(): String {
         if (filePath != null) {
-            var metaRetriever: MediaMetadataRetriever = MediaMetadataRetriever()
-            metaRetriever.setDataSource(filePath!!.absolutePath)
-
             val year = metaRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_YEAR)
-
-            metaRetriever.release()
             if (year != null) {
                 return year
             } else {
@@ -44,12 +38,7 @@ class MediaDataInfo {
 
     fun getBitrate(): String {
         if (filePath != null) {
-            var metaRetriever: MediaMetadataRetriever = MediaMetadataRetriever()
-            metaRetriever.setDataSource(filePath!!.absolutePath)
-
             val year = metaRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_BITRATE)
-
-            metaRetriever.release()
             return year
         }
         return ""
@@ -57,8 +46,6 @@ class MediaDataInfo {
 
     fun getArtist(): String {
         if (filePath != null) {
-            var metaRetriever: MediaMetadataRetriever = MediaMetadataRetriever()
-            metaRetriever.setDataSource(filePath!!.absolutePath)
             val artist = metaRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_ARTIST)
             if (artist != null) return artist
         }
@@ -67,8 +54,6 @@ class MediaDataInfo {
 
     fun getAlbum(): String {
         if (filePath != null) {
-            var metaRetriever: MediaMetadataRetriever = MediaMetadataRetriever()
-            metaRetriever.setDataSource(filePath!!.absolutePath)
             val album = metaRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_ALBUM)
             if (album != null )return album
         }
@@ -77,14 +62,14 @@ class MediaDataInfo {
 
     fun getTitle(): String {
         if (filePath != null) {
-            var metaRetriever: MediaMetadataRetriever = MediaMetadataRetriever()
-            metaRetriever.setDataSource(filePath!!.absolutePath)
             val title = metaRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_TITLE)
             if (title != null) return title
         }
         return "title"
     }
 
-
+    fun release() {
+        metaRetriever.release()
+    }
 
 }

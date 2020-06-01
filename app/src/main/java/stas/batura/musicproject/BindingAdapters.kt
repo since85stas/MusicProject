@@ -32,17 +32,11 @@ fun TextView.setTrackDurat (track : MusicRepository.Track) {
 
 @BindingAdapter("trackTitleBinding")
 fun TextView.setTrackTitleMove(track: TrackKot?) {
+
     if (track != null) {
-        if (track.isPlaying) {
-            visibility = View.VISIBLE
-            text =
-                "                                        ${track.title}                                               "
-        } else {
-            visibility = View.GONE
-            text = track.title.trim()
-        }
+        text =
+            "                                         ${track.title.trim()}                                                 "
     } else {
-        visibility = View.GONE
         text =  context.getString(R.string.title)
     }
 }
@@ -50,16 +44,9 @@ fun TextView.setTrackTitleMove(track: TrackKot?) {
 @BindingAdapter("trackTitleBindingConst")
 fun TextView.setTrackTitleConst(track: TrackKot?) {
     if (track != null) {
-        if (track.isPlaying) {
-            visibility = View.GONE
-            text = track.title.trim()
-        } else {
-            visibility = View.VISIBLE
-            text = track.title
-        }
+        text = track!!.title.trim()
     } else {
-        visibility = View.VISIBLE
-        text =  context.getString(R.string.title)
+        text = context.getString(R.string.title)
     }
 }
 

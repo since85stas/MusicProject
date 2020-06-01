@@ -12,6 +12,7 @@ import java.io.FilenameFilter;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.TreeSet;
 
 import stas.batura.musicproject.R;
 import stas.batura.musicproject.repository.room.TrackKot;
@@ -22,7 +23,7 @@ public class SongsManager {
     // SDCard Path
     final String MEDIA_PATH;
     int playlistId;
-    List<File> files;
+    TreeSet<File> files;
     List<File> imageFiles;
 
     // Constructor
@@ -65,10 +66,11 @@ public class SongsManager {
         File home = new File(MEDIA_PATH);
 
 //        File[] files = home.listFiles(new FileExtensionFilter());
-        files = new ArrayList<>();
+        files = new TreeSet<>();
         imageFiles = new ArrayList<>();
         getTracksInSubs(home);
 
+        long time = System.currentTimeMillis();
         List<TrackKot> trackKot = new ArrayList<>();
         if (files != null && files.size() > 0) {
             for (File file : files) {
@@ -76,10 +78,10 @@ public class SongsManager {
                 MediaDataInfo dataInfo = new MediaDataInfo(file);
                 String fileStr = file.toString();
 
+                long nextT = time - System.currentTimeMillis();
                 String title = dataInfo.getTitle();
                 String album = dataInfo.getAlbum();
                 String artist = dataInfo.getArtist();
-//                Uri uri = getUriValue(fileStr);
                 Uri uri = Uri.fromFile(new File(getUriValue(fileStr)
                         ));
                 Long duration = dataInfo.getDuration();
@@ -93,6 +95,8 @@ public class SongsManager {
                 }catch (Exception e) {
                     Log.d("songmanager", "getPlayList: " +e);
                 }
+
+
 
                 Uri imageUri = null;
                 //TODO: check finding matches
@@ -118,8 +122,10 @@ public class SongsManager {
                         yearInt
                 );
                 trackKot.add(rackKot);
+                dataInfo.release();
             }
         }
+        long nextT = time - System.currentTimeMillis();
         // return songs list array
         return trackKot;
     }
