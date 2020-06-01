@@ -51,7 +51,6 @@ class SongDecorFragment : Fragment() {
     }
 
     override fun onResume() {
-
         super.onResume()
     }
 

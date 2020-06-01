@@ -1,7 +1,10 @@
 package stas.batura.musicproject
 
+import android.Manifest
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -15,7 +18,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
@@ -31,7 +33,6 @@ import com.google.android.material.navigation.NavigationView
 import com.google.firebase.analytics.FirebaseAnalytics
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.control_fragment_new.*
-import kotlinx.android.synthetic.main.nav_header_main.*
 import kotlinx.android.synthetic.main.nav_header_main.view.*
 import kotlinx.android.synthetic.main.pager_activity.*
 import stas.batura.musicproject.musicservice.MusicService
@@ -43,6 +44,7 @@ import stas.batura.musicproject.ui.dialogs.TextDialog
 import stas.batura.musicproject.ui.playlist.PlaylistFragment
 import stas.batura.musicproject.ui.song_decor.SongDecorFragment
 import stas.batura.musicproject.utils.CircleTransform
+import stas.batura.musicproject.utils.ContexUtils
 import stas.batura.musicproject.utils.InjectorUtils
 import java.io.File
 
@@ -117,6 +119,15 @@ class MainActivity : AppCompatActivity(), DialogSelectionListener {
         mainViewModel.onActivityCreated()
 
         createBasicNavView()
+
+        if (!ContexUtils.checkStorageAccessPermissions(this)) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                this.requestPermissions(
+                    arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
+                    FilePickerDialog.EXTERNAL_READ_PERMISSION_GRANT
+                )
+            }
+        }
 
 //        if (mainViewModel.serviseIsCreated) {
 //            bindCurrentService()
