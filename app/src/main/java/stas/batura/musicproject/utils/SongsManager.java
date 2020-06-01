@@ -12,6 +12,7 @@ import java.io.FilenameFilter;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.TreeSet;
 
 import stas.batura.musicproject.R;
 import stas.batura.musicproject.repository.room.TrackKot;
@@ -22,7 +23,7 @@ public class SongsManager {
     // SDCard Path
     final String MEDIA_PATH;
     int playlistId;
-    List<File> files;
+    TreeSet<File> files;
     List<File> imageFiles;
 
     // Constructor
@@ -65,7 +66,7 @@ public class SongsManager {
         File home = new File(MEDIA_PATH);
 
 //        File[] files = home.listFiles(new FileExtensionFilter());
-        files = new ArrayList<>();
+        files = new TreeSet<>();
         imageFiles = new ArrayList<>();
         getTracksInSubs(home);
 
