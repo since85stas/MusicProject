@@ -70,6 +70,7 @@ public class SongsManager {
         imageFiles = new ArrayList<>();
         getTracksInSubs(home);
 
+        long time = System.currentTimeMillis();
         List<TrackKot> trackKot = new ArrayList<>();
         if (files != null && files.size() > 0) {
             for (File file : files) {
@@ -77,10 +78,10 @@ public class SongsManager {
                 MediaDataInfo dataInfo = new MediaDataInfo(file);
                 String fileStr = file.toString();
 
+                long nextT = time - System.currentTimeMillis();
                 String title = dataInfo.getTitle();
                 String album = dataInfo.getAlbum();
                 String artist = dataInfo.getArtist();
-//                Uri uri = getUriValue(fileStr);
                 Uri uri = Uri.fromFile(new File(getUriValue(fileStr)
                         ));
                 Long duration = dataInfo.getDuration();
@@ -94,6 +95,8 @@ public class SongsManager {
                 }catch (Exception e) {
                     Log.d("songmanager", "getPlayList: " +e);
                 }
+
+
 
                 Uri imageUri = null;
                 //TODO: check finding matches
@@ -119,8 +122,10 @@ public class SongsManager {
                         yearInt
                 );
                 trackKot.add(rackKot);
+                dataInfo.release();
             }
         }
+        long nextT = time - System.currentTimeMillis();
         // return songs list array
         return trackKot;
     }
