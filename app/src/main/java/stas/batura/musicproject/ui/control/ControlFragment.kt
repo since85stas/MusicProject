@@ -15,7 +15,6 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
-import be.rijckaert.tim.animatedvector.FloatingMusicActionButton
 import kotlinx.android.synthetic.main.control_fragment_new.*
 import stas.batura.musicproject.MainAcivityViewModel
 import stas.batura.musicproject.MusicApplication
@@ -60,7 +59,7 @@ class ControlFragment () : Fragment() {
      */
     override fun onActivityCreated(savedInstanceState: Bundle?) {
 
-        play_pause_button.setOnMusicFabClickListener( object : FloatingMusicActionButton.OnMusicFabClickListener {
+        play_pause_button.setOnClickListener( object : View.OnClickListener {
             override fun onClick(view: View) {
                 isPlayButtonClicked = true
                 mainViewModel.checkServiseCreation()
@@ -114,40 +113,15 @@ class ControlFragment () : Fragment() {
         mainViewModel.callbackChanges.observe(viewLifecycleOwner, Observer {
             if (it != null) {
                 if (it.state == PlaybackStateCompat.STATE_PLAYING) {
-
-                    when(play_pause_button.currentMode) {
-                        FloatingMusicActionButton.Mode.PAUSE_TO_PLAY -> {
-                            Log.d(TAG, "playP")
-                        }
-                        FloatingMusicActionButton.Mode.PLAY_TO_PAUSE -> {
-                            Log.d(TAG, "pauseP")
-                            if ( !isPlayButtonClicked) {
-                                play_pause_button.playAnimation()
-                                isPlayButtonClicked = false
-                            }
-                        }
-                    }
-//                    play_pause_button.changeMode(FloatingMusicActionButton.Mode.PAUSE_TO_PLAY)
+                    play_pause_button.setImageResource(R.drawable.ic_pause_black_24dp)
                 } else if (it.state == PlaybackStateCompat.STATE_PAUSED ) {
-                    when(play_pause_button.currentMode) {
-                        FloatingMusicActionButton.Mode.PAUSE_TO_PLAY -> {
-                            Log.d(TAG, "playP")
-                        }
-                        FloatingMusicActionButton.Mode.PLAY_TO_PAUSE -> {
-                            Log.d(TAG, "pauseP")
-                        }
-                    }
-                    Log.d(TAG, "pause")
-//                    play_pause_button.changeMode(FloatingMusicActionButton.Mode.PLAY_TO_PAUSE)
+                    play_pause_button.setImageResource(R.drawable.ic_play_arrow_black_24dp)
                 } else if (it.state == PlaybackStateCompat.STATE_NONE) {
                     Log.d(TAG, "none")
 //                    play_pause_button.changeMode(FloatingMusicActionButton.Mode.PLAY_TO_PAUSE)
+                } else {
+                    Log.d(TAG, "else state")
                 }
-//                if ( !isPlayButtonClicked) {
-//                    play_pause_button.playAnimation()
-//                    play_pause_button.
-//                }
-//                isPlayButtonClicked = false
             }
         })
 
@@ -183,6 +157,7 @@ class ControlFragment () : Fragment() {
     }
 
     override fun onStop() {
+        isPlayButtonClicked = false
         removeObservers()
         super.onStop()
     }

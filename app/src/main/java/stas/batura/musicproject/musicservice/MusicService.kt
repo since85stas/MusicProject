@@ -217,8 +217,9 @@ class MusicService (): Service () {
         super.onRebind(intent)
     }
 
-
-
+    /**
+     * создаем колбэк для управления сервисом
+     */
     private val  mediaSessionCallback = object : MediaSessionCompat.Callback() {
 
         private var currentUri: Uri? = null
@@ -359,8 +360,9 @@ class MusicService (): Service () {
             prepareToPlay(track.uri)
         }
 
-
-
+        /**
+         * играем по uri
+         */
         override fun onPlayFromUri(uri: Uri?, extras: Bundle?) {
             val track = musicRepository.getTrackByUri(uri)
             updateMetadataFromTrack(track)

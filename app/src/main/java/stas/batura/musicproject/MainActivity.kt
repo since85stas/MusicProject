@@ -121,6 +121,7 @@ class MainActivity : AppCompatActivity(), DialogSelectionListener {
 //        if (mainViewModel.serviseIsCreated) {
 //            bindCurrentService()
 //        }
+        Log.d(TAG, "onCreate")
     }
 
     /**
@@ -234,6 +235,7 @@ class MainActivity : AppCompatActivity(), DialogSelectionListener {
     }
 
     override fun onStart() {
+        Log.d(TAG, "onStart")
         addObservers()
         super.onStart()
     }
