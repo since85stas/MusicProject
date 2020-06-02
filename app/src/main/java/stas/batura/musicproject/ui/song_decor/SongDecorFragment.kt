@@ -66,7 +66,7 @@ class SongDecorFragment : Fragment() {
         super.onStop()
     }
 
-    // TODO: странно еповедение обсервера лучше не использовать лямда при сложно жизн цикле!!!!!!!!!!!!!!!1
+    // TODO: странно еповедение обсервера лучше не использовать лямда при сложно жизн цикле!!!!!!!!
     private fun addObservers() {
         mainViewModel.currentTrackPlaying.observe(viewLifecycleOwner, object : Observer<TrackKot> {
 //            if (it != null) {

@@ -15,6 +15,8 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
+import com.github.amlcurran.showcaseview.ShowcaseView
+import com.github.amlcurran.showcaseview.targets.ViewTarget
 import kotlinx.android.synthetic.main.control_fragment_new.*
 import stas.batura.musicproject.MainAcivityViewModel
 import stas.batura.musicproject.MusicApplication
@@ -105,6 +107,8 @@ class ControlFragment () : Fragment() {
             mainViewModel.repository.changerPlayStatus(newStatus)
         }
 
+        addTour()
+
         super.onActivityCreated(savedInstanceState)
     }
 
@@ -162,4 +166,13 @@ class ControlFragment () : Fragment() {
         super.onStop()
     }
 
+    private fun addTour() {
+        ShowcaseView.Builder(activity)
+            .withMaterialShowcase()
+            .setTarget(ViewTarget(play_pause_button))
+            .hideOnTouchOutside()
+            .setContentTitle("R.string.showcase_fragment_title_2")
+            .setContentText("R.string.showcase_fragment_message_2")
+            .build();
+    }
 }

@@ -1,10 +1,14 @@
 package stas.batura.musicproject
 
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.view.View
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.core.graphics.drawable.RoundedBitmapDrawable
+import androidx.core.graphics.drawable.RoundedBitmapDrawableFactory
 import androidx.databinding.BindingAdapter
 import stas.batura.musicproject.musicservice.MusicRepository
 import stas.batura.musicproject.repository.room.SHUFFLE_ON
@@ -71,7 +75,13 @@ fun TextView.setartistTitle(track: TrackKot?) {
 @BindingAdapter("trackImageBinfing")
 fun ImageView.setAlbumImage(track: TrackKot?) {
     if (track != null && track.bitmapUri != null) {
-        setImageURI(track.bitmapUri)
+        val initialBit = BitmapFactory.decodeFile(track.bitmapUri!!.path)
+
+        val dr: RoundedBitmapDrawable = RoundedBitmapDrawableFactory.create(resources, initialBit)
+
+        dr.cornerRadius = 50f
+        setImageDrawable(dr)
+//        setImageURI(track.bitmapUri)
     } else {
         setImageDrawable(resources.getDrawable(R.drawable.note_image))
     }

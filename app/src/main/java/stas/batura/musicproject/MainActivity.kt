@@ -10,9 +10,11 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
+import androidx.core.view.get
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
@@ -29,9 +31,13 @@ import com.developer.filepicker.controller.DialogSelectionListener
 import com.developer.filepicker.model.DialogConfigs
 import com.developer.filepicker.model.DialogProperties
 import com.developer.filepicker.view.FilePickerDialog
+import com.github.amlcurran.showcaseview.ShowcaseView
+import com.github.amlcurran.showcaseview.targets.ActionViewTarget
+import com.github.amlcurran.showcaseview.targets.ViewTarget
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.analytics.FirebaseAnalytics
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.app_bar_main.*
 import kotlinx.android.synthetic.main.control_fragment_new.*
 import kotlinx.android.synthetic.main.nav_header_main.view.*
 import kotlinx.android.synthetic.main.pager_activity.*
@@ -122,9 +128,6 @@ class MainActivity : AppCompatActivity(), DialogSelectionListener {
             }
         }
 
-//        if (mainViewModel.serviseIsCreated) {
-//            bindCurrentService()
-//        }
         Log.d(TAG, "onCreate")
     }
 
@@ -196,6 +199,18 @@ class MainActivity : AppCompatActivity(), DialogSelectionListener {
                 print("play")
             }
         })
+    }
+
+    private fun addTour() {
+        val toolbar: Toolbar = findViewById(R.id.toolbar)
+//        val view = toolbar.findViewById<View>(R.id.action_add)
+        val item=toolbar.menu.getItem(0)
+        ShowcaseView.Builder(this)
+        .setTarget(ViewTarget(item.itemId, this))
+        .setContentTitle("ShowcaseView")
+        .setContentText("This is highlighting the Home button")
+        .hideOnTouchOutside()
+        .build();
     }
 
     /**
@@ -322,6 +337,8 @@ class MainActivity : AppCompatActivity(), DialogSelectionListener {
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.
         menuInflater.inflate(R.menu.main, menu)
+
+        addTour()
         return true
     }
 

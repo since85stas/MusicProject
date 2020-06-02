@@ -129,4 +129,7 @@ dependencies {
 
     // Add the Firebase SDK for Google Analytics
     implementation 'com.google.firebase:firebase-analytics:17.4.2'
+
+    implementation 'com.github.amlcurran.showcaseview:library:5.4.3'
+    implementation 'me.samlss:lighter:1.0.3'
 }

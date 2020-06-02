@@ -7,33 +7,33 @@
     android:background="@color/contrBackColor"
     >
     <!-- Timer Display -->
-    <LinearLayout
-        android:id="@+id/timerDisplay"
-        android:layout_above="@id/songProgressBar"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginRight="20dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginBottom="10dp">
-        <!-- Current Duration Label -->
-        <TextView
-            android:id="@+id/songCurrentDurationLabel"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="left"
-            android:textColor="#eeeeee"
-            android:textStyle="bold"/>
-        <!-- Total Duration Label -->
-        <TextView
-            android:id="@+id/songTotalDurationLabel"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="right"
-            android:textColor="#04cbde"
-            android:textStyle="bold"/>
-    </LinearLayout>
+<!--    <LinearLayout-->
+<!--        android:id="@+id/timerDisplay"-->
+<!--        android:layout_above="@id/songProgressBar"-->
+<!--        android:layout_width="fill_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginRight="20dp"-->
+<!--        android:layout_marginLeft="20dp"-->
+<!--        android:layout_marginBottom="10dp">-->
+<!--        &lt;!&ndash; Current Duration Label &ndash;&gt;-->
+<!--        <TextView-->
+<!--            android:id="@+id/songCurrentDurationLabel"-->
+<!--            android:layout_width="fill_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_weight="1"-->
+<!--            android:gravity="left"-->
+<!--            android:textColor="#eeeeee"-->
+<!--            android:textStyle="bold"/>-->
+<!--        &lt;!&ndash; Total Duration Label &ndash;&gt;-->
+<!--        <TextView-->
+<!--            android:id="@+id/songTotalDurationLabel"-->
+<!--            android:layout_width="fill_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_weight="1"-->
+<!--            android:gravity="right"-->
+<!--            android:textColor="#04cbde"-->
+<!--            android:textStyle="bold"/>-->
+<!--    </LinearLayout>-->
 
     <com.google.android.exoplayer2.ui.PlayerControlView
         android:id="@+id/exoplayer_control"
