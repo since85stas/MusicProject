@@ -2,6 +2,7 @@ package stas.batura.musicproject.ui.song_decor
 
 import android.os.Bundle
 import android.support.v4.media.session.PlaybackStateCompat
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,6 +17,7 @@ import stas.batura.musicproject.MainActivity
 import stas.batura.musicproject.MusicApplication
 import stas.batura.musicproject.R
 import stas.batura.musicproject.databinding.SongDecorFragmentBinding
+import stas.batura.musicproject.repository.room.TrackKot
 import stas.batura.musicproject.utils.InjectorUtils
 
 class SongDecorFragment : Fragment() {
@@ -64,10 +66,17 @@ class SongDecorFragment : Fragment() {
         super.onStop()
     }
 
+    // TODO: странно еповедение обсервера лучше не использовать лямда при сложно жизн цикле!!!!!!!!!!!!!!!1
     private fun addObservers() {
-        mainViewModel.currentTrackPlaying.observe(viewLifecycleOwner, Observer {
-            if (it != null) {
-                print("play")
+        mainViewModel.currentTrackPlaying.observe(viewLifecycleOwner, object : Observer<TrackKot> {
+//            if (it != null) {
+//                Log.d("decorFragm", it.title.toString().trim())
+//            }
+
+            override fun onChanged(t: TrackKot?) {
+                if (t != null) {
+                    Log.d("decorFragm", t.title.toString().trim())
+                }
             }
         })
 
@@ -89,5 +98,7 @@ class SongDecorFragment : Fragment() {
     private fun removeObservers() {
         mainViewModel.currentTrackPlaying.removeObservers(viewLifecycleOwner)
         mainViewModel.callbackChanges.removeObservers(viewLifecycleOwner)
+
+//        mainViewModel.currentTrackPlaying.re
     }
 }

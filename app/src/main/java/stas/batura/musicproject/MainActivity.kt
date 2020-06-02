@@ -97,14 +97,7 @@ class MainActivity : AppCompatActivity(), DialogSelectionListener {
         toolbar.title = ""
         setSupportActionBar(toolbar)
 
-        // Instantiate a ViewPager2 and a PagerAdapter.
-        viewPager = findViewById(R.id.pager);
-        pagerAdapter = ScreenSlidePagerAdapter(supportFragmentManager);
-        pagerAdapter!!.addFragment(SongDecorFragment())
-        pagerAdapter!!.addFragment(PlaylistFragment())
 
-        viewPager!!.orientation = ViewPager2.ORIENTATION_HORIZONTAL
-        viewPager!!.setAdapter(pagerAdapter);
 
 //        navContr = findNavController(this,R.id.nav_host_fragment)
 
@@ -246,6 +239,19 @@ class MainActivity : AppCompatActivity(), DialogSelectionListener {
     override fun onStart() {
         Log.d(TAG, "onStart")
         addObservers()
+//        if (pagerAdapter!=null) {
+//            pagerAdapter!!.createFragment(0)
+//            pagerAdapter!!.createFragment(1)
+//        }
+        // Instantiate a ViewPager2 and a PagerAdapter.
+        viewPager = findViewById(R.id.pager)
+        pagerAdapter = ScreenSlidePagerAdapter(supportFragmentManager)
+        pagerAdapter!!.addFragment(SongDecorFragment())
+        pagerAdapter!!.addFragment(PlaylistFragment())
+
+        viewPager!!.orientation = ViewPager2.ORIENTATION_HORIZONTAL
+        viewPager!!.setAdapter(pagerAdapter)
+
         super.onStart()
     }
 
@@ -257,6 +263,7 @@ class MainActivity : AppCompatActivity(), DialogSelectionListener {
 
     override fun onStop() {
         removeObservers()
+        pagerAdapter!!.removeFragments()
         println("main activity stop")
         super.onStop()
     }
@@ -497,15 +504,16 @@ class MainActivity : AppCompatActivity(), DialogSelectionListener {
     }
 
     /**
-     * A simple pager adapter that represents 5 ScreenSlidePageFragment objects, in
+     * A simple pager adapter that represents 2 ScreenSlidePageFragment objects, in
      * sequence.
      */
     inner class ScreenSlidePagerAdapter(val fragmentManager: FragmentManager) :
         FragmentStateAdapter(fragmentManager, this@MainActivity.lifecycle) {
 
-        private val arrayList: ArrayList<Fragment> = ArrayList()
+        private var arrayList: ArrayList<Fragment> = ArrayList()
 
         override fun createFragment(position: Int): Fragment {
+            Log.d(TAG, "fragment pos=${position} created")
             return arrayList.get(position)
         }
 
@@ -517,8 +525,12 @@ class MainActivity : AppCompatActivity(), DialogSelectionListener {
             return NUM_PAGES
         }
 
+        fun removeFragments() {
+            arrayList = ArrayList()
+        }
 
     }
 
 
 }
+
