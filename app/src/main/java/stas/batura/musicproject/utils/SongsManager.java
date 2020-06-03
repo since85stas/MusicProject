@@ -1,5 +1,6 @@
 package stas.batura.musicproject.utils;
 
+import android.media.MediaMetadataRetriever;
 import android.net.Uri;
 import android.os.Environment;
 import android.util.Log;
@@ -72,10 +73,11 @@ public class SongsManager {
 
         long time = System.currentTimeMillis();
         List<TrackKot> trackKot = new ArrayList<>();
+        MediaMetadataRetriever mediaMetadataRetriever = new MediaMetadataRetriever();
         if (files != null && files.size() > 0) {
             for (File file : files) {
 
-                MediaDataInfo dataInfo = new MediaDataInfo(file);
+                MediaDataInfo dataInfo = new MediaDataInfo(file, mediaMetadataRetriever);
                 String fileStr = file.toString();
 
                 long nextT = time - System.currentTimeMillis();
@@ -122,9 +124,10 @@ public class SongsManager {
                         yearInt
                 );
                 trackKot.add(rackKot);
-                dataInfo.release();
+//                dataInfo.release();
             }
         }
+        mediaMetadataRetriever.release();
         long nextT = time - System.currentTimeMillis();
         // return songs list array
         return trackKot;

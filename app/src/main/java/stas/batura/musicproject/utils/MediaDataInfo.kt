@@ -7,10 +7,11 @@ import java.io.File
 class MediaDataInfo {
 
     private var filePath: File? = null;
-    var metaRetriever: MediaMetadataRetriever = MediaMetadataRetriever()
+   lateinit var metaRetriever: MediaMetadataRetriever
 
-    constructor( file: File) {
+    constructor( file: File, metaRetrieverIn: MediaMetadataRetriever) {
         filePath = file
+        metaRetriever = metaRetrieverIn
         metaRetriever.setDataSource(filePath!!.absolutePath)
     }
 
@@ -68,8 +69,8 @@ class MediaDataInfo {
         return "title"
     }
 
-    fun release() {
-        metaRetriever.release()
-    }
+//    fun release() {
+//        metaRetriever.release()
+//    }
 
 }

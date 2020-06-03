@@ -338,7 +338,7 @@ class MainActivity : AppCompatActivity(), DialogSelectionListener {
         // Inflate the menu; this adds items to the action bar if it is present.
         menuInflater.inflate(R.menu.main, menu)
 
-        addTour()
+//        addTour()
         return true
     }
 
@@ -481,7 +481,7 @@ class MainActivity : AppCompatActivity(), DialogSelectionListener {
 
         // test
         val properties = DialogProperties()
-        properties.selection_mode = DialogConfigs.MULTI_MODE
+        properties.selection_mode = DialogConfigs.SINGLE_MODE
         properties.selection_type = DialogConfigs.FILE_AND_DIR_SELECT
         properties.root = File(DialogConfigs.DEFAULT_DIR)
         properties.error_dir = File(DialogConfigs.DEFAULT_DIR)

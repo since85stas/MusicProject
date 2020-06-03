@@ -24,6 +24,19 @@ class AlbumsDataInfo {
         return albumNames.values.toList()
     }
 
+    fun getTracksInAlbumsOrder(): List<MusicRepository.Track> {
+//        tracks = list.toMutableList()
+        val albums = getAlbumsData()
+
+        val newList: MutableList<MusicRepository.Track> = ArrayList<MusicRepository.Track>()
+        for (alb in albums) {
+            for (tr in alb.albumTracks!!) {
+                newList.add(tr)
+            }
+        }
+        return newList
+    }
+
     fun getSongsNum(): Int {
         return tracks.size
     }

@@ -107,7 +107,7 @@ class ControlFragment () : Fragment() {
             mainViewModel.repository.changerPlayStatus(newStatus)
         }
 
-        addTour()
+//        addTour()
 
         super.onActivityCreated(savedInstanceState)
     }

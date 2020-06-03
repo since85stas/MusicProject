@@ -13,6 +13,7 @@ import stas.batura.musicproject.repository.room.Controls;
 import stas.batura.musicproject.repository.room.ControlsKt;
 import stas.batura.musicproject.repository.room.TrackKot;
 import stas.batura.musicproject.repository.room.TracksDao;
+import stas.batura.musicproject.ui.playlist.AlbumsDataInfo;
 
 import static stas.batura.musicproject.repository.room.ControlsKt.REPEAT_ON;
 import static stas.batura.musicproject.repository.room.ControlsKt.REPEAT_ONE;
@@ -57,7 +58,10 @@ public final class MusicRepository {
             tacksRep.add(track );
         }
 
-        tracks.postValue(tacksRep);
+        // упорядочиваем список песен по альбомам
+        AlbumsDataInfo data =new  AlbumsDataInfo(tacksRep);
+        tracks.postValue(data.getTracksInAlbumsOrder());
+//        tracks.postValue(tacksRep);
         maxIndex = tacksRep.size()-1;
     }
 

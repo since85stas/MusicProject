@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">AudioExample</string>
+    <string name="app_name">BatPlayer</string>
     <string name="title_activity_main">MainActivity</string>
     <string name="notification_channel_name">Player controls</string>
 
