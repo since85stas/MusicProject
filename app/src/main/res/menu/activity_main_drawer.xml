@@ -6,8 +6,13 @@
     <group android:id="@+id/mainGroup"  android:checkableBehavior="none">
         <item
             android:id="@+id/nav_home"
-            android:icon="@drawable/ic_menu_camera"
             android:title="@string/home" />
+
+        <item
+            android:orderInCategory="2"
+            android:id="@+id/nav_rate"
+            android:icon="@drawable/ic_star_black_24dp"
+            android:title="@string/rate_an_app" />
 
         <item
             android:id="@+id/find_text"

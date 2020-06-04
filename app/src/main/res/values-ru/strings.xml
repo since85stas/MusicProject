@@ -31,8 +31,10 @@
     <string name="add">Добавить</string>
     <string name="enter_playlist_name">Введите имю плейлиста</string>
     <string name="new_playlist">Новый плейлист</string>
-    <string name="home">Домой</string>
+    <string name="home">Лицензия</string>
     <string name="find_track_lyrics">Поиск текста песни</string>
     <string name="add_playlist">Добавить новый плейлист</string>
     <string name="action">Действия</string>
+
+    <string name="rate_an_app">Оценить приложение</string>
 </resources>

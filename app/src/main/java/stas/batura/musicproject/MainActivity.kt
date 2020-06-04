@@ -43,10 +43,7 @@ import kotlinx.android.synthetic.main.nav_header_main.view.*
 import kotlinx.android.synthetic.main.pager_activity.*
 import stas.batura.musicproject.musicservice.MusicService
 import stas.batura.musicproject.repository.room.Playlist
-import stas.batura.musicproject.ui.dialogs.DeleteAlertDialog
-import stas.batura.musicproject.ui.dialogs.PlaylistListDialog
-import stas.batura.musicproject.ui.dialogs.PlaylistNameDialog
-import stas.batura.musicproject.ui.dialogs.TextDialog
+import stas.batura.musicproject.ui.dialogs.*
 import stas.batura.musicproject.ui.playlist.PlaylistFragment
 import stas.batura.musicproject.ui.song_decor.SongDecorFragment
 import stas.batura.musicproject.utils.CircleTransform
@@ -196,6 +193,7 @@ class MainActivity : AppCompatActivity(), DialogSelectionListener {
                 param.putString("ARTIST", it.artist)
 
                 mFirebaseAnalytics.logEvent("Play", param)
+                mainViewModel.songTitle.value = it.title
                 print("play")
             }
         })
@@ -375,7 +373,8 @@ class MainActivity : AppCompatActivity(), DialogSelectionListener {
         nav_view.setNavigationItemSelectedListener( (NavigationView.OnNavigationItemSelectedListener {
             when (it.itemId) {
                 R.id.nav_home -> {
-                    drawer_layout.closeDrawers()
+//                    drawer_layout.closeDrawers()
+                    createNewLicenseDialog()
                     true
                 }
 
@@ -448,6 +447,16 @@ class MainActivity : AppCompatActivity(), DialogSelectionListener {
         val fragmentManage = supportFragmentManager
         dialog.show(fragmentManage, "playlist")
         pager.currentItem = 1
+    }
+
+    /**
+     * создает новый диалог для лицензии
+     */
+    private fun createNewLicenseDialog() {
+        val dialog = LicenseDialog()
+        val fragmentManage = supportFragmentManager
+        dialog.show(fragmentManage, "playlist")
+//        pager.currentItem = 1
     }
 
     /**

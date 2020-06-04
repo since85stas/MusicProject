@@ -29,16 +29,18 @@
     <style name="ExpandParentStyle">
         <item name="android:textStyle">bold</item>
         <item name="android:textSize">18sp</item>
-        <item name="android:textColor">@color/colorAccent</item>
+        <item name="android:textColor">@color/colorPrimary</item>
         <item name="android:layout_marginStart">24sp</item>
+        <item name="android:layout_marginTop">6dp</item>
+        <item name="android:layout_marginBottom">6dp</item>
         <item name="android:maxLines">1</item>
     </style>
 
     <style name="ExpandChildBaseStyle">
         <item name="android:textSize">14sp</item>
         <item name="android:maxLines">1</item>
-        <item name="android:layout_marginTop">12dp</item>
-        <item name="android:layout_marginBottom">12dp</item>
+        <item name="android:layout_marginTop">10dp</item>
+        <item name="android:layout_marginBottom">10dp</item>
     </style>
 
     <style name="ExpandChildSmallStyle">

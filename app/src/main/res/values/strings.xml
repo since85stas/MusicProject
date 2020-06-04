@@ -30,8 +30,39 @@
     <string name="add">add</string>
     <string name="enter_playlist_name">Enter playlist name</string>
     <string name="new_playlist">New playlist</string>
-    <string name="home">Home</string>
+    <string name="home">License</string>
     <string name="find_track_lyrics">Find track lyrics</string>
     <string name="add_playlist">Add new playlist</string>
     <string name="action">Action</string>
+
+    <string name="myLicense">
+        Copyright 2020 Stanislav Batura \n
+        Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at\n
+
+   http://www.apache.org/licenses/LICENSE-2.0\n
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License\n\n External libraries:\n\n
+    </string>
+
+    <string name="about">    A simple audio player to play mp3 from phone\n\n
+
+Features:\n
+* Best notepad full free application\n
+        * Create infinity number of folders to storing your notes.\n
+* Offline notepad where you can easily write thoughts without using the internet.\n
+* Notepad with protection. You can protect your notes with a password.\n
+* Adjust the color of your text for notes or entries in the diary.\n
+* Share your notes with other applications.\n
+* Check spelling in all your notes.\n
+* An unincorporated notepad.\n
+* Easy application that loads instantly.\n
+* Free diary and notepad for smartphones on android.</string>
+
+    <string name="rate_an_app">Rate an app</string>
 </resources>
