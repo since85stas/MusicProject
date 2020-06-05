@@ -543,7 +543,7 @@ class MusicService (): Service () {
                 )
                 .setMediaSession(mediaSession!!.sessionToken)
         ) // setMediaSession требуется для Android Wear
-        builder.setSmallIcon(R.mipmap.ic_launcher)
+//        builder.setSmallIcon(R.mipmap.ic_launcher)
         builder.color = ContextCompat.getColor(
             this,
             R.color.colorPrimaryDark

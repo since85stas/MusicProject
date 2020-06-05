@@ -225,7 +225,7 @@ class MainAcivityViewModel (private val application: Application,
     }
 
     fun onActivityDestroyed() {
-        setAllTracksNotPlaying()
+//        setAllTracksNotPlaying()
         _createServiceListner.value = false
     }
 

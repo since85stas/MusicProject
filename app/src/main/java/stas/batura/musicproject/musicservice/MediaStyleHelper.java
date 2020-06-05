@@ -3,6 +3,7 @@ package stas.batura.musicproject.musicservice;
 // https://gist.github.com/ianhanniballake/47617ec3488e0257325c
 
 import android.content.Context;
+import android.graphics.BitmapFactory;
 import android.support.v4.media.MediaDescriptionCompat;
 import android.support.v4.media.MediaMetadataCompat;
 import android.support.v4.media.session.MediaControllerCompat;
@@ -11,6 +12,8 @@ import android.support.v4.media.session.PlaybackStateCompat;
 
 import androidx.core.app.NotificationCompat;
 import androidx.media.session.MediaButtonReceiver;
+
+import stas.batura.musicproject.R;
 
 /**
  * Helper APIs for constructing MediaStyle notifications
@@ -37,6 +40,8 @@ class MediaStyleHelper {
                 .setContentText(description.getSubtitle())
                 .setSubText(description.getDescription())
                 .setLargeIcon(description.getIconBitmap())
+                .setSmallIcon( R.drawable.bat_notif_icon_white)
+
                 .setContentIntent(controller.getSessionActivity())
                 .setDeleteIntent(
                         MediaButtonReceiver.buildMediaButtonPendingIntent(context, PlaybackStateCompat.ACTION_STOP))

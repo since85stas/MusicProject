@@ -26,7 +26,7 @@ public final class MusicRepository {
 
     public MutableLiveData<List<Track>> tracks = new  MutableLiveData<>();
 
-    Controls controls;
+    private Controls controls;
 
     private int maxIndex = 20;
 
@@ -41,9 +41,24 @@ public final class MusicRepository {
         System.out.println("end repos creat");
     }
 
+    private int getInitIndex(List<TrackKot> trackKotList) {
+        int count = 0;
+        int index = 0;
+        for (TrackKot tr: trackKotList
+             ) {
+            if (tr.isPlaying()) {
+                index = count;
+            }
+            count++;
+        }
+        return index;
+    }
+
     public void getDbTracks() {
         tracksDb = repository.getAllTracksFromMainPlaylist();
-        updateTracksLive(tracksDb);
+        if (tracksDb != null) {
+            updateTracksLive(tracksDb);
+        }
     }
 
     public void updateContols(Controls controls) {
@@ -61,6 +76,9 @@ public final class MusicRepository {
         // упорядочиваем список песен по альбомам
         AlbumsDataInfo data =new  AlbumsDataInfo(tacksRep);
         tracks.postValue(data.getTracksInAlbumsOrder());
+
+        //
+        currentItemIndex = getInitIndex(trackKotList);
 //        tracks.postValue(tacksRep);
         maxIndex = tacksRep.size()-1;
     }
@@ -123,7 +141,6 @@ public final class MusicRepository {
         return 0;
     }
 
-    // TODO : разобраться с обновлением лайв дэйта
     private void setIsPlaying() {
         Log.d("musicReppos", "setIsPlaying: ");
         if (tracks.getValue() != null && tracks.getValue().size() > 0) {
