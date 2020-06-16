@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">BatPlayer</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="notification_channel_name">Controles del jugador</string>
+
+    <string name="play">Play</string>
+    <string name="pause">Pause</string>
+    <string name="stop">Stop</string>
+
+    <string name="previous">Previous</string>
+    <string name="next">Next</string>
+
+    <!-- playlist name dialog  -->
+    <string name="message_text">Nueva lista de reproducción</string>
+    <string name="yes">Sí</string>
+    <string name="no">No</string>
+
+    <!-- Play Icon -->
+    <string name="yesStr">Sí</string>
+    <string name="delete_pllst_str">Eliminar lista de reproducción</string>
+    <string name="del_plst_body">¿Realmente desea eliminar lista de reproducción?</string>
+    <string name="canc_str">Cancelar</string>
+    <string name="text_not_found">Lo siento, no podemos encontrar texto</string>
+    <string name="track">Pista</string>
+    <string name="playlist">Reproducción</string>
+    <string name="artist">Artista</string>
+    <string name="album">Álbum</string>
+    <string name="title">Titular</string>
+    <string name="select_playlist">Seleccionar lista de reproducción</string>
+    <string name="add">añadir</string>
+    <string name="enter_playlist_name">Introduzca el nombre de la lista de reproducción</string>
+    <string name="new_playlist">Nueva lista de reproducción</string>
+    <string name="home">Licencia</string>
+    <string name="find_track_lyrics">Buscar letras de canciones</string>
+    <string name="add_playlist">Añadir nueva lista de reproducción</string>
+    <string name="action">Acto</string>
+
+
+</resources>

@@ -41,12 +41,12 @@ public final class MusicRepository {
         System.out.println("end repos creat");
     }
 
-    private int getInitIndex(List<TrackKot> trackKotList) {
+    private int getInitIndex(List<Track> trackKotList) {
         int count = 0;
         int index = 0;
-        for (TrackKot tr: trackKotList
+        for (Track tr: trackKotList
              ) {
-            if (tr.isPlaying()) {
+            if (tr.isPlaying) {
                 index = count;
             }
             count++;
@@ -78,7 +78,7 @@ public final class MusicRepository {
         tracks.postValue(data.getTracksInAlbumsOrder());
 
         //
-        currentItemIndex = getInitIndex(trackKotList);
+        currentItemIndex = getInitIndex(data.getTracksInAlbumsOrder());
 //        tracks.postValue(tacksRep);
         maxIndex = tacksRep.size()-1;
     }

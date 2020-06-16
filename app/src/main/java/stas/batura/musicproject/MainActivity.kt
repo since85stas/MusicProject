@@ -49,6 +49,7 @@ import stas.batura.musicproject.ui.song_decor.SongDecorFragment
 import stas.batura.musicproject.utils.CircleTransform
 import stas.batura.musicproject.utils.ContexUtils
 import stas.batura.musicproject.utils.InjectorUtils
+import stas.batura.ratelibrary.RateLibrary
 import java.io.File
 
 
@@ -82,6 +83,8 @@ class MainActivity : AppCompatActivity(), DialogSelectionListener {
      * The pager adapter, which provides the pages to the view pager widget.
      */
     private var pagerAdapter: ScreenSlidePagerAdapter? = null
+
+    private lateinit var rateLibrary: RateLibrary
 
     /**
      * создаем активити
@@ -124,6 +127,12 @@ class MainActivity : AppCompatActivity(), DialogSelectionListener {
                 )
             }
         }
+
+        rateLibrary = RateLibrary.Builder().setContext(this)
+            .setFragManager(supportFragmentManager)
+            .setNumActions(10)
+            .setUrl("market://details?id=stas.batura.musicproject")
+            .build()
 
         Log.d(TAG, "onCreate")
     }
@@ -250,6 +259,8 @@ class MainActivity : AppCompatActivity(), DialogSelectionListener {
     }
 
     override fun onStart() {
+        rateLibrary.checkRates()
+
         Log.d(TAG, "onStart")
         addObservers()
 //        if (pagerAdapter!=null) {
@@ -336,7 +347,7 @@ class MainActivity : AppCompatActivity(), DialogSelectionListener {
         // Inflate the menu; this adds items to the action bar if it is present.
         menuInflater.inflate(R.menu.main, menu)
 
-//        addTour()
+    //        addTour()
         return true
     }
 
@@ -389,6 +400,12 @@ class MainActivity : AppCompatActivity(), DialogSelectionListener {
                     createNewPlaylistDialog()
                     true
                 }
+
+                R.id.nav_rate -> {
+                    rateLibrary.showDialog()
+                    true
+                }
+
                 in listId ->  {
                     Log.d("main", "frag$listId")
                     drawer_layout.closeDrawers()
