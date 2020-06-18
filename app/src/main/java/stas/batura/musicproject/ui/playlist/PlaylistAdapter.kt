@@ -1,16 +1,16 @@
 package stas.batura.musicproject.ui.playlist
 
-import android.support.v4.media.session.PlaybackStateCompat
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.ListAdapter
-import androidx.recyclerview.widget.RecyclerView
-import stas.batura.musicproject.MainAcivityViewModel
-import stas.batura.musicproject.R
-import stas.batura.musicproject.musicservice.MusicRepository
-
+//import android.support.v4.media.session.PlaybackStateCompat
+//import android.view.LayoutInflater
+//import android.view.View
+//import android.view.ViewGroup
+//import androidx.recyclerview.widget.DiffUtil
+//import androidx.recyclerview.widget.ListAdapter
+//import androidx.recyclerview.widget.RecyclerView
+//import stas.batura.musicproject.MainAcivityViewModel
+//import stas.batura.musicproject.R
+//import stas.batura.musicproject.musicservice.MusicRepository
+//
 //class PlaylistAdapter (val mainAcivityViewModel: MainAcivityViewModel):
 //    ListAdapter<MusicRepository.Track, PlaylistAdapter.ViewHolder> (TrackDiffCalback()) {
 //

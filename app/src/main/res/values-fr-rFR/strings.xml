@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- playlist name dialog  -->
+    <string name="message_text">New Playlist</string>
+    <string name="yes">Oui</string>
+    <string name="no">Aucun</string>
+
+    <!-- Play Icon -->
+    <string name="yesStr">Oui</string>
+    <string name="delete_pllst_str">Supprimer la liste de lecture</string>
+    <string name="del_plst_body">Voulez-vous vraiment supprimer playlist?</string>
+    <string name="canc_str">Annuler</string>
+    <string name="text_not_found">Désolé, nous ne pouvons pas trouver le texte</string>
+    <string name="track">Piste</string>
+    <string name="playlist">Playlist</string>
+    <string name="artist">Artiste</string>
+    <string name="album">Album</string>
+    <string name="title">Intitulé</string>
+    <string name="select_playlist">Sélectionner Une Playlist</string>
+    <string name="add">ajouter</string>
+    <string name="enter_playlist_name">Entrez le nom de la sélection</string>
+    <string name="new_playlist">Nouveau playlist</string>
+    <string name="home">Licence</string>
+    <string name="find_track_lyrics">Trouver les paroles de la piste</string>
+    <string name="add_playlist">Ajouter une nouvelle liste de lecture</string>
+    <string name="action">Action</string>
+</resources>
