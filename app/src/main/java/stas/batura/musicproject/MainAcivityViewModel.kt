@@ -36,7 +36,7 @@ class MainAcivityViewModel (private val application: Application,
                             val musicRepository: MusicRepository
                             ) : ViewModel(  ) {
 
-    private var playerServiceBinder: MusicService.PlayerServiceBinder? = null
+    var playerServiceBinder: MusicService.PlayerServiceBinder? = null
     var mediaController: MutableLiveData<MediaControllerCompat?> = MutableLiveData()
     private var callback: MediaControllerCompat.Callback? = null
     var serviceConnection: MutableLiveData<ServiceConnection?> = MutableLiveData()

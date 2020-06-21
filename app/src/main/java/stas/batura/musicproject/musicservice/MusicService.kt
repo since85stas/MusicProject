@@ -331,6 +331,8 @@ class MusicService (): Service () {
             stopSelf()
         }
 
+
+
         // при переходе на следующий трек
         override fun onSkipToNext() {
             val track = musicRepository.next
@@ -464,6 +466,7 @@ class MusicService (): Service () {
     }
 
     inner class PlayerServiceBinder : Binder () {
+
         fun  getMediaSessionToke() : MediaSessionCompat.Token{
             return mediaSession!!.sessionToken
         }
@@ -471,6 +474,8 @@ class MusicService (): Service () {
         fun getPlayer(): ExoPlayer? {
             return exoPlayer
         }
+
+
     }
 
     private fun refreshNotificationAndForegroundStatus(playbackState: Int) {

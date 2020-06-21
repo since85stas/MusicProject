@@ -19,6 +19,8 @@ import org.junit.rules.TestRule;
 import org.junit.runner.RunWith;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import stas.batura.musicproject.data.source.FakeRepositoryAndr;
@@ -117,5 +119,33 @@ public class MusicRepositoryTest {
         musicRepository.getNext();
         musicRepository.getNext();
         assertEquals (musicRepository.getNext(),(new MusicRepository.Track(trackKot0)));
+    }
+
+    @Test
+    public void test_randomizer() {
+        musicRepository.maxIndex = 20;
+        HashMap<Integer, Integer> randomResult = new HashMap<>();
+        for (int i = 0; i < musicRepository.maxIndex*10000; i++) {
+            int ran = musicRepository.getRandomNum();
+
+            if (!randomResult.containsKey(ran)) {
+                randomResult.put(ran, 1);
+            } else {
+                int prev = randomResult.get(ran);
+                randomResult.put(ran, prev + 1);
+            }
+        }
+        List<Float> perc = new ArrayList<>();
+
+        for (Integer val: randomResult.values()
+             ) {
+            int del = Math.abs(val - 10000);
+            perc.add((float)del/ 10000.f * 100.f);
+        }
+
+        for (int i = 0; i < perc.size(); i++) {
+            assertTrue(perc.get(i) < 3.f);
+        }
+        Log.d(TAG, "test_randomizer: ");
     }
 }

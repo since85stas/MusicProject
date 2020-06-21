@@ -3,11 +3,13 @@ package stas.batura.musicproject.musicservice;
 import android.net.Uri;
 import android.util.Log;
 
+import androidx.annotation.VisibleForTesting;
 import androidx.lifecycle.MutableLiveData;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Random;
 
 import stas.batura.musicproject.repository.room.Controls;
 import stas.batura.musicproject.repository.room.ControlsKt;
@@ -28,7 +30,8 @@ public final class MusicRepository {
 
     private Controls controls;
 
-    private int maxIndex = 20;
+    @VisibleForTesting
+    public int maxIndex = 20;
 
     private int currentItemIndex = 0;
 
@@ -85,7 +88,7 @@ public final class MusicRepository {
 
     Track getNext() {
         if (controls.getPlayStatus() == SHUFFLE_ON) {
-            currentItemIndex = (int)(Math.random()*tracks.getValue().size());
+            currentItemIndex = getRandomNum();
         } else if (controls.getPlayStatus() == REPEAT_ONE) {
             Log.d("music service", "getNext: one");
         } else {
@@ -99,7 +102,7 @@ public final class MusicRepository {
 
     Track getPrevious() {
         if (controls.getPlayStatus() == SHUFFLE_ON) {
-            currentItemIndex = (int)(Math.random()*tracks.getValue().size());
+            currentItemIndex = getRandomNum();
         } else {
             if (currentItemIndex == maxIndex)
                 currentItemIndex = 0;
@@ -112,6 +115,12 @@ public final class MusicRepository {
     Track getTrackByIndex(int index) {
         currentItemIndex = index;
         return getCurrent();
+    }
+
+    @VisibleForTesting
+    public int getRandomNum() {
+        Random random = new Random();
+        return random.nextInt(maxIndex);
     }
 
     Track getTrackByUri(Uri uri) {

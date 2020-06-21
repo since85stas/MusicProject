@@ -1,7 +1,7 @@
 package stas.batura.musicproject
 
 import android.Manifest
-import android.app.Activity
+import android.app.ActivityManager
 import android.content.Context
 import android.content.Intent
 import android.os.Build
@@ -10,11 +10,9 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuItem
-import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
-import androidx.core.view.get
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
@@ -32,12 +30,10 @@ import com.developer.filepicker.model.DialogConfigs
 import com.developer.filepicker.model.DialogProperties
 import com.developer.filepicker.view.FilePickerDialog
 import com.github.amlcurran.showcaseview.ShowcaseView
-import com.github.amlcurran.showcaseview.targets.ActionViewTarget
 import com.github.amlcurran.showcaseview.targets.ViewTarget
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.analytics.FirebaseAnalytics
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.app_bar_main.*
 import kotlinx.android.synthetic.main.control_fragment_new.*
 import kotlinx.android.synthetic.main.nav_header_main.view.*
 import kotlinx.android.synthetic.main.pager_activity.*
@@ -130,7 +126,7 @@ class MainActivity : AppCompatActivity(), DialogSelectionListener {
 
         rateLibrary = RateLibrary.Builder().setContext(this)
             .setFragManager(supportFragmentManager)
-            .setNumActions(10)
+            .setNumActions(20)
             .setUrl("market://details?id=stas.batura.musicproject")
             .build()
 
@@ -300,11 +296,23 @@ class MainActivity : AppCompatActivity(), DialogSelectionListener {
             mainViewModel.mediaController.value!!.transportControls.stop()
         }
         if ((mainViewModel.serviceConnection.value != null)) {
-            unbindService(mainViewModel.serviceConnection.value!!)
+            if (isServiceRunning())
+                unbindService(mainViewModel.serviceConnection.value!!)
         }
         mainViewModel.onActivityDestroyed()
 
         super.onDestroy()
+    }
+
+    private fun isServiceRunning(): Boolean {
+        val manager: ActivityManager =
+            getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager
+        for (service in manager.getRunningServices(Int.MAX_VALUE)) {
+            if ("stas.batura.musicproject.musicservice".equals(service.service.getClassName())) {
+                return true
+            }
+        }
+        return false
     }
 
     /**
