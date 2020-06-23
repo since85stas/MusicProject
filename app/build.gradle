@@ -16,8 +16,8 @@ android {
 
     defaultConfig {
         applicationId "stas.batura.musicproject"
-        versionCode 6
-        versionName "1.03"
+        versionCode 7
+        versionName "1.04"
 
         minSdkVersion  23
         targetSdkVersion 29

@@ -1,17 +1,14 @@
 package stas.batura.musicproject
 
-import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.view.View
-import android.widget.ImageButton
 import android.widget.ImageView
-import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.graphics.drawable.RoundedBitmapDrawable
 import androidx.core.graphics.drawable.RoundedBitmapDrawableFactory
 import androidx.databinding.BindingAdapter
 import stas.batura.musicproject.musicservice.MusicRepository
-import stas.batura.musicproject.repository.room.SHUFFLE_ON
+import stas.batura.musicproject.repository.room.Playlist
 import stas.batura.musicproject.repository.room.TrackKot
 
 @BindingAdapter ("titleFormatted")
@@ -94,11 +91,13 @@ fun ImageView.setAlbumImage(track: TrackKot?) {
 }
 
 @BindingAdapter("playlistNameBinding")
-fun TextView.setPlaylistName(name: String?) {
-    if (name == null) {
+fun TextView.setPlaylistName(playlist: Playlist?) {
+    if (playlist == null) {
         text = context.getString(R.string.playlist)
+    } else if (playlist.playlistId != 1){
+        text = playlist.name
     } else {
-        text = name
+        text = playlist.name
     }
 }
 

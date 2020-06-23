@@ -1,8 +1,10 @@
 package stas.batura.musicproject.repository.room
 
 import android.net.Uri
-import androidx.annotation.ColorInt
-import androidx.room.*
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+import androidx.room.TypeConverter
 
 @Entity (tableName = "tracks_table")
 data class TrackKot (
@@ -40,6 +42,12 @@ data class TrackKot (
 
     @ColumnInfo(name = "is_playing")
     var isPlaying = false
+
+    @ColumnInfo(name = "is_active")
+    var isActive: Boolean = true
+
+    @ColumnInfo(name = "num_play")
+    var numPlayed: Int = 0
 }
 
 class UriRoomConverter {

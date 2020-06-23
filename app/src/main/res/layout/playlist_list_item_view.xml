@@ -24,7 +24,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            playlistNameBinding="@{playlist.name}"
+            playlistNameBinding="@{playlist}"
             android:onClick="@{() -> viewHolder.onItemClecked()}"
             android:maxLines="1"
             android:layout_gravity="right"

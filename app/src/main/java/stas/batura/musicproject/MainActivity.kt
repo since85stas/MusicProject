@@ -182,10 +182,10 @@ class MainActivity : AppCompatActivity(), DialogSelectionListener {
             }
         })
 
-        mainViewModel.currentPlaylistName.observe(this, Observer {
+        mainViewModel.currentPlaylist.observe(this, Observer {
             val toolbar: Toolbar = findViewById(R.id.toolbar)
             if (it != null) {
-                toolbar.title = it
+                toolbar.title = it.name
             } else {
                 toolbar.title = "No playlist"
             }
@@ -227,7 +227,7 @@ class MainActivity : AppCompatActivity(), DialogSelectionListener {
         mainViewModel.mainDataLive.removeObservers(this)
         mainViewModel.exoPlayer.removeObservers(this)
         mainViewModel.openTextListner.removeObservers(this)
-        mainViewModel.currentPlaylistName.removeObservers(this)
+        mainViewModel.currentPlaylist.removeObservers(this)
         mainViewModel.currentTrackPlaying.removeObservers(this)
     }
 
@@ -489,7 +489,9 @@ class MainActivity : AppCompatActivity(), DialogSelectionListener {
      */
     override fun onSelectedFilePaths(files: Array<out String>?) {
         print("test select")
-        mainViewModel.addTracksToPlaylist(files!![0])
+        for (file in files!!) {
+            mainViewModel.addTracksToPlaylist(file)
+        }
     }
 
     fun openTrackTextDialog() {
@@ -515,7 +517,7 @@ class MainActivity : AppCompatActivity(), DialogSelectionListener {
 
         // test
         val properties = DialogProperties()
-        properties.selection_mode = DialogConfigs.SINGLE_MODE
+        properties.selection_mode = DialogConfigs.MULTI_MODE
         properties.selection_type = DialogConfigs.FILE_AND_DIR_SELECT
         properties.root = File(DialogConfigs.DEFAULT_DIR)
         properties.error_dir = File(DialogConfigs.DEFAULT_DIR)

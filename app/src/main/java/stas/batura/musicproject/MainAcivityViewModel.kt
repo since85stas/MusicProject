@@ -67,7 +67,7 @@ class MainAcivityViewModel (private val application: Application,
 
     val controlsLive = repository.getControls()
 
-    val currentPlaylistName = repository.getCurrPlaylistName()
+    val currentPlaylist = repository.getCurrPlaylistName()
 
     var playIsClicked: Boolean = false
 
@@ -288,11 +288,17 @@ class MainAcivityViewModel (private val application: Application,
      * удаляет плейлист
      */
     fun deletePlaylist() {
-        repository.deleteTracksInMainPlayList()
-        repository.deletePlaylist()
 
-        repository.updateMainPlayilistId(0)
-        musicRepository.getDbTracks()
+        if (currentPlaylist.value!!.playlistId != 1 ) {
+            repository.deleteTracksInMainPlayList()
+            repository.deletePlaylist()
+
+            repository.updateMainPlayilistId(1)
+            musicRepository.getDbTracks()
+        } else {
+
+        }
+
     }
 
     /**
