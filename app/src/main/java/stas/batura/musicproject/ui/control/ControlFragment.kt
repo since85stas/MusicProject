@@ -160,9 +160,14 @@ class ControlFragment () : Fragment() {
         super.onStart()
     }
 
+    override fun onPause() {
+        removeObservers()
+        super.onPause()
+    }
+
     override fun onStop() {
         isPlayButtonClicked = false
-        removeObservers()
+
         super.onStop()
     }
 

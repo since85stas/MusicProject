@@ -277,12 +277,12 @@ class MainActivity : AppCompatActivity(), DialogSelectionListener {
 
     override fun onPause() {
         println("main activity pause")
-//        removeObservers()
+        removeObservers()
         super.onPause()
     }
 
     override fun onStop() {
-        removeObservers()
+//        removeObservers()
         pagerAdapter!!.removeFragments()
         println("main activity stop")
         super.onStop()

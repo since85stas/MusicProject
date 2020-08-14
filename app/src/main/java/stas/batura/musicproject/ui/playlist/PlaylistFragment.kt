@@ -181,8 +181,13 @@ class PlaylistFragment : Fragment (), DialogSelectionListener {
         super.onStart()
     }
 
-    override fun onStop() {
+    override fun onPause() {
         removeObservers()
+        super.onPause()
+    }
+
+    override fun onStop() {
+
         super.onStop()
     }
 
