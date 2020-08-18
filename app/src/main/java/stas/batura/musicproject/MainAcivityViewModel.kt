@@ -26,10 +26,13 @@ import stas.batura.musicproject.repository.room.TrackKot
 import stas.batura.musicproject.repository.room.TracksDao
 import stas.batura.musicproject.utils.InjectorUtils
 import stas.batura.musicproject.utils.SongsManager
+import stas.batura.musicproject.utils.SongsManagerKotl
 import java.lang.Exception
 import java.lang.NullPointerException
 
 enum class NetApiStatus { LOADING, ERROR, DONE }
+
+enum class PlaylistApiStatus { LOADING, DONE }
 
 class MainAcivityViewModel (private val application: Application,
                             val repository: TracksDao,
@@ -305,8 +308,8 @@ class MainAcivityViewModel (private val application: Application,
      * поллучаем путь папки, создаем список треков и сохраняем в БД
      */
     fun addTracksToPlaylist(pathStr : String) {
-        val songsManager = SongsManager(pathStr, mainDataLive.value!!.currentPlaylistId);
-        val songs = songsManager.playList
+        val songsManager = SongsManagerKotl(pathStr, mainDataLive.value!!.currentPlaylistId);
+        val songs = songsManager.getPlayList()
         repository.insertTracks(songs)
         musicRepository.getDbTracks()
 

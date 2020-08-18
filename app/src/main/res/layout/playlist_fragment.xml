@@ -78,5 +78,11 @@
             android:groupIndicator="@drawable/group_indicator_selector"
             />
 
+        <ImageView
+            imageStatus="@{playlistViewModel}"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:layout_gravity="center" />
+
     </LinearLayout>
 </layout>
