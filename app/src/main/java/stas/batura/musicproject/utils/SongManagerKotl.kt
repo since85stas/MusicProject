@@ -42,13 +42,13 @@ class SongsManagerKotl {
      * Function to read all mp3 files from sdcard
      * and store the details in ArrayList
      */
-    suspend fun getPlayList(): Deferred<List<TrackKot>>
+    suspend fun getPlayList(): List<TrackKot>
          {
             val home = File(MEDIA_PATH)
 
             //        File[] files = home.listFiles(new FileExtensionFilter());
             files = TreeSet()
-//            val imageFiles = ArrayList()
+            imageFiles = ArrayList()
             getTracksInSubs(home)
             val time = System.currentTimeMillis()
             val trackKot: MutableList<TrackKot> = ArrayList()

@@ -34,9 +34,9 @@ enum class NetApiStatus { LOADING, ERROR, DONE }
 
 enum class PlaylistApiStatus { LOADING, DONE }
 
-class MainAcivityViewModel (private val application: Application,
-                            val repository: TracksDao,
-                            val musicRepository: MusicRepository
+class MainAcivityViewModel ( private val application: Application,
+                             val repository: TracksDao,
+                             val musicRepository: MusicRepository
                             ) : ViewModel(  ) {
 
     var playerServiceBinder: MusicService.PlayerServiceBinder? = null
@@ -309,11 +309,13 @@ class MainAcivityViewModel (private val application: Application,
      */
     fun addTracksToPlaylist(pathStr : String) {
         val songsManager = SongsManagerKotl(pathStr, mainDataLive.value!!.currentPlaylistId);
-        val songs = songsManager.getPlayList()
-        repository.insertTracks(songs)
-        musicRepository.getDbTracks()
+        coroutineScope.launch {
+            val songs = songsManager.getPlayList()
+            repository.insertTracks(songs)
+            musicRepository.getDbTracks()
 
-        updatePlaylistName(songsManager.playlistName)
+            updatePlaylistName(songsManager.playlistName)
+        }
 //        musicRepository = MusicRepository.recreateMusicRepository(application)
     }
 
