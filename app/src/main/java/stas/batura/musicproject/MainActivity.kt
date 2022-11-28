@@ -57,7 +57,7 @@ class MainActivity : AppCompatActivity(), DialogSelectionListener {
 
     private lateinit var navContr : NavController
 
-    val TAG = MainActivity::javaClass.toString()
+    val TAG = this::class.java.simpleName
 
     lateinit var  mainViewModel : MainAcivityViewModel
 

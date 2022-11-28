@@ -10,9 +10,9 @@
 
     <application
         android:allowBackup="false"
-        android:icon="@drawable/bat_logo_gr_smal"
+        android:icon="@drawable/play"
         android:label="@string/app_name"
-        android:roundIcon="@drawable/bat_logo_gr_smal"
+        android:roundIcon="@drawable/play"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:requestLegacyExternalStorage="true"

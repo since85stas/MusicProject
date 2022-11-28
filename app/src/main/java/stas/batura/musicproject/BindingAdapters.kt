@@ -121,6 +121,7 @@ fun bindStatus(statusImageView: ImageView, status: NetApiStatus?) {
         NetApiStatus.DONE -> {
             statusImageView.visibility = View.GONE
         }
+        else -> {}
     }
 }
 
@@ -132,17 +133,23 @@ fun bindStatus(statusImageView: ImageView, status: NetApiStatus?) {
  */
 @BindingAdapter("playlistAnimStatus")
 fun bindplaylistAnimStatusStatus(statusImageView: ImageView, status: PlaylistApiStatus?) {
-    when (status) {
-        NetApiStatus.LOADING -> {
-            statusImageView.visibility = View.VISIBLE
-            statusImageView.setImageResource(R.drawable.loading_animation)
-        }
-        NetApiStatus.ERROR -> {
-            statusImageView.visibility = View.VISIBLE
-            statusImageView.setImageResource(R.drawable.ic_connection_error)
-        }
-        NetApiStatus.DONE -> {
-            statusImageView.visibility = View.GONE
+    status?.let { it ->
+        when (it) {
+            PlaylistApiStatus.LOADING -> {
+                statusImageView.visibility = View.VISIBLE
+                statusImageView.setImageResource(R.drawable.loading_animation)
+            }
+            PlaylistApiStatus.DONE -> {
+                statusImageView.visibility = View.GONE
+            }
+//            NetApiStatus.ERROR -> {
+//                statusImageView.visibility = View.VISIBLE
+//                statusImageView.setImageResource(R.drawable.ic_connection_error)
+//            }
+//            NetApiStatus.DONE -> {
+//                statusImageView.visibility = View.GONE
+//            }
+            else -> {}
         }
     }
 }
@@ -155,7 +162,7 @@ fun bindplaylistAnimStatusStatus(statusImageView: ImageView, status: PlaylistApi
  */
 @BindingAdapter("textStatus")
 fun TextView.bindTextStatus( status: NetApiStatus?) {
-    when (status) {
+    when (status!!) {
         NetApiStatus.LOADING -> {
             visibility = View.GONE
         }
