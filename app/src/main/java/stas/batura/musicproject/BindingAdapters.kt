@@ -80,7 +80,7 @@ fun ImageView.setAlbumImage(track: TrackKot?) {
         setImageDrawable(dr)
 //        setImageURI(track.bitmapUri)
     } else {
-        val initialBit = BitmapFactory.decodeResource(resources, R.drawable.bat_logo_square_gr)
+        val initialBit = BitmapFactory.decodeResource(resources, R.drawable.play)
 
         val dr: RoundedBitmapDrawable = RoundedBitmapDrawableFactory.create(resources, initialBit)
 
